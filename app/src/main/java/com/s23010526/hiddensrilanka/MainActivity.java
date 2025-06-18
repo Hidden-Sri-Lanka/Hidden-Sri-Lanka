@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +18,13 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static final long SPLASH_TIMEOUT = 3000; // 3 seconds Delay between next screen
+    private static final long SPLASH_TIMEOUT = 5000; // 3 seconds Delay between next screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//-----------------------------------------------transition to next page ---------------------------------------------
         // Use a Handler to delay the transition
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -35,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, SPLASH_TIMEOUT);
+
+        // -------------------------------------- fading animation ------------------------------------------
+
+        ImageView imageViewToFadeIn = findViewById(R.id.splashImage);
+
+        // Load the fade-in animation
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
+
+        // Apply the animation to the ImageView
+        imageViewToFadeIn.startAnimation(fadeInAnimation);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
