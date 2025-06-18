@@ -18,16 +18,18 @@
         android:layout_marginHorizontal="10dp"
         android:padding="24dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_width="140dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/hsl_only_logo_transparent_black"/>
+
 
     </LinearLayout>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Blue2"
+        app:cardBackgroundColor="@color/white"
+        android:backgroundTint="@color/Gray"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
