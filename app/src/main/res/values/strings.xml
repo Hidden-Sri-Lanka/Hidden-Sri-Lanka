@@ -7,8 +7,15 @@
 
 
 
+
 <!--    Un Nessosory-->
 
 
     <string name="Login">Login</string>
+    <string name="not_yet_registered_sign_up_now">Not Yet Registered? Sign Up Now</string>
+    <string name="uncover_the_wonders_beyond_the_guidebook">Uncover the Wonders Beyond the Guidebook</string>
+    <string name="next">Next</string>
+    <string name="lets_explore_button">Let\'s Explore</string>
+    <string name="explorShere">Explore and Share 🔥</string>
+
 </resources>
