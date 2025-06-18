@@ -14,11 +14,27 @@
     <color name="Blue2">#0E28EB</color>
 
 <!--    Primary Color Pallet-->
-    <color name="Primary">#3A6B35 </color>
-    <color name="Secondoty">#B38867 </color>
-    <color name="Thierd">#D4A373 </color>
-    <color name="Nature1">#2C3E50 </color>
-    <color name="Nature2">#F8F8F8 </color>
+<!--    Background -->
+<!--    The main background for all screens-->
+    <color name="offWhite">#F8F8F8</color>
+<!--    Text-->
+<!--    All main body text, descriptions, and labels.-->
+    <color name="NavyBlue">#2C3E50 </color>
+
+<!--    Primary Button-->
+<!--    Primary buttons-->
+
+    <color name="DeepForestGreen">#3A6B35 </color>
+
+<!--    Secondary buttons or links-->
+    <color name="Tanbrown">#B38867 </color>
+
+<!--    Highlight-->
+<!--    The "Add to Favorites" icon after it has been selected.-->
+<!--    Star ratings for locations.-->
+<!--    Highlighting a special feature or a new "pro" tip within a description.-->
+    <color name="GoldSand">#D4A373 </color>
+
 <!--    Transparent Colors -->
     <color name="white_transparent">#80FFFFFF</color>
     <color name="black_transparent">#80000000</color>
