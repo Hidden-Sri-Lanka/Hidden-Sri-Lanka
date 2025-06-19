@@ -34,6 +34,7 @@
 <!--    Star ratings for locations.-->
 <!--    Highlighting a special feature or a new "pro" tip within a description.-->
     <color name="GoldSand">#D4A373 </color>
+    <color name="GoldYellow">#FFAE00 </color>
 
 <!--    Transparent Colors -->
     <color name="white_transparent">#80FFFFFF</color>

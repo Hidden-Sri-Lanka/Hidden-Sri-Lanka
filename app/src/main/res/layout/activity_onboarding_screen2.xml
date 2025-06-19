@@ -23,20 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="40dp"
         android:paddingBottom="20dp">
-
-        <ImageView
-            android:id="@+id/splashImageView"
-            android:layout_width="107dp"
-            android:layout_height="69dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="40dp"
-            android:scaleType="centerCrop"
-
-            app:srcCompat="@drawable/logo_only" />
 
         <TextView
         android:id="@+id/txtWelcome"
@@ -44,9 +32,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:text="@string/explorShere"
+        android:text="@string/discover_sri_lanka_s_hidden_wonders"
+        android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/NavyBlue"/>
+        <TextView
+        android:id="@+id/txtWelcomedescript"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="@string/simple_paragraph_1"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:textStyle="bold"
+            android:layout_marginTop="8dp"
         android:layout_marginBottom="0dp"
         android:textColor="@color/NavyBlue"/>
 <LinearLayout
@@ -133,7 +135,7 @@
         android:layout_marginBottom="100dp"
         android:text="Let's Go"
         android:textSize="18sp"
-        android:backgroundTint="@color/NavyBlue"
+        android:backgroundTint="@color/DeepForestGreen"
         app:cornerRadius="20dp"
         android:onClick="LoginPage"/>
 
