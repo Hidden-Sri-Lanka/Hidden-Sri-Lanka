@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".SignUpActivity">
 
     <!--    since some mobile phone screens small (spetialy my phone) bottom fetures dosent show so anable the scroll feture -->
@@ -27,9 +26,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="20dp"
+                android:orientation="vertical"
                 android:padding="0dp">
 
 
@@ -39,8 +38,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
                 android:layout_margin="30dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="30dp">
 
@@ -62,29 +61,29 @@
                         android:id="@+id/signUpLable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sign Up"
-                        android:textSize="36sp"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
                         android:layout_marginBottom="40dp"
-                        android:textColor="@color/NavyBlue"/>
+                        android:text="Sign Up"
+                        android:textAlignment="center"
+                        android:textColor="@color/NavyBlue"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
 
                     <!--            User name input feald -->
                     <EditText
                         android:id="@+id/userName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="20dp"
-                        android:minHeight="48dp"
                         android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/person_black"
                         android:drawablePadding="8dp"
                         android:hint="User Name"
                         android:inputType="text"
+                        android:minHeight="48dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/black" />
 
                     <!--            password input feald -->
@@ -92,51 +91,51 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="30dp"
-                        android:minHeight="48dp"
                         android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/lock_black"
-                        android:inputType="textPassword"
                         android:drawablePadding="8dp"
                         android:hint="New Password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/black" />
-<!--                    Veryfy Password -->
+                    <!--                    Veryfy Password -->
                     <EditText
                         android:id="@+id/rePassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="30dp"
-                        android:minHeight="48dp"
                         android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/lock_black"
-                        android:inputType="textPassword"
                         android:drawablePadding="8dp"
                         android:hint="Re Type Password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/black" />
-<!--                    Email Input-->
+                    <!--                    Email Input-->
                     <EditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="30dp"
-                        android:minHeight="48dp"
                         android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/email_icon"
-                        android:inputType="textEmailAddress"
                         android:drawablePadding="8dp"
                         android:hint="Your Email Address"
+                        android:inputType="textEmailAddress"
+                        android:minHeight="48dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:textColor="@color/black" />
 
                     <!--            login Button-->
@@ -144,28 +143,24 @@
                         android:id="@+id/logingButton"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="Sign Up"
-                        android:textSize="18sp"
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/DeepForestGreen"
-                        app:cornerRadius = "30dp"/>
+                        android:text="Sign Up"
+                        android:textSize="18sp"
+                        app:cornerRadius="30dp" />
 
-<!--                    Alredy Registerd Button-->
+                    <!--                    Alredy Registerd Button-->
                     <com.google.android.material.button.MaterialButton
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/Tanbrown"
                         android:layout_marginTop="0dp"
                         android:onClick="toLogin"
-                        android:text="Already Registered? Log in Now"/>
+                        android:text="Already Registered? Log in Now"
+                        android:textColor="@color/Tanbrown" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-
-
-
 
 
         </LinearLayout>

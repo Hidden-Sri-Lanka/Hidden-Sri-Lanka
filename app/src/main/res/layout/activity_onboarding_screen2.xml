@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical"
     android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     tools:context=".OnboardingScreen2Activity">
@@ -19,126 +18,128 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp"
-        android:paddingBottom="20dp">
-
-        <TextView
-        android:id="@+id/txtWelcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:text="@string/discover_sri_lanka_s_hidden_wonders"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="0dp"
-        android:textColor="@color/NavyBlue"/>
-        <TextView
-        android:id="@+id/txtWelcomedescript"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:text="@string/simple_paragraph_1"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:textStyle="bold"
-            android:layout_marginTop="8dp"
-        android:layout_marginBottom="0dp"
-        android:textColor="@color/NavyBlue"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:orientation="vertical"
-            android:padding="38dp">
+            android:paddingBottom="20dp">
 
             <TextView
-                android:id="@+id/sampleTxt"
-                android:layout_width="171dp"
+                android:id="@+id/txtWelcome"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="0dp"
-                android:text="Explore Attractions 🚀"
+                android:text="@string/discover_sri_lanka_s_hidden_wonders"
+                android:textAlignment="center"
                 android:textColor="@color/NavyBlue"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="264dp"
-                android:layout_height="205dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@raw/sigiriya" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            android:layout_margin="30dp"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="20dp">
+            <TextView
+                android:id="@+id/txtWelcomedescript"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="0dp"
+                android:text="@string/simple_paragraph_1"
+                android:textAlignment="center"
+                android:textColor="@color/NavyBlue"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="38dp">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/sampleTxt2"
-                    android:layout_width="171dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="0dp"
-                    android:text="Discover unique destinations ⛰️ "
-                    android:textColor="@color/NavyBlue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="20dp">
 
-                <ImageView
-                    android:layout_width="264dp"
-                    android:layout_height="205dp"
-                    android:layout_gravity="center_horizontal"
-                    app:srcCompat="@raw/polonnaruwa" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="38dp">
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/sampleTxt"
+                        android:layout_width="171dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Explore Attractions 🚀"
+                        android:textColor="@color/NavyBlue"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="264dp"
+                        android:layout_height="205dp"
+                        android:layout_gravity="center_horizontal"
+                        app:srcCompat="@raw/sigiriya" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="38dp">
+
+                    <TextView
+                        android:id="@+id/sampleTxt2"
+                        android:layout_width="171dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Discover unique destinations ⛰️ "
+                        android:textColor="@color/NavyBlue"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="264dp"
+                        android:layout_height="205dp"
+                        android:layout_gravity="center_horizontal"
+                        app:srcCompat="@raw/polonnaruwa" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextPageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="100dp"
+                android:backgroundTint="@color/DeepForestGreen"
+                android:onClick="LoginPage"
+                android:text="Let's Go"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/nextPageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="100dp"
-        android:text="Let's Go"
-        android:textSize="18sp"
-        android:backgroundTint="@color/DeepForestGreen"
-        app:cornerRadius="20dp"
-        android:onClick="LoginPage"/>
-
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
