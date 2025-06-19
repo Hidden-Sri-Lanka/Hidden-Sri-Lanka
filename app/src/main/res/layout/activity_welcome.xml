@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/splashImageView"
-        android:layout_width="299dp"
-        android:layout_height="400dp"
+        android:layout_width="256dp"
+        android:layout_height="208dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="40dp"
         android:contentDescription="@drawable/hsl_only_logo_transparent_black"

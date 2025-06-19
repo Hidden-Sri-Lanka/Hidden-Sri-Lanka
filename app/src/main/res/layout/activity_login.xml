@@ -17,23 +17,15 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+<!--        Main Screen-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:paddingBottom="20dp">
 
-<!--        for logo image-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="20dp"
-        android:padding="0dp">
-
-
-    </LinearLayout>
 
 <!--        loging widget -->
     <androidx.cardview.widget.CardView
@@ -50,6 +42,7 @@
             android:orientation="vertical"
             android:padding="40dp">
 
+<!--            Logo image-->
             <ImageView
                 android:layout_width="140dp"
                 android:layout_height="120dp"
@@ -117,6 +110,7 @@
                 android:backgroundTint="@color/DeepForestGreen"
                 app:cornerRadius = "30dp"/>
 
+<!--            to sinup btn-->
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
@@ -128,7 +122,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Button Not registerd  -->
 
 
 
