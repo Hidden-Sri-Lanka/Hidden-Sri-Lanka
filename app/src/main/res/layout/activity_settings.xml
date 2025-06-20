@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:backgroundTint="@color/DeepForestGreen"
+            android:backgroundTint="@color/lBlue"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:tooltipText="sample"
@@ -73,7 +73,7 @@
                     android:paddingBottom="4dp">
 
                     <TextView
-                        android:id="@+id/txtHiddnsl_main"
+                        android:id="@+id/txtanableDarkTheam"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -82,20 +82,44 @@
                         android:paddingEnd="8dp"
                         android:text="Enable Dark Theme"
                         android:textColor="@color/NavyBlue"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <ToggleButton
-                        android:id="@+id/theme_toggle_button"
+<!--                    <ToggleButton-->
+<!--                        android:id="@+id/theme_toggle_button"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:background="@color/DeepForestGreen"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textOff="OFF"-->
+<!--                        android:textOn="ON" />-->
+
+                    <Switch
+                        android:id="@+id/switch1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:background="@color/DeepForestGreen"
+                        android:layout_marginRight="40dp"
                         android:layout_gravity="center_vertical"
+                        android:textColor="@color/white"
                         android:textOff="OFF"
                         android:textOn="ON" />
-
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/txtNewfeature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="100dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:text="New Fetures are comming Soon..."
+                    android:textColor="@color/NavyBlue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
 
             </LinearLayout>
         </ScrollView>
