@@ -93,7 +93,7 @@
                     android:text="@string/devBy" />
 
                 <!-- Links to other pages
-                like privacy policy,tos,contact-->
+                like privacy policy,tos,contact ...-->
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/AboutPage.Button.Link"
