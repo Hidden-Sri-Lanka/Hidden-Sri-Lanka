@@ -4,14 +4,18 @@
     <string name="devName">Asitha Kanchana Palliyaguru</string>
 
 
-<!--    nav bar strings-->
-<string name="navigation_drawer_open">Open Navigation drawer</string>
-<string name="navigation_drawer_close">Close Navigation drawer</string>
+    <!--    nav bar strings-->
+    <string name="navigation_drawer_open">Open Navigation drawer</string>
+    <string name="navigation_drawer_close">Close Navigation drawer</string>
+
+    <!--Paragraphes-->
+    <string name="aboutParagraph">Hidden Sri Lanka \n is your ultimate mobile companion designed to help tourists discover and navigate the countless beautiful but lesser-known destinations across Sri Lanka. Our mission is to uncover the wonders beyond the guidebook, providing accessible and reliable information about hidden beaches, scenic hikes, and unique cultural sites, ensuring an enhanced tourist experience for every explorer. </string>
+    <string name="devBy">Developed by: P.G.Asitha Kanchana \n
+        (Student ID: S23010526) \n
+        As part of EEI4369 Mobile Application Development Design Project.\n</string>
 
 
-
-
-<!--    Un Nessosory-->
+    <!--    Un Nessosory-->
 
 
     <string name="Login">Login</string>
