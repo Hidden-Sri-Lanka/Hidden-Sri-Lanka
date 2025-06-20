@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HiddenSriLanka"
         tools:targetApi="31">
         <activity
+            android:name=".FetureCommingSoonActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
@@ -35,8 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
-            android:exported="false" />
-<!--        Splash Screen Deleted and Replace with mainActivity -->
+            android:exported="false" /> <!-- Splash Screen Deleted and Replace with mainActivity -->
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
