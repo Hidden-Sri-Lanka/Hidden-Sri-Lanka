@@ -18,49 +18,39 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/hedder"
         app:menu="@menu/main_menue" />
-    <!-- Note: The LinearLayout and its content that was previously inside NavigationView
-         is actually the content *of the drawer itself*. If that was intended as drawer content,
-         it's fine there. If it was intended as main screen content, it needs to move.
-         For clarity, I'm assuming the existing LinearLayout inside NavigationView
-         is for the drawer's visual content, and app:headerLayout also contributes. -->
 
 
     <!-- Main content area -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:backgroundTint="@color/lBlue"
+            android:layout_height="81dp"
+            android:background="@color/toolbar_background_color"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:tooltipText="sample"
+            android:theme="@style/ToolbarTheme"
+            app:contentInsetEnd="16dp"
+            app:menu="@menu/settings_toolbar_menu"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="396dp"
+            android:layout_height="771dp"
             android:fillViewport="true">
 
-            <!-- This LinearLayout is where the actual content of your Settings screen goes,
-                 which will be scrollable. The content you had inside the NavigationView
-                 previously might belong here if it wasn't drawer-specific content. -->
+            <!-- actual content of page , with scrollable -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-
-                <!-- Example: Move the Splash Image and Text Wrappers here if they are main content -->
-                <!-- Splash Image Container -->
-
 
                 <!-- Text Wrapper -->
                 <LinearLayout
@@ -71,7 +61,7 @@
                     android:orientation="horizontal"
                     android:paddingTop="20dp"
                     android:paddingBottom="4dp">
-
+                    <!--Enable Dark Theam txt-->
                     <TextView
                         android:id="@+id/txtanableDarkTheam"
                         android:layout_width="0dp"
@@ -85,22 +75,13 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-<!--                    <ToggleButton-->
-<!--                        android:id="@+id/theme_toggle_button"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:background="@color/DeepForestGreen"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textOff="OFF"-->
-<!--                        android:textOn="ON" />-->
-
-                    <Switch
-                        android:id="@+id/switch1"
+                    <!--                    Switch for dark theam-->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_them"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="40dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="40dp"
                         android:textColor="@color/white"
                         android:textOff="OFF"
                         android:textOn="ON" />
@@ -111,8 +92,8 @@
                     android:id="@+id/txtNewfeature"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="100dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="100dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp"
                     android:text="New Fetures are comming Soon..."
