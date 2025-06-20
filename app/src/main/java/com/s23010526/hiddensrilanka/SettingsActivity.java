@@ -28,11 +28,10 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // EdgeToEdge is not needed when manually setting padding for system bars.
-        // You can comment it out or remove it if it causes issues with the toolbar color.
-        // EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
+
+//<------------------------------------------------ Navigation top Tool Bar------------------------------------------------------------->
         // Hooks for Nav view
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -41,7 +40,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Use this toolbar as the action bar
         setSupportActionBar(toolbar);
 
-        // --- CHANGE 1: SET THE TITLE ---
         // Add this line to set the title to "Settings"
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Settings");
@@ -52,18 +50,16 @@ public class SettingsActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // This listener handles insets (like the status bar) but can interfere with simple layouts.
-        // If your toolbar color doesn't extend to the top of the screen, you might need to adjust this.
         // For a simple white toolbar, this should be okay.
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom); // Set top padding to 0
-            toolbar.setPadding(0, systemBars.top, 0, 0); // Apply top padding to the toolbar instead
+            toolbar.setPadding(0, systemBars.top, 0, 0); // aply top padding to the toolbar instead
             return insets;
         });
     }
 
-    // --- CHANGE 2: INFLATE THE MENU TO SHOW THE SEARCH ICON ---
+    // ------------------------------ Adding Serach icon and feture--------------------------------- ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.settings_toolbar_menu, menu);
@@ -72,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         searchView.setQueryHint("Search...");
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
-        // Optional: Add listeners for search functionality
+        // adding listenere for serch
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -91,21 +87,14 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
-    // --- CHANGE 3: HANDLE CLICKS ON MENU ITEMS (LIKE SEARCH) ---
+    // --- handle clickes on menue icon ---
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
-            // This can be used if you want to perform an action when the icon itself is clicked,
-            // but the main logic is often in the SearchView listener above.
-            Toast.makeText(this, "Search icon clicked!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Search icon clicked... !", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // --- Bonus Tip: Handle Navigation Drawer Clicks ---
-    // You'll also want to handle clicks on your navigation items.
-    // Set a listener in onCreate:
-    // navigationView.setNavigationItemSelectedListener(this);
-    // Then implement the listener method.
 }

@@ -98,6 +98,8 @@
                         android:textColor="@color/black" />
 
                     <!--            login Button-->
+
+<!--                    For Testing Purpus I have added Sttings page Nav here -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/logingButton"
                         android:layout_width="match_parent"

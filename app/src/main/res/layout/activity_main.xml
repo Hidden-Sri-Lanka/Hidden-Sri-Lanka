@@ -49,8 +49,8 @@
             android:textAlignment="center"
             android:textColor="@color/NavyBlue"
             android:textSize="10sp"
-            android:textStyle="bold" />
-
+            android:textStyle="italic" />
+<!--Main Text-->
         <TextView
             android:id="@+id/txtHiddnsl"
             android:layout_width="match_parent"
@@ -62,8 +62,9 @@
             android:textAlignment="center"
             android:textColor="@color/NavyBlue"
             android:textSize="36sp"
+            android:fontFamily="cursive"
             android:textStyle="bold" />
-
+<!--Subtitle-->
         <TextView
             android:id="@+id/txtWondersBeyondtheGuidebook"
             android:layout_width="match_parent"
@@ -75,7 +76,7 @@
             android:textAlignment="center"
             android:textColor="@color/NavyBlue"
             android:textSize="10sp"
-            android:textStyle="bold" />
+            android:textStyle="italic" />
 
     </LinearLayout>
 
