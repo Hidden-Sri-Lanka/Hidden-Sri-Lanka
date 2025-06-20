@@ -29,24 +29,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <!-- Toolbar -->
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:backgroundTint="@color/lBlue"
+            android:layout_height="81dp"
+            android:background="@color/toolbar_background_color"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:tooltipText="sample"
+            android:theme="@style/ToolbarTheme"
+            app:contentInsetEnd="16dp"
+            app:menu="@menu/settings_toolbar_menu"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="396dp"
+            android:layout_height="771dp"
             android:fillViewport="true">
 
             <!-- This LinearLayout is where the actual content of your Settings screen goes,
@@ -85,22 +87,22 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-<!--                    <ToggleButton-->
-<!--                        android:id="@+id/theme_toggle_button"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:background="@color/DeepForestGreen"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textOff="OFF"-->
-<!--                        android:textOn="ON" />-->
+                    <!--                    <ToggleButton-->
+                    <!--                        android:id="@+id/theme_toggle_button"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_gravity="center_vertical"-->
+                    <!--                        android:background="@color/DeepForestGreen"-->
+                    <!--                        android:textColor="@color/white"-->
+                    <!--                        android:textOff="OFF"-->
+                    <!--                        android:textOn="ON" />-->
 
-                    <Switch
-                        android:id="@+id/switch1"
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_them"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="40dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="40dp"
                         android:textColor="@color/white"
                         android:textOff="OFF"
                         android:textOn="ON" />
@@ -111,8 +113,8 @@
                     android:id="@+id/txtNewfeature"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="100dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="100dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp"
                     android:text="New Fetures are comming Soon..."
