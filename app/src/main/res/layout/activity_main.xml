@@ -10,7 +10,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-<!--    Status Finished-->
+<!--    Status Finished -->
     <LinearLayout
         android:id="@+id/splashImageContainer"
         android:layout_width="match_parent"
