@@ -24,6 +24,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
+    // TODO: Add database logic for sin up user
     public void toLogin(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -14,7 +14,30 @@
         (Student ID: S23010526) \n
         As part of EEI4369 Mobile Application Development Design Project.\n</string>
 
+    <!--Comminng zoon-->
 
+
+
+    <string name="search_hint">Search…</string>
+    <string name="searching_for_query">Searching for: %1$s</string>
+    <string name="search_icon_clicked">Search icon clicked!</string>
+
+
+<!--    These are for Placeholders till creating button action pages-->
+    <string name="feature_privacy_policy">Privacy Policy</string>
+    <string name="feature_terms_conditions">Terms &amp; Conditions</string>
+    <string name="feature_contact_us">Contact Us</string>
+    <string name="coming_soon_suffix">feature is coming soon!</string>
+
+    <!-- Example Nav Menu Item Titles -->
+    <string name="nav_home_title">Home</string>
+    <string name="nav_settings_title">Settings</string>
+
+<!--    About Us Page-->
+    <string name="title_about_us">About Us</string>
+
+<!--    Map -->
+    <string name="nav_explore_on_map_title">Explore on Map</string>
     <!--    Un Nessosory-->
 
 

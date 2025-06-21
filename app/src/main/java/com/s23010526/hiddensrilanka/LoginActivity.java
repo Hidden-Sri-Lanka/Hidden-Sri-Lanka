@@ -29,8 +29,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    //    Following line is for tesing purpus
+    //-------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------
     public void toSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, AboutUsActivity.class);
         startActivity(intent);
     }
+//    --------------------------------------------------------------------------------------------
+//    --------------------------------------------------------------------------------------------
 }

@@ -5,6 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".FetureCommingSoonActivity">
 
+    <!--    Temporary file for build
+    TODO: Remove this file
+    TODO: add more disigns for this file-->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="This Features Comming Soon..."
+        android:textAlignment="center"
+        android:textColor="@color/GoldSand"
+        android:textSize="36sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

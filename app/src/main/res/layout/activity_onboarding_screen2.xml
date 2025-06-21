@@ -12,6 +12,9 @@
     android:paddingEnd="10dp"
     tools:context=".OnboardingScreen2Activity">
 
+    <!--    TODO: Add Mor Iterms -->
+    <!--    TODO: Experiment With Horicetal Scroll Viwe
+    TODO: If possible move to Horisental Scroll weve-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +35,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="0dp"
+                android:fontFamily="cursive"
                 android:text="@string/discover_sri_lanka_s_hidden_wonders"
                 android:textAlignment="center"
                 android:textColor="@color/NavyBlue"
@@ -50,7 +54,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/NavyBlue"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="italic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,6 +81,7 @@
                         android:layout_marginStart="50dp"
                         android:layout_marginEnd="50dp"
                         android:layout_marginBottom="0dp"
+                        android:fontFamily="casual"
                         android:text="Explore Attractions 🚀"
                         android:textColor="@color/NavyBlue"
                         android:textSize="16sp"
@@ -103,15 +108,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:padding="38dp">
 
                     <TextView
                         android:id="@+id/sampleTxt2"
-                        android:layout_width="171dp"
+                        android:layout_width="246dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="50dp"
                         android:layout_marginEnd="50dp"
                         android:layout_marginBottom="0dp"
+
+                        android:fontFamily="casual"
                         android:text="Discover unique destinations ⛰️ "
                         android:textColor="@color/NavyBlue"
                         android:textSize="16sp"
@@ -136,6 +144,8 @@
                 android:layout_marginBottom="100dp"
                 android:backgroundTint="@color/DeepForestGreen"
                 android:onClick="LoginPage"
+                android:fontFamily="cursive"
+                android:textColor="@color/GoldYellow"
                 android:text="Let's Go"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />

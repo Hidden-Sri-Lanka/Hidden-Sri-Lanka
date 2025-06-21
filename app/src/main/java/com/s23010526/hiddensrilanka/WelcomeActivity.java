@@ -30,6 +30,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
 
+        // after button click
     public void exploreShere(View view) {
         Intent intent = new Intent(this, OnboardingScreen2Activity.class);
         startActivity(intent);

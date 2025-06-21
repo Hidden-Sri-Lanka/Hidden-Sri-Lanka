@@ -2,23 +2,27 @@ package com.s23010526.hiddensrilanka;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class FullMapViewActivity extends AppCompatActivity {
+public class FullMapViewActivity extends BaseActivity {
+
+    // TODO: Google Map Implimentations
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_full_map_view;// map layout file
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        return getString(R.string.nav_explore_on_map_title); //  string in strings.xml [Explore on Map]
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_full_map_view);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+
+        // TODO: MAP_INTEGRATION - Initialize the map
+// Map Integration Point
+
     }
 }

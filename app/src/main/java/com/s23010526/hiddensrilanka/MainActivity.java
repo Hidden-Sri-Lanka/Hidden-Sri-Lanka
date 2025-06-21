@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    // private static final long SPLASH_TIMEOUT = 5000; // This is no longer the primary delay mechanism
+    // private static final long SPLASH_TIMEOUT = 5000;  (Changed to another method for delay )
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                // Animation started (you can add log statements or other actions here if needed)
+                // Animation started
             }
 
             @Override
@@ -46,31 +46,18 @@ public class MainActivity extends AppCompatActivity {
                 // Finish this MainActivity so the user can't navigate back to the splash screen
                 finish();
 
-                // If you wanted an *additional* short delay *after* the animation
-                // but *before* transitioning, you could add a new Handler here.
-                // For most splash screens, transitioning immediately after animation is fine.
-                /*
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, 500); // e.g., an additional 0.5-second delay
-                */
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-                // Animation repeated (not typical for a simple fade-in)
+                // Animation repeated
             }
         });
 
         // Apply the animation to the ImageView
         imageViewToFadeIn.startAnimation(fadeInAnimation);
 
-        // --- Original Handler for delayed transition is now REMOVED or COMMENTED OUT ---
+        // --- Original Handler that i used for  delayed transition  ---
         /*
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -82,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         }, SPLASH_TIMEOUT);
         */
 
-        // -------------------------------------- Window Insets Handling ------------------------------------------
-        // This part handles fitting the layout to screen edges, you can keep it as is.
+        // --------------------------------------------finshed------------------------------------
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

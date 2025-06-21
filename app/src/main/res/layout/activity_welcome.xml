@@ -27,8 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
-
         android:layout_marginBottom="40dp"
+        android:fontFamily="cursive"
         android:text="@string/uncover_the_wonders_beyond_the_guidebook"
         android:textAlignment="center"
         android:textColor="@color/NavyBlue"
@@ -45,6 +45,8 @@
         android:backgroundTint="@color/DeepForestGreen"
         android:onClick="exploreShere"
         android:text="@string/next"
+        android:textColor="@color/GoldYellow"
+        android:fontFamily="cursive"
         android:textSize="18sp"
         app:cornerRadius="20dp" />
 

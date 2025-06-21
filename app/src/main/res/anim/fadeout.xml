@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/linear_interpolator">
+    <!--all this is for fade out animation -->
+    <!--Currently Not Using this animation -->
 
     <alpha
         android:duration="3000"

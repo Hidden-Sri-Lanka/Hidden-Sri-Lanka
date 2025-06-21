@@ -1,24 +1,29 @@
 package com.s23010526.hiddensrilanka;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+public class LocationDetailScreenActivity extends BaseActivity { // Changed to BaseActivity
 
-public class LocationDetailScreenActivity extends AppCompatActivity {
+    // TODO: DETAIL_CONTENT_SETUP - Declare UI elements for the location detail screen
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_location_detail_screen;
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        String locationName = getIntent().getStringExtra("LOCATION_NAME_EXTRA");
+        return locationName != null ? locationName : "Location Details"; // Default title
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_location_detail_screen);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // --- TODO: Future Feature Integration  here  ---
+
+
     }
 }

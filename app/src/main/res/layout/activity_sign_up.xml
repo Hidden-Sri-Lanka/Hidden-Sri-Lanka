@@ -9,7 +9,11 @@
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
-    <!--    since some mobile phone screens small (spetialy my phone) bottom fetures dosent show so anable the scroll feture -->
+    <!--    since some mobile phone screens small (spetialy my phone)
+     bottom fetures dosent show so anable the scroll feture
+
+     TODO: Add Database Funtionality to thhis-->
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -148,6 +152,7 @@
                         android:backgroundTint="@color/DeepForestGreen"
                         android:text="Sign Up"
                         android:textSize="18sp"
+                        android:textColor="@color/GoldYellow"
                         app:cornerRadius="30dp" />
 
                     <!--                    Alredy Registerd Button-->

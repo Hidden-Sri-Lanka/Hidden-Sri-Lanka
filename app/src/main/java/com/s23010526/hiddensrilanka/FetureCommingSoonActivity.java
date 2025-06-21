@@ -2,23 +2,26 @@ package com.s23010526.hiddensrilanka;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+public class FetureCommingSoonActivity extends BaseActivity { // Changed to BaseActivity
 
-public class FetureCommingSoonActivity extends AppCompatActivity {
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_feture_comming_soon; //layout file
+    }
+
+    @Override
+    protected String getActivityTitle() {
+        String featureName = getIntent().getStringExtra("FEATURE_NAME");
+        if (featureName != null && !featureName.isEmpty()) {
+            return featureName; // Set the toolbar title to the specific feature
+        }
+        return "Coming Soon"; // defoult title
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_feture_comming_soon);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
     }
 }
