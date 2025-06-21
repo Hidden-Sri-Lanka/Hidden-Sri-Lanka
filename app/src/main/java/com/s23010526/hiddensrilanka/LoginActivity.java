@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     Button signUpRederect;
 
-    // Define your database URL as a constant or retrieve it from a config
+    // Define your database URL as a constant i have given reson in Signup Activity
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     @Override
@@ -106,18 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginUsername.setError(null);
                     boolean credentialsValid = false;
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        // Assuming your user data is directly under the node found by username
-                        // If 'username' is the key of the node, userSnapshot.getKey() would be the username.
-                        // And you are querying for a child "username", so the structure might be:
-                        // users: {
-                        //   <unique_user_id>: {
-                        //     username: "actualUsername",
-                        //     password: "userPassword",
-                        //     ...
-                        //   }
-                        // }
-                        // If so, then 'userName' in snapshot.child(userName) is incorrect.
-                        // You should get the password from the userSnapshot directly if username is a field
+
 
                         String passwordFromDB = userSnapshot.child("password").getValue(String.class);
 
@@ -148,10 +137,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // It's good practice to handle errors, e.g., show a Toast to the user
+//if any error
                 Toast.makeText(LoginActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                // You might want to log the error as well for debugging
-                // Log.e("LoginActivityDBError", "onCancelled: " + error.getMessage());
             }
         });
     }

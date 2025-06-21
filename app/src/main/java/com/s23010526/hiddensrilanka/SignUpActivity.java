@@ -18,14 +18,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    // Removed signupName, as R.id.userName will be for signupUsername
     EditText signupEmail, signupUsername, signupPassword, signupRePassword; // Added signupRePassword
     Button loginRedirectText;
     Button signupButton;
     FirebaseDatabase database;
     DatabaseReference reference;
 
-    // Define your database URL as a constant or retrieve it from a config
+    // Define your database URL as a constant
+    // reson the default authentication is not with sigappoor server so i got error so i have specify the databae url now it working
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     @Override
@@ -71,14 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                     signupPassword.setError(null);
                 }
 
-                // Assuming HelperClass constructor is HelperClass(String email, String username, String password)
-                // Or if it's HelperClass(String name, String email, String username, String password),
-                // you might pass username for both 'name' and 'username' parameters, or adjust HelperClass.
-                // For this example, let's assume HelperClass takes (username, email, password)
-                // or you adjust it to HelperClass(String name, String email, String username, String password)
-                // and pass username as the 'name' parameter.
-                // If HelperClass is (String name, String email, String username, String password):
-                HelperClass helperClass = new HelperClass(username, email, username, password); // Ensure this matches your HelperClass constructor
+                HelperClass helperClass = new HelperClass(username, email, username, password);
 
                 reference.child(username).setValue(helperClass)
                         .addOnSuccessListener(aVoid -> {
@@ -108,7 +101,4 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    // This method is not used in the current context of the provided code.
-    // public void toLogin(View view) {
-    // }
 }
