@@ -1,78 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/settings_content_scrollview"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".SettingsActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".SettingsActivity"
+    tools:openDrawer="start">
 
-    <!-- page  content with scrollable -->
+    <!-- Navigation View (Drawer) -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/hedder"
+        app:menu="@menu/main_menue" />
+
+
+    <!-- Main content area -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
 
-        <!-- Text Wrapper -->
-        <LinearLayout
-            android:id="@+id/txtwrapper_main"
+        <!-- Toolbar -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="20dp"
-            android:paddingBottom="4dp">
+            android:layout_height="81dp"
+            android:background="@color/toolbar_background_color"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:contentInsetEnd="16dp"
+            app:menu="@menu/settings_toolbar_menu"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <!--Enable Dark Theme txt-->
-            <TextView
-                android:id="@+id/txtanableDarkTheam"
-                android:layout_width="0dp"
+
+        <ScrollView
+            android:layout_width="396dp"
+            android:layout_height="771dp"
+            android:fillViewport="true">
+
+            <!-- actual content of page , with scrollable -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:paddingStart="16dp"
-                android:paddingEnd="8dp"
-                android:text="Enable Dark Theme"
-                android:textColor="@color/NavyBlue"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Switch >>for dark theme -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_them"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/white"
-                android:textOff="OFF"
-                android:textOn="ON" />
-        </LinearLayout>
+                <!-- Text Wrapper -->
+                <LinearLayout
+                    android:id="@+id/txtwrapper_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="4dp">
+                    <!--Enable Dark Theam txt-->
+                    <TextView
+                        android:id="@+id/txtanableDarkTheam"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="8dp"
+                        android:text="Enable Dark Theme"
+                        android:textColor="@color/NavyBlue"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <!-- for additional settings  in feuture-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="?android:attr/listDivider" />
-<!--        Black line between settings-->
+                    <!--                    Switch for dark theam-->
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_them"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="40dp"
+                        android:textColor="@color/white"
+                        android:textOff="OFF"
+                        android:textOn="ON" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtNewfeature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="8dp"
-            android:text="New Features are coming Soon..."
-            android:textColor="@color/NavyBlue"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
-        <!--   Nedd to add more fetures -->
+                <TextView
+                    android:id="@+id/txtNewfeature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="100dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:text="New Fetures are comming Soon..."
+                    android:textColor="@color/NavyBlue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
