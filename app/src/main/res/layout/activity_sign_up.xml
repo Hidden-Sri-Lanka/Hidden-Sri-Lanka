@@ -59,6 +59,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="0dp"
                         android:padding="0dp"
+
                         app:srcCompat="@drawable/hsl_only_logo_transparent_black" />
                     <!--            login lable-->
                     <TextView
@@ -67,6 +68,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
                         android:text="Sign Up"
+                        android:fontFamily="cursive"
+
                         android:textAlignment="center"
                         android:textColor="@color/NavyBlue"
                         android:textSize="36sp"
@@ -85,6 +88,8 @@
                         android:drawablePadding="8dp"
                         android:hint="User Name"
                         android:inputType="text"
+                        android:fontFamily="cursive"
+
                         android:minHeight="48dp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
@@ -103,6 +108,8 @@
                         android:drawablePadding="8dp"
                         android:hint="New Password"
                         android:inputType="textPassword"
+                        android:fontFamily="cursive"
+
                         android:minHeight="48dp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
@@ -123,6 +130,8 @@
                         android:minHeight="48dp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
+                        android:fontFamily="cursive"
+
                         android:textColor="@color/black" />
                     <!--                    Email Input-->
                     <EditText
@@ -138,13 +147,14 @@
                         android:hint="Your Email Address"
                         android:inputType="textEmailAddress"
                         android:minHeight="48dp"
+                        android:fontFamily="cursive"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
                         android:textColor="@color/black" />
 
                     <!--            login Button-->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/logingButton"
+                        android:id="@+id/signUpButton"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginHorizontal="10dp"
@@ -152,6 +162,7 @@
                         android:backgroundTint="@color/DeepForestGreen"
                         android:text="Sign Up"
                         android:textSize="18sp"
+                        android:fontFamily="cursive"
                         android:textColor="@color/GoldYellow"
                         app:cornerRadius="30dp" />
 
@@ -161,9 +172,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
+                        android:id="@+id/loginRedirectText"
                         android:onClick="toLogin"
+                        android:fontFamily="cursive"
+                        android:textAllCaps="false"
                         android:text="Already Registered? Log in Now"
-                        android:textColor="@color/Tanbrown" />
+                        android:textColor="@color/Blue2" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -110,7 +110,6 @@
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/DeepForestGreen"
-                        android:onClick="toSettings"
                         android:text="Login"
                         android:textColor="@color/GoldYellow"
                         android:fontFamily="cursive"
@@ -123,10 +122,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
-                        android:onClick="toSinUp"
                         android:fontFamily="cursive"
+                        android:textAllCaps="false"
+                        android:id="@+id/signUpRederect"
                         android:text="@string/not_yet_registered_sign_up_now"
-                        android:textColor="@color/Tanbrown" />
+                        android:textColor="@color/Blue2" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

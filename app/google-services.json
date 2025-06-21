@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35836937746",
+    "project_id": "hidden-sri-lanka-c3ec5",
+    "storage_bucket": "hidden-sri-lanka-c3ec5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35836937746:android:498f9481c4611a291c7acb",
+        "android_client_info": {
+          "package_name": "com.s23010526.hiddensrilanka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6DkyTPOlGq_xyRNJp81hQ5LVWGZEj18I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
