@@ -14,7 +14,7 @@ Here’s a glimpse into the app's design and user interface.
 
 | Settings          | Side Panel           | Sign Up                   |
 |-------------------|---------------------|---------------------------|
-| ![Settings](img-Markdown/Setings.png) | ![Side Panel](img-Markdown/Side_Pnel.png) | ![Sign Up](img-Markdown/SinUp.png) |
+| ![Settings](img-Markdown/Setings.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Sign Up](img-Markdown/SinUp.png) |
 
 | Splash Screen           | Welcome Screen          |
 |------------------------|------------------------|
