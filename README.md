@@ -6,19 +6,19 @@ Here’s a glimpse into the app's design and user interface.
 
 | About Us         | Explore and Share          | Home Screen                    |
 |------------------|---------------------------|-------------------------------|
-| ![About Us](img-Markdown/About Us.png) | ![Explore and Share](img-Markdown/Explor and Shere.png) | ![Home Screen](img-Markdown/Hidden Sri Lanka- home screen.png) |
+| ![About Us](img-Markdown/About_Us.png) | ![Explore_and_Share](img-Markdown/Explor_and_Shere.png) | ![Home Screen](img-Markdown/Hidden_Sri_Lanka_home_screen.png) |
 
 | Location Details         | Login           | Map                       |
 |-------------------------|-----------------|---------------------------|
-| ![Location Details](img-Markdown/Location Details.png) | ![Login](img-Markdown/Login.png) | ![Map](img-Markdown/Map.png) |
+| ![Location Details](img-Markdown/Location_Details.png) | ![Login](img-Markdown/Login.png) | ![Map](img-Markdown/Map.png) |
 
 | Settings          | Side Panel           | Sign Up                   |
 |-------------------|---------------------|---------------------------|
-| ![Settings](img-Markdown/Setings.png) | ![Side Panel](img-Markdown/Side Pnel.png) | ![Sign Up](img-Markdown/SinUp.png) |
+| ![Settings](img-Markdown/Setings.png) | ![Side Panel](img-Markdown/Side_Pnel.png) | ![Sign Up](img-Markdown/SinUp.png) |
 
 | Splash Screen           | Welcome Screen          |
 |------------------------|------------------------|
-| ![Splash Screen](img-Markdown/Splash Screen.png) | ![Welcome Screen](img-Markdown/Welcome.png) |
+| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome Screen](img-Markdown/Welcome.png) |
 
 
 🎯 About The Project
