@@ -113,5 +113,5 @@ Purpose: Stores and serves all the data related to tourist attractions.
 Structure: Data is organized by city. Each city is a document within a cities collection, and each city document contains an attractions sub-collection. This allows for efficient querying of attractions based on a specific city.
 
 ## 👨‍💻 Developer
-Name: Asitha Kanchana Palliyaguru
+Name: Asitha Kanchana Palliyaguru <br>
 This project was developed as part of the EEI4369 Mobile Application Development Design Project.
