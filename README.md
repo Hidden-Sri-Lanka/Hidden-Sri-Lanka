@@ -10,7 +10,7 @@ Here’s a glimpse into the app's design and user interface.
 
 | Location Details         | Login           | Map                       |
 |-------------------------|-----------------|---------------------------|
-| ![Location Details](img-Markdown/Location_Details.png) | ![Login](img-Markdown/Login.png) | ![Map](img-Markdown/Map.png) |
+| ![Location Details](img-Markdown/Location_Details.png) | ![Login](img-Markdown/Login.png) | ![Map](img-Markdown/map.png) |
 
 | Settings          | Side Panel           | Sign Up                   |
 |-------------------|---------------------|---------------------------|
