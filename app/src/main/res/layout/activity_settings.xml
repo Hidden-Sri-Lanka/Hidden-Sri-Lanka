@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".SettingsActivity"
-    tools:openDrawer="start">
+    tools:context=".SettingsActivity">
+<!--    tools:openDrawer="start" need to add this line so drawer will be visibal -->
 
-    <!-- Navigation View (Drawer) -->
+    <!-- Navigation View  -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

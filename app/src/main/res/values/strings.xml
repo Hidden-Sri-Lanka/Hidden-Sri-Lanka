@@ -1,4 +1,8 @@
 <resources>
+
+    <!--    TODO: Reove UnNessosry Stings -->
+    <!--    TODO: add more Strings that way codes will more clear -->
+
     <string name="app_name">Hidden Sri Lanka</string>
     <string name="sID">S23010526</string>
     <string name="devName">Asitha Kanchana Palliyaguru</string>
@@ -17,13 +21,12 @@
     <!--Comminng zoon-->
 
 
-
     <string name="search_hint">Search…</string>
     <string name="searching_for_query">Searching for: %1$s</string>
     <string name="search_icon_clicked">Search icon clicked!</string>
 
 
-<!--    These are for Placeholders till creating button action pages-->
+    <!--    These are for Placeholders till creating button action pages-->
     <string name="feature_privacy_policy">Privacy Policy</string>
     <string name="feature_terms_conditions">Terms &amp; Conditions</string>
     <string name="feature_contact_us">Contact Us</string>
@@ -33,10 +36,10 @@
     <string name="nav_home_title">Home</string>
     <string name="nav_settings_title">Settings</string>
 
-<!--    About Us Page-->
+    <!--    About Us Page-->
     <string name="title_about_us">About Us</string>
 
-<!--    Map -->
+    <!--    Map -->
     <string name="nav_explore_on_map_title">Explore on Map</string>
     <!--    Un Nessosory-->
 

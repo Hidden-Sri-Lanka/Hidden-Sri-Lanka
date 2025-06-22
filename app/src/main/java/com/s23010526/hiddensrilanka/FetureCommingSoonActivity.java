@@ -2,7 +2,7 @@ package com.s23010526.hiddensrilanka;
 
 import android.os.Bundle;
 
-public class FetureCommingSoonActivity extends BaseActivity { // Changed to BaseActivity
+public class FetureCommingSoonActivity extends BaseActivity {
 
 
     @Override
@@ -16,7 +16,7 @@ public class FetureCommingSoonActivity extends BaseActivity { // Changed to Base
         if (featureName != null && !featureName.isEmpty()) {
             return featureName; // Set the toolbar title to the specific feature
         }
-        return "Coming Soon"; // defoult title
+        return "Coming Soon"; // defoult title if title is not foumnd
     }
 
     @Override

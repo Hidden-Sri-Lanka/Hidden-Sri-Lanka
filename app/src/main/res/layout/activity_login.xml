@@ -10,7 +10,7 @@
     tools:context=".LoginActivity">
 
     <!--    since some mobile phone screens small (spetialy my phone) bottom fetures dosent show so anable the scroll feture -->
-
+<!--TODO: Change Logo-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

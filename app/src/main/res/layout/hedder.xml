@@ -9,7 +9,7 @@
     android:padding="20dp"
     >
 
-
+<!--TODO : Change Logo-->
 <!--    hedder menu for side panel-->
     <ImageView
         android:layout_width="100dp"

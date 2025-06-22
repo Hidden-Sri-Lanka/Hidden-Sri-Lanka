@@ -30,11 +30,11 @@ public class AboutUsActivity extends BaseActivity {
         navigateToFeatureComingSoon(getString(R.string.feature_privacy_policy));
     }
 
-    public void Terms(View view) { // for android:onClick="Terms" (assuming this matches XML)
+    public void Terms(View view) { // for android:onClick="Terms"
         navigateToFeatureComingSoon(getString(R.string.feature_terms_conditions));
     }
 
-    public void Contact(View view) { // for android:onClick="Contact" (assuming this matches XML)
+    public void Contact(View view) { // for android:onClick="Contact"
         navigateToFeatureComingSoon(getString(R.string.feature_contact_us));
     }
 

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class LocationDetailScreenActivity extends BaseActivity { // Changed to BaseActivity
-
+//TODO : Still in Inplimentation Part
     // TODO: DETAIL_CONTENT_SETUP - Declare UI elements for the location detail screen
 
     @Override

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         // Apply the animation to the ImageView
         imageViewToFadeIn.startAnimation(fadeInAnimation);
 
-        // --- Original Handler that i used for  delayed transition  ---
+        // --- Original Handler that i used for  delayed transition no longer need ---
         /*
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
