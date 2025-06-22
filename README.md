@@ -114,4 +114,4 @@ Structure: Data is organized by city. Each city is a document within a cities co
 
 ## 👨‍💻 Developer
 Name: Asitha Kanchana Palliyaguru <br>
-This project was developed as part of the EEI4369 Mobile Application Development Design Project.
+This project was developed as part of the **EEI4369 Mobile Application Development Design Project**.
