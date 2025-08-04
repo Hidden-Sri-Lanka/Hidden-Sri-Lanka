@@ -41,41 +41,37 @@
 
         <TextView
             android:id="@+id/txtWelcome"
+            style="@style/BodyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="0dp"
             android:text="Welcome To"
-            android:textAlignment="center"
-            android:textColor="@color/NavyBlue"
             android:textSize="10sp"
             android:textStyle="italic" />
+
         <!--Main Text-->
         <TextView
             android:id="@+id/txtHiddnsl"
+            style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="0dp"
-            android:fontFamily="cursive"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textColor="@color/NavyBlue"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            android:text="@string/app_name" />
+
         <!--Subtitle-->
         <TextView
             android:id="@+id/txtWondersBeyondtheGuidebook"
+            style="@style/BodyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="40dp"
             android:text="Wonders Beyond the Guidebook"
-            android:textAlignment="center"
-            android:textColor="@color/NavyBlue"
             android:textSize="10sp"
             android:textStyle="italic" />
 

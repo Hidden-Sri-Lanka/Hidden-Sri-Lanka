@@ -4,30 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:orientation="vertical"
-    android:background="@color/GoldSand"
+    android:background="@color/DeepForestGreen"
     android:gravity="bottom"
-    android:padding="20dp"
-    >
+    android:padding="20dp">
 
-<!--TODO : Change Logo-->
-<!--    hedder menu for side panel-->
+    <!-- Header menu for side panel -->
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/hsl_logo"/>
+        android:src="@drawable/hsl_logo"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:fontFamily="cursive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hidden Sri Lanka"
-        android:textSize="24sp"/>
+        android:textColor="@color/GoldYellow"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <TextView
         android:fontFamily="cursive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hay ,Travaler"
-        android:textSize="14sp"/>
-
+        android:text="Wonders Beyond the Guidebook"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:layout_marginTop="4dp" />
 
 </LinearLayout>

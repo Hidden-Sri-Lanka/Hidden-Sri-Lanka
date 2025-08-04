@@ -9,12 +9,6 @@
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
-    <!--    since some mobile phone screens small (spetialy my phone)
-     bottom fetures dosent show so anable the scroll feture
-
-     TODO: Add Database Funtionality to thhis-->
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,26 +20,10 @@
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
-            <!--        for logo image-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:padding="0dp">
-
-
-            </LinearLayout>
-
-            <!--        loging widget -->
             <androidx.cardview.widget.CardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="30dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,125 +37,58 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="0dp"
                         android:padding="0dp"
-
                         app:srcCompat="@drawable/hsl_only_logo_transparent_black" />
-                    <!--            login lable-->
+
                     <TextView
                         android:id="@+id/signUpLable"
+                        style="@style/TitleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
-                        android:text="Sign Up"
-                        android:fontFamily="cursive"
+                        android:text="Sign Up" />
 
-                        android:textAlignment="center"
-                        android:textColor="@color/NavyBlue"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <!--            User name input feald -->
                     <EditText
                         android:id="@+id/userName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/custom_edittext"
+                        style="@style/CustomEditText"
                         android:drawableStart="@drawable/person_black"
-                        android:drawablePadding="8dp"
                         android:hint="User Name"
-                        android:inputType="text"
-                        android:fontFamily="cursive"
+                        android:inputType="text" />
 
-                        android:minHeight="48dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:textColor="@color/black" />
-
-                    <!--            password input feald -->
                     <EditText
                         android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="30dp"
-                        android:background="@drawable/custom_edittext"
+                        style="@style/CustomEditText"
                         android:drawableStart="@drawable/lock_black"
-                        android:drawablePadding="8dp"
                         android:hint="New Password"
-                        android:inputType="textPassword"
-                        android:fontFamily="cursive"
+                        android:inputType="textPassword" />
 
-                        android:minHeight="48dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:textColor="@color/black" />
-                    <!--                    Veryfy Password -->
                     <EditText
                         android:id="@+id/rePassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="30dp"
-                        android:background="@drawable/custom_edittext"
+                        style="@style/CustomEditText"
                         android:drawableStart="@drawable/lock_black"
-                        android:drawablePadding="8dp"
                         android:hint="Re Type Password"
-                        android:inputType="textPassword"
-                        android:minHeight="48dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:fontFamily="cursive"
+                        android:inputType="textPassword" />
 
-                        android:textColor="@color/black" />
-                    <!--                    Email Input-->
                     <EditText
                         android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        style="@style/CustomEditText"
                         android:layout_marginBottom="30dp"
-                        android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/email_icon"
-                        android:drawablePadding="8dp"
                         android:hint="Your Email Address"
-                        android:inputType="textEmailAddress"
-                        android:minHeight="48dp"
-                        android:fontFamily="cursive"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:textColor="@color/black" />
+                        android:inputType="textEmailAddress" />
 
-                    <!--            login Button-->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/signUpButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        style="@style/PrimaryButton"
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/DeepForestGreen"
-                        android:text="Sign Up"
-                        android:textSize="18sp"
-                        android:fontFamily="cursive"
-                        android:textColor="@color/GoldYellow"
-                        app:cornerRadius="30dp" />
+                        android:text="Sign Up" />
 
-                    <!--                    Alredy Registerd Button-->
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
                         android:id="@+id/loginRedirectText"
+                        style="@style/SecondaryButton"
+                        android:layout_marginTop="0dp"
                         android:onClick="toLogin"
-                        android:fontFamily="cursive"
-                        android:textAllCaps="false"
-                        android:text="Already Registered? Log in Now"
-                        android:textColor="@color/Blue2" />
+                        android:text="Already Registered? Log in Now" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

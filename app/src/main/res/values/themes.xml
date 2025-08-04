@@ -1,15 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-<!--    TODO: Check Here -->
-
     <!-- Base application theme. -->
     <style name="Base.Theme.HiddenSriLanka" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Apply your consistent color scheme -->
+        <item name="colorPrimary">@color/DeepForestGreen</item>
+        <item name="colorPrimaryVariant">@color/NavyBlue</item>
+        <item name="colorOnPrimary">@color/GoldYellow</item>
+        <item name="colorSecondary">@color/GoldSand</item>
+        <item name="colorSecondaryVariant">@color/Tanbrown</item>
+        <item name="colorOnSecondary">@color/NavyBlue</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/NavyBlue</item>
     </style>
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@android:color/black</item>
-        <item name="colorControlNormal">@android:color/black</item>
-    </style>
+
     <style name="Theme.HiddenSriLanka" parent="Base.Theme.HiddenSriLanka" />
 </resources>

@@ -1,63 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-<!--    TODO: Remove Un Nessosory Colors -->
-<!--    TODO : CleanUp -->
-
-<!--    Main Colors-->
-    <color name="black">#FF000000</color>
+<!--Cleanup done 2025-08-04 -->
+<!--    Primary Color Palette for Hidden Sri Lanka-->
+<!--    Background Colors-->
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#2196F3</color>
-    <color name="yellow">#FFC107</color>
-    <color name="red">#F20000</color>
-    <color name="lBlue">#00BCD4</color>
-    <color name="light_gray">#C8C8C8</color>
-    <color name="green">#4CAF50</color>
-    <color name="lGreen">#6AE76A</color>
-    <color name="pink">#E91E63</color>
-    <color name="orange">#FF5722</color>
+    <color name="black">#FF000000</color>
+    <color name="offWhite">#F8F8F8</color>
+
+<!--    Brand Colors-->
+<!--    Primary text, headings, and main UI elements-->
+    <color name="NavyBlue">#2C3E50</color>
+
+<!--    Primary buttons and forest-themed elements-->
+    <color name="DeepForestGreen">#3A6B35</color>
+
+<!--    Secondary buttons and links-->
+    <color name="Tanbrown">#B38867</color>
+
+<!--    Accent colors for highlights, ratings, and special features-->
+    <color name="GoldSand">#D4A373</color>
+    <color name="GoldYellow">#FFAE00</color>
+
+<!--    Secondary action color-->
     <color name="Blue2">#0E28EB</color>
 
-<!--    Primary Color Pallet-->
-<!--    Background -->
-<!--    The main background for all screens-->
-    <color name="offWhite">#F8F8F8</color>
-<!--    Text-->
-<!--    All main body text, descriptions, and labels.-->
-    <color name="NavyBlue">#2C3E50 </color>
+<!--    Utility Colors (only keep what's actually used)-->
+    <color name="light_gray">#C8C8C8</color>
+    <color name="toolbar_background_color">#FFFFFF</color>
 
-<!--    Primary Button-->
-<!--    Primary buttons-->
-
-    <color name="DeepForestGreen">#3A6B35 </color>
-
-<!--    Secondary buttons or links-->
-    <color name="Tanbrown">#B38867 </color>
-
-<!--    Highlight-->
-<!--    The "Add to Favorites" icon after it has been selected.-->
-<!--    Star ratings for locations.-->
-<!--    Highlighting a special feature or a new "pro" tip within a description.-->
-    <color name="GoldSand">#D4A373 </color>
-    <color name="GoldYellow">#FFAE00 </color>
-
-<!--    Transparent Colors -->
+<!--    Transparent Colors (only commonly used ones)-->
     <color name="white_transparent">#80FFFFFF</color>
     <color name="black_transparent">#80000000</color>
-    <color name="green_transparent">#804CAF50</color>
-    <color name="Blue2_Transparent">#800E28EB</color>
-    <color name="lBlue_transparent">#8000BCD4</color>
-    <color name="yellow_transparent">#66FFC107</color>
-    <color name="orange_transparent">#80FF5722</color>
-
-<!--Extreen Transparency -->
-    <color name="white_ex_trans">#10FFFFFF</color>
-    <color name="green_ex_trans">#104CAF50</color>
-    <color name="yellow_ex_trans">#4DFFC107</color>
-
-
-<!--    Random Color-->
-<!---->
-    <color name="toolbar_background_color">#FFFFFF</color> ```
 
 </resources>

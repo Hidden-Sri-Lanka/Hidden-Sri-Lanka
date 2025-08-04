@@ -7,27 +7,18 @@
     android:background="@color/white"
     tools:context=".HomeActivity">
 
-    <!--    hrdding text-->
     <TextView
         android:id="@+id/txtWelcome"
+        style="@style/HeadingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
-        android:fontFamily="cursive"
         android:text="Attractions Near You"
-        android:textAlignment="center"
-        android:textColor="@color/NavyBlue"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--filter buttons-->
-    <!--   TODO: more buttons need to add here -->
-    <!--TODO :also need to impliment horicental scroll viwe-->
-
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group_filters"
@@ -46,31 +37,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="All" />
+            android:text="All"
+            app:chipBackgroundColor="@color/DeepForestGreen"
+            android:textColor="@color/GoldYellow" />
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Historical Site" />
+            android:text="Historical Site"
+            app:chipBackgroundColor="@color/GoldSand"
+            android:textColor="@color/NavyBlue" />
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WaterFall" />
+            android:text="WaterFall"
+            app:chipBackgroundColor="@color/GoldSand"
+            android:textColor="@color/NavyBlue" />
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More" />
-
+            android:text="More"
+            app:chipBackgroundColor="@color/GoldSand"
+            android:textColor="@color/NavyBlue" />
 
     </com.google.android.material.chip.ChipGroup>
 
-    <!--    Auto populate with data no need to add scrollviwe for this -->
-    <!--    not static this is dynamic s-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_attractions"
         android:layout_width="0dp"
@@ -90,6 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:indeterminateTint="@color/DeepForestGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".SettingsActivity">
-<!--    tools:openDrawer="start" need to add this line so drawer will be visibal -->
 
     <!-- Navigation View  -->
     <com.google.android.material.navigation.NavigationView
@@ -19,13 +18,13 @@
         app:headerLayout="@layout/hedder"
         app:menu="@menu/main_menue" />
 
-
     <!-- Main content area -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <!-- Toolbar -->
         <com.google.android.material.appbar.MaterialToolbar
@@ -39,10 +38,9 @@
             app:menu="@menu/settings_toolbar_menu"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
         <ScrollView
-            android:layout_width="396dp"
-            android:layout_height="771dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
             <!-- actual content of page , with scrollable -->
@@ -61,7 +59,7 @@
                     android:orientation="horizontal"
                     android:paddingTop="20dp"
                     android:paddingBottom="4dp">
-                    <!--Enable Dark Theam txt-->
+
                     <TextView
                         android:id="@+id/txtanableDarkTheam"
                         android:layout_width="0dp"
@@ -73,20 +71,20 @@
                         android:text="Enable Dark Theme"
                         android:textColor="@color/NavyBlue"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="cursive" />
 
-                    <!--                    Switch for dark theam-->
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switch_them"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="40dp"
-                        android:textColor="@color/white"
+                        app:thumbTint="@color/GoldYellow"
+                        app:trackTint="@color/DeepForestGreen"
                         android:textOff="OFF"
                         android:textOn="ON" />
                 </LinearLayout>
-
 
                 <TextView
                     android:id="@+id/txtNewfeature"
@@ -96,11 +94,11 @@
                     android:layout_marginTop="100dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp"
-                    android:text="New Fetures are comming Soon..."
+                    android:text="New Features are coming Soon..."
                     android:textColor="@color/NavyBlue"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
 
             </LinearLayout>
         </ScrollView>

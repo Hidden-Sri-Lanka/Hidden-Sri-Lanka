@@ -12,10 +12,6 @@
     android:paddingEnd="10dp"
     tools:context=".OnboardingScreen2Activity">
 
-    <!--    TODO: Add Mor Iterms -->
-    <!--    TODO: Experiment With Horicetal Scroll Viwe
-    TODO: If possible move to Horisental Scroll weve-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,20 +26,17 @@
 
             <TextView
                 android:id="@+id/txtWelcome"
+                style="@style/HeadingText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="0dp"
-                android:fontFamily="cursive"
-                android:text="@string/discover_sri_lanka_s_hidden_wonders"
-                android:textAlignment="center"
-                android:textColor="@color/NavyBlue"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="@string/discover_sri_lanka_s_hidden_wonders" />
 
             <TextView
                 android:id="@+id/txtWelcomedescript"
+                style="@style/BodyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -51,22 +44,13 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="0dp"
                 android:text="@string/simple_paragraph_1"
-                android:textAlignment="center"
-                android:textColor="@color/NavyBlue"
                 android:textSize="12sp"
                 android:textStyle="italic" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <androidx.cardview.widget.CardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="20dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,16 +60,13 @@
 
                     <TextView
                         android:id="@+id/sampleTxt"
-                        android:layout_width="171dp"
+                        style="@style/HeadingText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginBottom="0dp"
+                        android:layout_marginBottom="10dp"
                         android:fontFamily="casual"
                         android:text="Explore Attractions 🚀"
-                        android:textColor="@color/NavyBlue"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:layout_width="264dp"
@@ -97,12 +78,9 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="20dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,17 +91,13 @@
 
                     <TextView
                         android:id="@+id/sampleTxt2"
-                        android:layout_width="246dp"
+                        style="@style/HeadingText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginBottom="0dp"
-
+                        android:layout_marginBottom="10dp"
                         android:fontFamily="casual"
-                        android:text="Discover unique destinations ⛰️ "
-                        android:textColor="@color/NavyBlue"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:text="Discover unique destinations ⛰️"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:layout_width="264dp"
@@ -134,21 +108,17 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/nextPageButton"
+                style="@style/PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="100dp"
-                android:backgroundTint="@color/DeepForestGreen"
                 android:onClick="LoginPage"
-                android:fontFamily="cursive"
-                android:textColor="@color/GoldYellow"
                 android:text="Let's Go"
-                android:textSize="18sp"
-                app:cornerRadius="20dp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>

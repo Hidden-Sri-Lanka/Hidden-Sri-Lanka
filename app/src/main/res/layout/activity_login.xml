@@ -28,12 +28,9 @@
 
             <!--        loging widget -->
             <androidx.cardview.widget.CardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="30dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,81 +49,45 @@
                     <!--            login lable-->
                     <TextView
                         android:id="@+id/loginLable"
+                        style="@style/TitleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="40dp"
-                        android:text="@string/Login"
-                        android:fontFamily="cursive"
-                        android:textAlignment="center"
-                        android:textColor="@color/NavyBlue"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
+                        android:text="@string/Login" />
 
                     <!--            User name input feald -->
                     <EditText
                         android:id="@+id/userName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/custom_edittext"
+                        style="@style/CustomEditText"
                         android:drawableStart="@drawable/person_black"
-                        android:drawablePadding="8dp"
                         android:hint="User Name"
-                        android:fontFamily="cursive"
-                        android:inputType="text"
-                        android:minHeight="48dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:textColor="@color/black" />
+                        android:inputType="text" />
 
                     <!--            password input feald -->
                     <EditText
                         android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        style="@style/CustomEditText"
                         android:layout_marginBottom="30dp"
-                        android:background="@drawable/custom_edittext"
                         android:drawableStart="@drawable/lock_black"
-                        android:drawablePadding="8dp"
                         android:hint="Password"
-                        android:fontFamily="cursive"
-                        android:inputType="textPassword"
-                        android:minHeight="48dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:textColor="@color/black" />
+                        android:inputType="textPassword" />
 
                     <!--            login Button-->
 
                     <!--                    For Testing Purpus I have added Sttings page Nav here -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/logingButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        style="@style/PrimaryButton"
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/DeepForestGreen"
-                        android:text="Login"
-                        android:textColor="@color/GoldYellow"
-                        android:fontFamily="cursive"
-                        android:textSize="18sp"
-                        app:cornerRadius="30dp" />
+                        android:text="Login" />
 
                     <!--            to sinup btn-->
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:fontFamily="cursive"
-                        android:textAllCaps="false"
                         android:id="@+id/signUpRederect"
-                        android:text="@string/not_yet_registered_sign_up_now"
-                        android:textColor="@color/Blue2" />
+                        style="@style/SecondaryButton"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/not_yet_registered_sign_up_now" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
