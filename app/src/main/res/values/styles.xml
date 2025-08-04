@@ -132,4 +132,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Toolbar Title Appearance Style -->
+    <style name="ToolbarTitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/NavyBlue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">cursive</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
 </resources>

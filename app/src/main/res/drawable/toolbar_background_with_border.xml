@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- White background for the toolbar -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+
+    <!-- Black bottom border -->
+    <item android:gravity="bottom">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/black" />
+            <size android:height="1dp" />
+        </shape>
+    </item>
+
+</layer-list>
+

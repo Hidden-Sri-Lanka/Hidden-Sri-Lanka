@@ -50,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getActivityTitle());
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
         // Setup Navigation Drawer
@@ -66,11 +67,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         binding.navView.setNavigationItemSelectedListener(this);
         binding.navView.bringToFront();
 
-        // Handle WindowInsets for Edge to Edge display
+        // Handle WindowInsets for Edge to Edge display - FIXED
         ViewCompat.setOnApplyWindowInsetsListener(binding.drawerLayout, (v, windowInsets) -> {
             Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
-            binding.toolbar.setPadding(0, systemBars.top, 0, 0);
+            // Remove the problematic toolbar padding that was causing misalignment
             return WindowInsetsCompat.CONSUMED;
         });
     }
