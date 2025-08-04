@@ -7,15 +7,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
@@ -46,11 +47,49 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         LayoutInflater inflater = LayoutInflater.from(this);
         inflater.inflate(getLayoutResourceId(), binding.contentFrame, true);
 
-        // Setup Toolbar
+        // Setup Toolbar with custom layout
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(getActivityTitle());
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            // Disable the default title since we're using custom TextView
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        // Set custom title text
+        TextView toolbarTitle = binding.toolbar.findViewById(R.id.toolbar_title);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText(getActivityTitle());
+        }
+
+        // Setup search field functionality
+        EditText searchField = binding.toolbar.findViewById(R.id.toolbar_search_field);
+        ImageView searchIcon = binding.toolbar.findViewById(R.id.search_icon);
+
+        if (searchField != null && searchIcon != null) {
+            // Handle search input
+            searchField.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                    String query = searchField.getText().toString().trim();
+                    if (!query.isEmpty()) {
+                        performSearch(query);
+                        searchField.clearFocus();
+                        // Hide keyboard
+                        android.view.inputmethod.InputMethodManager imm =
+                                (android.view.inputmethod.InputMethodManager) getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            });
+
+            // Handle search icon click
+            searchIcon.setOnClickListener(v -> {
+                String query = searchField.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    performSearch(query);
+                    searchField.clearFocus();
+                }
+            });
         }
 
         // Setup Navigation Drawer
@@ -129,32 +168,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings_toolbar_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        if (searchItem != null) {
-            SearchView searchView = (SearchView) searchItem.getActionView();
-            if (searchView != null) {
-                searchView.setQueryHint(getString(R.string.search_hint));
-                searchView.setMaxWidth(Integer.MAX_VALUE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        Toast.makeText(BaseActivity.this,
-                                getString(R.string.searching_for_query, query),
-                                Toast.LENGTH_SHORT).show();
-                        searchView.clearFocus();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        return false;
-                    }
-                });
-            } else {
-            }
-        } else {
-        }
+        // Removed old search menu since we now have integrated search field in toolbar
+        // No need to inflate any menu items as search is now integrated
         return true;
     }
 
@@ -163,10 +178,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if (drawerToggle.onOptionsItemSelected(item)) { // Let drawer toggle handle hamburger icon
             return true;
         }
-        if (item.getItemId() == R.id.action_search) {
-            Toast.makeText(this, getString(R.string.search_icon_clicked), Toast.LENGTH_SHORT).show();
-            return true;
-        }
+        // Removed old search menu item handling since we have integrated search field
         return super.onOptionsItemSelected(item);
     }
 
@@ -177,5 +189,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected void performSearch(String query) {
+        // Implement search functionality in child classes or here
+        Toast.makeText(this, "Search performed for query: " + query, Toast.LENGTH_SHORT).show();
     }
 }
