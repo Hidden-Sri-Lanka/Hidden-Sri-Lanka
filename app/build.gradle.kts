@@ -50,12 +50,12 @@ dependencies {
     implementation(libs.firebase.auth)       // For  login system
     implementation(libs.firebase.database)   // For login system
     implementation(libs.firebase.firestore)  // For location content
-
+    implementation(libs.firebase.storage)    // For image uploads - ADDED
 
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
-    // Google Play Servicesfor location
+    // Google Play Services for location
     implementation(libs.play.services.location)
 
 
@@ -63,4 +63,3 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
-

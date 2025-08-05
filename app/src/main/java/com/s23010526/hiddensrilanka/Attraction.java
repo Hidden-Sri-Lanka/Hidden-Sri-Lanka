@@ -1,24 +1,50 @@
 package com.s23010526.hiddensrilanka;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Attraction {
-
-    // --- NEW FIELD ---
     private String documentId;
-
-    // --- Existing Fields ---
     private String name;
     private String category;
     private String description;
     private String youtubeUrl;
     private List<String> images;
 
+    // New fields for contributor information
+    private String contributorName;
+    private long contributedAt;
+
     // Firebase requires a public, no-argument constructor
     public Attraction() {
     }
 
-    // --- NEW GETTER AND SETTER METHODS ---
+    // Constructor with all fields including contributor info
+    public Attraction(String documentId, String name, String category, String description,
+                     String youtubeUrl, List<String> images, String contributorName, long contributedAt) {
+        this.documentId = documentId;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.youtubeUrl = youtubeUrl;
+        this.images = images;
+        this.contributorName = contributorName;
+        this.contributedAt = contributedAt;
+    }
+
+    // Original constructor for backward compatibility
+    public Attraction(String documentId, String name, String category, String description, String youtubeUrl, List<String> images) {
+        this.documentId = documentId;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.youtubeUrl = youtubeUrl;
+        this.images = images;
+        this.contributorName = "Unknown";
+        this.contributedAt = 0;
+    }
+
+    // Getters and Setters
     public String getDocumentId() {
         return documentId;
     }
@@ -26,10 +52,7 @@ public class Attraction {
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
-    // --- END OF NEW METHODS ---
 
-
-    // --- Existing Getters and Setters ---
     public String getName() {
         return name;
     }
@@ -66,7 +89,56 @@ public class Attraction {
         return images;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImages(Object imagesData) {
+        if (imagesData == null) {
+            this.images = new ArrayList<>();
+        } else if (imagesData instanceof List) {
+            // If it's already a List, cast it
+            this.images = (List<String>) imagesData;
+        } else if (imagesData instanceof String) {
+            // If it's a String, convert it to a List
+            String imageString = (String) imagesData;
+            if (imageString.trim().isEmpty()) {
+                this.images = new ArrayList<>();
+            } else if (imageString.contains(",")) {
+                // Handle comma-separated string
+                this.images = new ArrayList<>();
+                String[] urlArray = imageString.split(",");
+                for (String url : urlArray) {
+                    this.images.add(url.trim());
+                }
+            } else {
+                // Single URL
+                this.images = new ArrayList<>();
+                this.images.add(imageString.trim());
+            }
+        } else {
+            // Fallback for any other data type
+            this.images = new ArrayList<>();
+        }
+    }
+
+    // New getters and setters for contributor information
+    public String getContributorName() {
+        return contributorName;
+    }
+
+    public void setContributorName(String contributorName) {
+        this.contributorName = contributorName;
+    }
+
+    public long getContributedAt() {
+        return contributedAt;
+    }
+
+    public void setContributedAt(long contributedAt) {
+        this.contributedAt = contributedAt;
+    }
+
+    // Helper method to get formatted contribution date
+    public String getFormattedContributionDate() {
+        if (contributedAt == 0) return "Unknown";
+        return new java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault())
+                .format(new java.util.Date(contributedAt));
     }
 }

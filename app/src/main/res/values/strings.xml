@@ -38,6 +38,12 @@
 
     <!--    About Us Page-->
     <string name="title_about_us">About Us</string>
+    <string name="app_logo_description">App Logo</string>
+    <string name="app_title">Hidden Sri Lanka</string>
+    <string name="mission_title">Mission 🎯</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="contact_us_email">Contact Us: asitha.contact.me@gmail.com</string>
 
     <!--    Map -->
     <string name="nav_explore_on_map_title">Explore on Map</string>
@@ -49,8 +55,17 @@
     <string name="uncover_the_wonders_beyond_the_guidebook">Uncover the Wonders Beyond the Guidebook</string>
     <string name="next">Next</string>
     <string name="lets_explore_button">Let\'s Explore</string>
-    <string name="explorShere">Explore &amp; Share 🔥</string>
-    <string name="discover_sri_lanka_s_hidden_wonders">Discover Sri Lanka\'s Hidden Wonders 🔥</string>
-    <string name="simple_paragraph_1">Find unique destinations, authentic experiences, and connect with fellow explorers.</string>
+
+    <!-- Sign Up Page -->
+    <string name="sign_up">Sign Up</string>
+    <string name="user_name">User Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="new_password">New Password</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="already_registered_login">Already Registered? Login</string>
+
+    <!-- Onboarding -->
+    <string name="discover_sri_lanka_s_hidden_wonders">Discover Sri Lanka\'s Hidden Wonders</string>
+    <string name="simple_paragraph_1">Explore breathtaking destinations that are off the beaten path. From pristine beaches to ancient temples, discover the authentic beauty of Sri Lanka through local insights and hidden gems.</string>
 
 </resources>

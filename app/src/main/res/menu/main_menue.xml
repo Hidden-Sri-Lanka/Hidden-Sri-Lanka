@@ -13,6 +13,12 @@
             android:id="@+id/nav_exp_map"
             android:icon="@drawable/map_drop_pin_icon"
             android:title="Explore On Map" />
+
+        <item
+            android:id="@+id/nav_add_location"
+            android:icon="@drawable/ic_add_location"
+            android:title="Add Location" />
+
         <item
             android:id="@+id/nav_favorit"
             android:icon="@drawable/fav_icon"

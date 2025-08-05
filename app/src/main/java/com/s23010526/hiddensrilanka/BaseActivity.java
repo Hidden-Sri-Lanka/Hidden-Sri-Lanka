@@ -2,13 +2,10 @@ package com.s23010526.hiddensrilanka;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,21 +18,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.navigation.NavigationView;
 import com.s23010526.hiddensrilanka.databinding.ActivityBaseBinding;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "BaseActivity";
     protected ActivityBaseBinding binding; // Binding for the base layout
     private ActionBarDrawerToggle drawerToggle;
 
     @LayoutRes
-    protected abstract int getLayoutResourceId(); // Child activities need to e provide their content layout
+    protected abstract int getLayoutResourceId(); // Child activities need to provide their content layout
 
-    protected abstract String getActivityTitle(); // Child activities needto  provide their titles
+    protected abstract String getActivityTitle(); // Child activities need to provide their titles
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +102,26 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         binding.navView.setNavigationItemSelectedListener(this);
         binding.navView.bringToFront();
 
-        // Handle WindowInsets for Edge to Edge display - FIXED
+        // Handle back button press using OnBackPressedCallback (modern approach)
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        });
+
+        // Handle WindowInsets for Edge to Edge display
         ViewCompat.setOnApplyWindowInsetsListener(binding.drawerLayout, (v, windowInsets) -> {
             Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
-            // Remove the problematic toolbar padding that was causing misalignment
             return WindowInsetsCompat.CONSUMED;
         });
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -138,6 +145,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 intent = new Intent(this, FullMapViewActivity.class);
             }
             Toast.makeText(this, "Map Page Clicked", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.nav_add_location) {
+            if (currentActivityClass != AddLocationActivity.class) {
+                intent = new Intent(this, AddLocationActivity.class);
+            }
+            Toast.makeText(this, "Add Location Clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_favorit) {
             Toast.makeText(this, "Favorites Feature Coming Soon...", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_about_us) {
@@ -156,9 +168,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if (intent != null) {
             startActivity(intent);
             if (itemId == R.id.nav_log_out) {
-                finish(); // Finishing  current activity after logging out
-            } else if (currentActivityClass != intent.getComponent().getClass()) {
-
+                finish(); // Finish current activity after logging out
             }
         }
 
@@ -168,7 +178,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Removed old search menu since we now have integrated search field in toolbar
         // No need to inflate any menu items as search is now integrated
         return true;
     }
@@ -178,18 +187,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if (drawerToggle.onOptionsItemSelected(item)) { // Let drawer toggle handle hamburger icon
             return true;
         }
-        // Removed old search menu item handling since we have integrated search field
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     protected void performSearch(String query) {
         // Implement search functionality in child classes or here
