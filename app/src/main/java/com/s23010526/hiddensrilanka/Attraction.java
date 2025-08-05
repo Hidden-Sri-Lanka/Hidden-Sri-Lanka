@@ -15,6 +15,9 @@ public class Attraction {
     private String contributorName;
     private long contributedAt;
 
+    // Field to identify placeholder entries
+    private boolean isPlaceholder;
+
     // Firebase requires a public, no-argument constructor
     public Attraction() {
     }
@@ -133,6 +136,15 @@ public class Attraction {
 
     public void setContributedAt(long contributedAt) {
         this.contributedAt = contributedAt;
+    }
+
+    // Getter and setter for isPlaceholder
+    public boolean isPlaceholder() {
+        return isPlaceholder;
+    }
+
+    public void setPlaceholder(boolean placeholder) {
+        isPlaceholder = placeholder;
     }
 
     // Helper method to get formatted contribution date

@@ -1,8 +1,5 @@
 package com.s23010526.hiddensrilanka;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,22 +10,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class AddLocationActivity extends BaseActivity {
 
@@ -39,20 +31,12 @@ public class AddLocationActivity extends BaseActivity {
     private AutoCompleteTextView etCategory, etCity, etProvince;
     private ImageView ivSelectedImage;
     private LinearLayout layoutImagePlaceholder;
-    private MaterialButton btnSelectImage, btnSubmitLocation, btnLoadUrl;
-    private TextInputLayout tilCategory, tilCity, tilProvince;
+    private MaterialButton btnSubmitLocation, btnLoadUrl;
+    private TextInputLayout tilCity;
+    private ProgressBar progressBar; // Replace ProgressDialog with ProgressBar
 
     // Firebase
     private FirebaseFirestore firestore;
-    private StorageReference storageRef;
-
-    // Data
-    private Uri selectedImageUri;
-    private String imageUrl; // To store either uploaded image URL or user-provided URL
-    private ProgressDialog progressDialog;
-
-    // Image picker launcher
-    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     // Data structures for province-city mapping
     private Map<String, String[]> provinceCityMap;
@@ -74,7 +58,6 @@ public class AddLocationActivity extends BaseActivity {
         initializeViews();
         initializeFirebase();
         initializeProvinceCityMapping();
-        setupImagePicker();
         setupDropdowns();
         setupClickListeners();
     }
@@ -90,42 +73,17 @@ public class AddLocationActivity extends BaseActivity {
         etProvince = findViewById(R.id.et_province);
         ivSelectedImage = findViewById(R.id.iv_selected_image);
         layoutImagePlaceholder = findViewById(R.id.layout_image_placeholder);
-        btnSelectImage = findViewById(R.id.btn_select_image);
         btnSubmitLocation = findViewById(R.id.btn_submit_location);
         btnLoadUrl = findViewById(R.id.btn_load_url);
-        tilCategory = findViewById(R.id.til_category);
         tilCity = findViewById(R.id.til_city);
-        tilProvince = findViewById(R.id.til_province);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Uploading location...");
-        progressDialog.setCancelable(false);
+        // Reference ProgressBar from layout
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     private void initializeFirebase() {
         firestore = FirebaseFirestore.getInstance();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-
-        // Check Firebase connection
-        Log.d(TAG, "Firebase Storage initialized");
-        Log.d(TAG, "Storage reference: " + storageRef.toString());
-
-        // Test Firebase Storage connection
-        testFirebaseStorageConnection();
-    }
-
-    private void testFirebaseStorageConnection() {
-        // Test if we can access Firebase Storage
-        StorageReference testRef = storageRef.child("test.txt");
-        testRef.getDownloadUrl()
-            .addOnSuccessListener(uri -> Log.d(TAG, "Firebase Storage connection successful"))
-            .addOnFailureListener(e -> {
-                Log.w(TAG, "Firebase Storage connection test failed: " + e.getMessage());
-                if (e.getMessage() != null && e.getMessage().contains("does not exist")) {
-                    Log.d(TAG, "Storage accessible but test file doesn't exist (this is normal)");
-                }
-            });
+        Log.d(TAG, "Firestore initialized");
     }
 
     private void initializeProvinceCityMapping() {
@@ -188,18 +146,6 @@ public class AddLocationActivity extends BaseActivity {
         });
     }
 
-    private void setupImagePicker() {
-        imagePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    selectedImageUri = result.getData().getData();
-                    displaySelectedImage(selectedImageUri);
-                }
-            }
-        );
-    }
-
     private void setupDropdowns() {
         // Categories dropdown
         String[] categories = {
@@ -224,7 +170,7 @@ public class AddLocationActivity extends BaseActivity {
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,
             android.R.layout.simple_dropdown_item_1line, allCities);
         etCity.setAdapter(cityAdapter);
-        etCity.setEnabled(true); // Enable city selection immediately
+        etCity.setEnabled(true);
 
         // Provinces dropdown
         String[] provinces = {
@@ -238,7 +184,6 @@ public class AddLocationActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        btnSelectImage.setOnClickListener(v -> openImagePicker());
         btnSubmitLocation.setOnClickListener(v -> validateAndSubmitLocation());
         btnLoadUrl.setOnClickListener(v -> loadImageFromUrl());
 
@@ -252,24 +197,14 @@ public class AddLocationActivity extends BaseActivity {
     private void updateCityDropdown(String selectedProvince) {
         String[] cities = provinceCityMap.get(selectedProvince);
         if (cities != null) {
-            // Update city dropdown with province-specific cities
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, cities);
             etCity.setAdapter(cityAdapter);
-            etCity.setText(""); // Clear any previous selection
+            etCity.setText("");
 
-            // Update hint to show filtered cities
             tilCity.setHint("Select City from " + selectedProvince);
-
             Toast.makeText(this, "Cities filtered for " + selectedProvince, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        imagePickerLauncher.launch(Intent.createChooser(intent, "Select Image"));
     }
 
     private void loadImageFromUrl() {
@@ -281,52 +216,31 @@ public class AddLocationActivity extends BaseActivity {
             return;
         }
 
-        if (!isValidImageUrl(url)) {
+        if (!isValidUrl(url)) {
             etImageUrl.setError("Please enter a valid image URL");
             etImageUrl.requestFocus();
             return;
         }
 
-        // Clear any selected image from gallery
-        selectedImageUri = null;
-
-        // Store the URL for later use
-        imageUrl = url;
-
-        // Load and display the image from URL
-        loadImageFromUrl(url);
+        loadAndDisplayImage(url);
     }
 
-    private boolean isValidImageUrl(String url) {
+    private boolean isValidUrl(String url) {
         return url.startsWith("http://") || url.startsWith("https://");
     }
 
-    private void loadImageFromUrl(String url) {
-        progressDialog.setMessage("Loading image...");
-        progressDialog.show();
+    private void loadAndDisplayImage(String url) {
+        progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(this)
             .load(url)
             .into(ivSelectedImage);
 
-        // Hide placeholder and show image
         layoutImagePlaceholder.setVisibility(View.GONE);
         ivSelectedImage.setVisibility(View.VISIBLE);
-        btnSelectImage.setText("Change Image");
 
-        progressDialog.dismiss();
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(this, "Image loaded successfully", Toast.LENGTH_SHORT).show();
-    }
-
-    private void displaySelectedImage(Uri imageUri) {
-        ivSelectedImage.setImageURI(imageUri);
-        layoutImagePlaceholder.setVisibility(View.GONE);
-        ivSelectedImage.setVisibility(View.VISIBLE);
-        btnSelectImage.setText("Change Image");
-
-        // Clear any URL input since user selected from gallery
-        etImageUrl.setText("");
-        imageUrl = null;
     }
 
     private void validateAndSubmitLocation() {
@@ -375,15 +289,16 @@ public class AddLocationActivity extends BaseActivity {
             return;
         }
 
-        // Check if either image is selected or URL is provided
+        // Check if image URL is provided
         String providedImageUrl = etImageUrl.getText().toString().trim();
-        if (selectedImageUri == null && TextUtils.isEmpty(providedImageUrl)) {
-            Toast.makeText(this, "Please select an image or provide an image URL", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(providedImageUrl)) {
+            etImageUrl.setError("Please provide an image URL");
+            etImageUrl.requestFocus();
             return;
         }
 
-        // Validate image URL if provided
-        if (!TextUtils.isEmpty(providedImageUrl) && !isValidImageUrl(providedImageUrl)) {
+        // Validate image URL
+        if (!isValidUrl(providedImageUrl)) {
             etImageUrl.setError("Please enter a valid image URL");
             etImageUrl.requestFocus();
             return;
@@ -397,7 +312,7 @@ public class AddLocationActivity extends BaseActivity {
         }
 
         // All validations passed, submit the location
-        submitLocation(locationName, description, category, city, contributorName, youtubeUrl, province);
+        submitLocation(locationName, description, category, city, contributorName, youtubeUrl, province, providedImageUrl);
     }
 
     private boolean isValidYouTubeUrl(String url) {
@@ -405,77 +320,11 @@ public class AddLocationActivity extends BaseActivity {
     }
 
     private void submitLocation(String locationName, String description, String category,
-                              String city, String contributorName, String youtubeUrl, String province) {
-        progressDialog.show();
+                              String city, String contributorName, String youtubeUrl, String province, String imageUrl) {
+        progressBar.setVisibility(View.VISIBLE);
 
-        // If an image file is selected, upload it first
-        if (selectedImageUri != null) {
-            uploadImageToStorage(locationName, uploadedUrl -> {
-                if (uploadedUrl != null) {
-                    // Image uploaded successfully, now save location data
-                    saveLocationToFirestore(locationName, description, category, city,
-                                          contributorName, youtubeUrl, uploadedUrl, province);
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(this, "Failed to upload image. Please try again.",
-                                 Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            // Use provided image URL
-            String providedImageUrl = etImageUrl.getText().toString().trim();
-            saveLocationToFirestore(locationName, description, category, city,
-                                  contributorName, youtubeUrl, providedImageUrl, province);
-        }
-    }
-
-    private void uploadImageToStorage(String locationName, OnImageUploadListener listener) {
-        String fileName = "locations/" + UUID.randomUUID().toString() + "_" +
-                         locationName.replaceAll("[^a-zA-Z0-9]", "_") + ".jpg";
-
-        StorageReference imageRef = storageRef.child(fileName);
-
-        Log.d(TAG, "Starting image upload to: " + fileName);
-        Log.d(TAG, "Selected image URI: " + selectedImageUri.toString());
-
-        imageRef.putFile(selectedImageUri)
-            .addOnProgressListener(taskSnapshot -> {
-                // Show upload progress
-                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d(TAG, "Upload progress: " + progress + "%");
-                progressDialog.setMessage("Uploading image... " + (int) progress + "%");
-            })
-            .addOnSuccessListener(taskSnapshot -> {
-                Log.d(TAG, "Image upload successful, getting download URL...");
-                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    Log.d(TAG, "Image uploaded successfully: " + uri.toString());
-                    listener.onImageUploaded(uri.toString());
-                }).addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to get download URL: " + e.getMessage());
-                    listener.onImageUploaded(null);
-                });
-            })
-            .addOnFailureListener(e -> {
-                Log.e(TAG, "Failed to upload image: " + e.getMessage());
-
-                // Provide more specific error messages
-                String errorMessage = "Failed to upload image";
-                if (e.getMessage() != null) {
-                    if (e.getMessage().contains("User does not have permission")) {
-                        errorMessage = "Permission denied. Please check Firebase Storage rules.";
-                    } else if (e.getMessage().contains("Network")) {
-                        errorMessage = "Network error. Please check your internet connection.";
-                    } else if (e.getMessage().contains("storage bucket not found")) {
-                        errorMessage = "Firebase Storage not properly configured.";
-                    } else {
-                        errorMessage = "Upload failed: " + e.getMessage();
-                    }
-                }
-
-                progressDialog.dismiss();
-                Toast.makeText(AddLocationActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                listener.onImageUploaded(null);
-            });
+        saveLocationToFirestore(locationName, description, category, city,
+                              contributorName, youtubeUrl, imageUrl, province);
     }
 
     private void saveLocationToFirestore(String locationName, String description, String category,
@@ -493,7 +342,7 @@ public class AddLocationActivity extends BaseActivity {
         locationData.put("contributedAt", System.currentTimeMillis());
         locationData.put("youtubeUrl", youtubeUrl.isEmpty() ? "" : youtubeUrl);
 
-        // Create images list
+        // Create images list with the provided URL
         List<String> images = new ArrayList<>();
         images.add(finalImageUrl);
         locationData.put("images", images);
@@ -504,7 +353,7 @@ public class AddLocationActivity extends BaseActivity {
                 .collection("attractions")
                 .add(locationData)
                 .addOnSuccessListener(documentReference -> {
-                    progressDialog.dismiss();
+                    progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "Location added successfully with ID: " + documentReference.getId());
 
                     Toast.makeText(this, "Location added successfully! Thank you for your contribution.",
@@ -514,7 +363,7 @@ public class AddLocationActivity extends BaseActivity {
                     clearForm();
                 })
                 .addOnFailureListener(e -> {
-                    progressDialog.dismiss();
+                    progressBar.setVisibility(View.GONE);
                     Log.e(TAG, "Error adding location: " + e.getMessage());
 
                     String errorMessage = "Failed to add location";
@@ -542,18 +391,9 @@ public class AddLocationActivity extends BaseActivity {
         etYoutubeUrl.setText("");
         etImageUrl.setText("");
 
-        selectedImageUri = null;
-        imageUrl = null;
-
         ivSelectedImage.setVisibility(View.GONE);
         layoutImagePlaceholder.setVisibility(View.VISIBLE);
-        btnSelectImage.setText("Select Image");
 
         tilCity.setHint("City *");
-    }
-
-    // Interface for image upload callback
-    interface OnImageUploadListener {
-        void onImageUploaded(String imageUrl);
     }
 }

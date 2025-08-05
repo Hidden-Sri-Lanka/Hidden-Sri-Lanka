@@ -1,6 +1,5 @@
 package com.s23010526.hiddensrilanka;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 public class LocationDetailScreenActivity extends BaseActivity { // Changed to BaseActivity

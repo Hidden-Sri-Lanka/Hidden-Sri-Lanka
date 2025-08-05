@@ -8,24 +8,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText signupEmail, signupUsername, signupPassword, signupRePassword; // Added signupRePassword
-    Button loginRedirectText;
+    EditText signupName, signupUserName, signupEmail, signupPassword, signupRePassword;
     Button signupButton;
-    FirebaseDatabase database;
-    DatabaseReference reference;
+    Button loginRedirectText;
 
     // Define your database URL as a constant
-    // reson the default authentication is not with sigappoor server so i got error so i have specify the databae url now it working
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     @Override
@@ -34,63 +35,71 @@ public class SignUpActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_up);
 
-        // getting data from xml file
-        signupUsername = findViewById(R.id.userName); // This is the "User Name" from XML
+        // Initialize views
+        signupName = findViewById(R.id.userName); // This might be reused for name
+        signupUserName = findViewById(R.id.userName);
         signupEmail = findViewById(R.id.email);
         signupPassword = findViewById(R.id.password);
-        signupRePassword = findViewById(R.id.rePassword); // Initialize for re-typed password
+        signupRePassword = findViewById(R.id.rePassword);
         signupButton = findViewById(R.id.signUpButton);
         loginRedirectText = findViewById(R.id.loginRedirectText);
-
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Get FirebaseDatabase instance with the correct URL
-                database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
-                reference = database.getReference("users");
+                FirebaseDatabase database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
+                DatabaseReference reference = database.getReference("users");
 
+                String name = signupName.getText().toString().trim();
                 String email = signupEmail.getText().toString().trim();
-                String username = signupUsername.getText().toString().trim(); // This comes from R.id.userName
-                String password = signupPassword.getText().toString().trim();
-                String rePassword = signupRePassword.getText().toString().trim();
+                String username = signupUserName.getText().toString().trim();
+                String password = signupPassword.getText().toString();
+                String rePassword = signupRePassword.getText().toString();
 
-                // Basic validation for input fields
-                if (email.isEmpty() || username.isEmpty() || password.isEmpty()) { // Removed name check
-                    Toast.makeText(SignUpActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                // Validation
+                if (name.isEmpty()) {
+                    signupName.setError("Name cannot be empty");
                     return;
                 }
-
+                if (email.isEmpty()) {
+                    signupEmail.setError("Email cannot be empty");
+                    return;
+                }
+                if (username.isEmpty()) {
+                    signupUserName.setError("Username cannot be empty");
+                    return;
+                }
+                if (password.isEmpty()) {
+                    signupPassword.setError("Password cannot be empty");
+                    return;
+                }
                 if (!password.equals(rePassword)) {
-                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                     signupRePassword.setError("Passwords do not match");
-                    signupPassword.setError("Passwords do not match");
                     return;
-                } else {
-                    signupRePassword.setError(null);
-                    signupPassword.setError(null);
                 }
 
-                HelperClass helperClass = new HelperClass(username, email, username, password);
+                // Create helper class instance
+                HelperClass helperClass = new HelperClass(name, email, username, password);
 
-                reference.child(username).setValue(helperClass)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(SignUpActivity.this, "You Have Signed Up Successfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(SignUpActivity.this, "Sign Up Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                // Save to Firebase
+                reference.child(username).setValue(helperClass).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Failed to create account", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
+                toLogin(v);
             }
         });
 
@@ -101,4 +110,8 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    public void toLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

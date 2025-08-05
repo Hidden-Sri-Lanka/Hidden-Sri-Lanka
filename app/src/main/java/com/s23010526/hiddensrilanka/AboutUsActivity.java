@@ -3,8 +3,6 @@ package com.s23010526.hiddensrilanka;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-
 
 public class AboutUsActivity extends BaseActivity {
 
@@ -15,32 +13,42 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected String getActivityTitle() {
-        return getString(R.string.title_about_us);
+        return "About Us";
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Setup click listeners for buttons if needed
+        setupClickListeners();
     }
 
-    // --- Methods for button clicks, linkes ---
-
-    public void privacyPolicy(View view) { // for android:onClick="privacyPolicy"
-        navigateToFeatureComingSoon(getString(R.string.feature_privacy_policy));
+    private void setupClickListeners() {
+        // You can add click listeners for buttons in the about us page
+        // For example, privacy policy, terms of service, contact us buttons
     }
 
-    public void Terms(View view) { // for android:onClick="Terms"
-        navigateToFeatureComingSoon(getString(R.string.feature_terms_conditions));
-    }
-
-    public void Contact(View view) { // for android:onClick="Contact"
-        navigateToFeatureComingSoon(getString(R.string.feature_contact_us));
-    }
-
-    private void navigateToFeatureComingSoon(String featureName) {
+    // These methods can be called from XML onClick attributes
+    public void privacyPolicy(View view) {
+        // Navigate to privacy policy or show dialog
+        // For now, show a coming soon message
         Intent intent = new Intent(this, FetureCommingSoonActivity.class);
-        Toast.makeText(this, featureName + " " + getString(R.string.coming_soon_suffix), Toast.LENGTH_SHORT).show();
+        intent.putExtra("FEATURE_NAME", "Privacy Policy");
+        startActivity(intent);
+    }
+
+    public void Terms(View view) {
+        // Navigate to terms of service or show dialog
+        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
+        intent.putExtra("FEATURE_NAME", "Terms of Service");
+        startActivity(intent);
+    }
+
+    public void Contact(View view) {
+        // Navigate to contact us or show dialog
+        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
+        intent.putExtra("FEATURE_NAME", "Contact Us");
         startActivity(intent);
     }
 }

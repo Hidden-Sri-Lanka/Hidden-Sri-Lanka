@@ -220,7 +220,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Image Selection Section -->
+                <!-- Image URL Input (Now Required) -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -231,7 +231,6 @@
                     android:fontFamily="cursive"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Image URL Input Option -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -244,42 +243,12 @@
                         android:id="@+id/et_image_url"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Image URL (Optional)"
+                        android:hint="Image URL *"
                         android:inputType="textUri"
                         android:textColor="@color/NavyBlue"
                         android:fontFamily="cursive" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- OR Divider -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginVertical="8dp">
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="@color/light_gray" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" OR "
-                        android:textColor="@color/light_gray"
-                        android:fontFamily="cursive"
-                        android:paddingHorizontal="16dp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="@color/light_gray" />
-
-                </LinearLayout>
 
                 <!-- Image Preview -->
                 <androidx.cardview.widget.CardView
@@ -317,54 +286,30 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No image selected"
+                            android:text="Enter image URL above and tap 'Load Image'"
                             android:textColor="@color/light_gray"
-                            android:fontFamily="cursive" />
+                            android:fontFamily="cursive"
+                            android:textAlignment="center"
+                            android:paddingHorizontal="16dp" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- Button Row -->
-                <LinearLayout
+                <!-- Load from URL Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_load_url"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="32dp">
-
-                    <!-- Select Image Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_select_image"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:text="Select Image"
-                        android:textColor="@color/DeepForestGreen"
-                        android:fontFamily="cursive"
-                        app:strokeColor="@color/DeepForestGreen"
-                        app:cornerRadius="8dp"
-                        app:icon="@drawable/ic_camera"
-                        app:iconTint="@color/DeepForestGreen" />
-
-                    <!-- Load from URL Button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_load_url"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:text="Load URL"
-                        android:textColor="@color/DeepForestGreen"
-                        android:fontFamily="cursive"
-                        app:strokeColor="@color/DeepForestGreen"
-                        app:cornerRadius="8dp"
-                        app:icon="@drawable/ic_link"
-                        app:iconTint="@color/DeepForestGreen" />
-
-                </LinearLayout>
+                    android:layout_marginBottom="32dp"
+                    android:text="Load Image from URL"
+                    android:textColor="@color/DeepForestGreen"
+                    android:fontFamily="cursive"
+                    app:strokeColor="@color/DeepForestGreen"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_link"
+                    app:iconTint="@color/DeepForestGreen" />
 
                 <!-- Submit Button -->
                 <com.google.android.material.button.MaterialButton
@@ -380,6 +325,16 @@
                     app:cornerRadius="12dp"
                     app:icon="@drawable/ic_share"
                     app:iconTint="@color/GoldYellow" />
+
+                <!-- Progress Bar for loading states -->
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/DeepForestGreen" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -411,7 +366,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Your contribution will help other travelers discover this amazing place. All submissions are reviewed before publishing."
+                    android:text="Please provide a valid image URL (http/https). Use image hosting services like Imgur, Google Photos, or Dropbox for best results. Your contribution helps travelers discover amazing places!"
                     android:textColor="@color/NavyBlue"
                     android:textSize="12sp"
                     android:fontFamily="cursive" />

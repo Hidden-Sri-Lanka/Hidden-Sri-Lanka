@@ -20,52 +20,106 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chip_group_filters"
+    <!-- Horizontal ScrollView for Filter Chips -->
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll_filters"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:scrollbars="none"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtWelcome"
-        app:singleSelection="true">
+        app:layout_constraintTop_toBottomOf="@id/txtWelcome">
 
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Filter"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_filters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="All"
-            app:chipBackgroundColor="@color/DeepForestGreen"
-            android:textColor="@color/GoldYellow" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:singleSelection="true"
+            app:singleLine="true">
 
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Historical Site"
-            app:chipBackgroundColor="@color/GoldSand"
-            android:textColor="@color/NavyBlue" />
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:checked="true"
+                android:text="All"
+                app:chipBackgroundColor="@color/DeepForestGreen"
+                android:textColor="@color/GoldYellow" />
 
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WaterFall"
-            app:chipBackgroundColor="@color/GoldSand"
-            android:textColor="@color/NavyBlue" />
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Historical Site"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
 
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="More"
-            app:chipBackgroundColor="@color/GoldSand"
-            android:textColor="@color/NavyBlue" />
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="WaterFall"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Beach"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Mountain"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Temple"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="National Park"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="More"
+                app:chipBackgroundColor="@color/GoldSand"
+                android:textColor="@color/NavyBlue" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_attractions"
@@ -77,7 +131,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chip_group_filters"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_scroll_filters"
         tools:listitem="@layout/list_item_attraction" />
 
     <ProgressBar
