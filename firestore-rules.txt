@@ -1,0 +1,39 @@
+// Firebase Firestore Security Rules
+// Copy these rules to your Firebase Console -> Firestore Database -> Rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Allow read/write access to cities and attractions for development
+    // TODO: Make more restrictive for production
+    match /cities/{cityId} {
+      allow read, write: if true;
+
+      match /attractions/{attractionId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Allow read/write access to users collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // More secure rules for production (uncomment when ready):
+    /*
+    match /cities/{cityId} {
+      allow read: if true;
+
+      match /attractions/{attractionId} {
+        allow read: if true;
+        allow write: if request.auth != null;
+      }
+    }
+
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    */
+  }
+}

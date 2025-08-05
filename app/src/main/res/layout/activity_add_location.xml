@@ -152,7 +152,7 @@
                         android:inputType="none"
                         android:textColor="@color/NavyBlue"
                         android:fontFamily="cursive"
-                        android:enabled="false" />
+                        android:enabled="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
