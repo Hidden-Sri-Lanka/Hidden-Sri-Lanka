@@ -92,12 +92,19 @@ public class Attraction {
         return images;
     }
 
+    @SuppressWarnings("unchecked")
     public void setImages(Object imagesData) {
         if (imagesData == null) {
             this.images = new ArrayList<>();
         } else if (imagesData instanceof List) {
-            // If it's already a List, cast it
-            this.images = (List<String>) imagesData;
+            // If it's already a List, cast it with proper type checking
+            List<?> rawList = (List<?>) imagesData;
+            this.images = new ArrayList<>();
+            for (Object item : rawList) {
+                if (item instanceof String) {
+                    this.images.add((String) item);
+                }
+            }
         } else if (imagesData instanceof String) {
             // If it's a String, convert it to a List
             String imageString = (String) imagesData;

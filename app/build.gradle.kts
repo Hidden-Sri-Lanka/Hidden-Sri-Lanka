@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.s23010526.hiddensrilanka"
-    compileSdk = 35
+    compileSdk = 34  // Change from 35 to 34 for better compatibility
 
     defaultConfig {
         applicationId = "com.s23010526.hiddensrilanka"
@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11  // Update from VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_11  // Update from VERSION_1_8
     }
     buildFeatures {
         viewBinding = true
