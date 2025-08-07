@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -46,19 +47,19 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
 
         // Handle placeholder entries differently
         if (currentAttraction.isPlaceholder()) {
-            // For placeholder entries, show a special custom image
+            // For placeholder entries, show your original PNG image
             holder.imageViewAttraction.setImageResource(R.drawable.grow_our_database);
             holder.imageViewAttraction.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             // Change appearance to indicate it's clickable
             holder.itemView.setAlpha(0.9f);
-            holder.nameTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.DeepForestGreen));
-            holder.categoryTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.GoldYellow));
+            holder.nameTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.DeepForestGreen));
+            holder.categoryTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.GoldYellow));
         } else {
             // Normal attraction entries
             holder.itemView.setAlpha(1.0f);
-            holder.nameTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.NavyBlue));
-            holder.categoryTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.light_gray));
+            holder.nameTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.NavyBlue));
+            holder.categoryTextView.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.light_gray));
             holder.imageViewAttraction.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             // Load image for normal attractions
@@ -103,15 +104,29 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
                         "Let's add some attractions! 🚀",
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Normal click handling for regular attractions
-                Toast.makeText(holder.itemView.getContext(),
-                        currentAttraction.getName() + " clicked!",
-                        Toast.LENGTH_SHORT).show();
+                // Navigate to LocationDetailScreenActivity with attraction data
+                Intent intent = new Intent(holder.itemView.getContext(), LocationDetailScreenActivity.class);
 
-                // TODO: Navigate to LocationDetailScreenActivity
-                // Intent intent = new Intent(holder.itemView.getContext(), LocationDetailScreenActivity.class);
-                // intent.putExtra("attraction_id", currentAttraction.getDocumentId());
-                // holder.itemView.getContext().startActivity(intent);
+                // Pass all attraction data as extras
+                intent.putExtra("ATTRACTION_NAME", currentAttraction.getName());
+                intent.putExtra("ATTRACTION_CATEGORY", currentAttraction.getCategory());
+                intent.putExtra("ATTRACTION_DESCRIPTION", currentAttraction.getDescription());
+                intent.putExtra("ATTRACTION_CONTRIBUTOR", currentAttraction.getContributorName());
+                intent.putExtra("ATTRACTION_CONTRIBUTED_AT", currentAttraction.getContributedAt());
+                intent.putExtra("ATTRACTION_YOUTUBE_URL", currentAttraction.getYoutubeUrl());
+                intent.putExtra("ATTRACTION_CITY", currentAttraction.getCity());
+
+                // Pass images as ArrayList
+                if (currentAttraction.getImages() != null) {
+                    intent.putStringArrayListExtra("ATTRACTION_IMAGES",
+                            new java.util.ArrayList<>(currentAttraction.getImages()));
+                }
+
+                holder.itemView.getContext().startActivity(intent);
+
+                Toast.makeText(holder.itemView.getContext(),
+                        "Opening " + currentAttraction.getName(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

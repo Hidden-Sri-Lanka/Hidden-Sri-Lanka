@@ -156,7 +156,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Team
 
 **Developer**: S23010526  
-**University**: OUSl (Open University Of Sri Lanka)
+**University**: OUSl (Open University Of Sri Lanka) </br>
 **Course**: Mobile Application Development  
 
 ## 🙏 Acknowledgments

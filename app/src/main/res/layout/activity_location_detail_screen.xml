@@ -1,28 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_location_detail_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".LocationDetailScreenActivity">
 
-    <!-- TODO automaticaly populated with user request  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/location_detail_name"
+        <!-- Main Image -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_main_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_image_placeholder" />
+
+                <!-- Gradient overlay for better text readability -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/gradient_overlay" />
+
+                <!-- Category chip overlay -->
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="12dp"
+                    android:text="Category"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/DeepForestGreen" />
+
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Location Information -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            tools:text="Your Location Details" />
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <!-- Location Name -->
+            <TextView
+                android:id="@+id/tv_location_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Location Name"
+                android:textColor="@color/NavyBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Category -->
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Category"
+                android:textColor="@color/light_gray"
+                android:textSize="16sp" />
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="About this place"
+                android:textColor="@color/NavyBlue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:lineSpacingExtra="4dp"
+                android:text="Description will be shown here..."
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <!-- Contributor Information -->
+            <TextView
+                android:id="@+id/tv_contributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Contributed by: Username"
+                android:textColor="@color/DeepForestGreen"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_contributed_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Added on: Date"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <!-- Get Directions Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_get_directions"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/DeepForestGreen"
+                android:text="Get Directions"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_directions"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white" />
+
+            <!-- Watch Video Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_watch_video"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:text="Watch Video"
+                android:textColor="@color/DeepForestGreen"
+                android:textSize="16sp"
+                android:visibility="visible"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_link"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/DeepForestGreen"
+                app:strokeColor="@color/DeepForestGreen"
+                app:strokeWidth="2dp" />
+
+            <!-- Share Location Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_share_location"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:text="Share Location"
+                android:textColor="@color/GoldYellow"
+                android:textSize="16sp"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_share"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/GoldYellow"
+                app:strokeColor="@color/GoldYellow"
+                app:strokeWidth="2dp" />
+
+        </LinearLayout>
+
+        <!-- Image Gallery (for multiple images) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="More Photos"
+                android:textColor="@color/NavyBlue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_image_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:clipToPadding="false"
+                android:paddingStart="0dp"
+                android:paddingEnd="16dp"
+                android:visibility="gone"
+                tools:listitem="@layout/item_gallery_image" />
+
+        </LinearLayout>
+
+        <!-- Bottom padding for better scrolling -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
 
     </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>

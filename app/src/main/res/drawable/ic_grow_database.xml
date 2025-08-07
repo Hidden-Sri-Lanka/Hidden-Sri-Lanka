@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="150dp"
+    android:viewportWidth="200"
+    android:viewportHeight="150">
+
+    <!-- Background -->
+    <path
+        android:fillColor="#E8F5E8"
+        android:pathData="M0,0h200v150h-200z"/>
+
+    <!-- Tree/Growth Icon -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M100,120c-2,0 -4,-2 -4,-4v-20c0,-2 2,-4 4,-4s4,2 4,4v20c0,2 -2,4 -4,4z"/>
+
+    <!-- Leaves -->
+    <path
+        android:fillColor="#66BB6A"
+        android:pathData="M100,90c-8,0 -15,-7 -15,-15s7,-15 15,-15s15,7 15,15s-7,15 -15,15z"/>
+
+    <path
+        android:fillColor="#81C784"
+        android:pathData="M90,85c-6,0 -12,-5 -12,-12s6,-12 12,-12s12,5 12,12s-6,12 -12,12z"/>
+
+    <path
+        android:fillColor="#81C784"
+        android:pathData="M110,85c-6,0 -12,-5 -12,-12s6,-12 12,-12s12,5 12,12s-6,12 -12,12z"/>
+
+    <!-- Plus icon in center -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M100,50v20m-10,-10h20"
+        android:strokeWidth="3"
+        android:strokeColor="#2E7D32"/>
+
+    <!-- Text area suggestion -->
+    <path
+        android:fillColor="#C8E6C9"
+        android:pathData="M30,130h140v15h-140z"/>
+</vector>
+

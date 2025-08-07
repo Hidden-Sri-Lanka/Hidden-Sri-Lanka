@@ -29,11 +29,14 @@ public class AddLocationActivity extends BaseActivity {
     // UI Components
     private EditText etLocationName, etDescription, etYoutubeUrl, etContributorName, etImageUrl;
     private AutoCompleteTextView etCategory, etCity, etProvince;
-    private ImageView ivSelectedImage;
+    private ImageView ivSelectedImage, ivTutorialThumbnail, btnPlayTutorial;
     private LinearLayout layoutImagePlaceholder;
     private MaterialButton btnSubmitLocation, btnLoadUrl;
     private TextInputLayout tilCity;
     private ProgressBar progressBar; // Replace ProgressDialog with ProgressBar
+
+    // Tutorial video URL - Replace with your actual instructional video
+    private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/watch?v=YOUR_TUTORIAL_VIDEO_ID"; // Replace with actual tutorial video
 
     // Firebase
     private FirebaseFirestore firestore;
@@ -60,6 +63,7 @@ public class AddLocationActivity extends BaseActivity {
         initializeProvinceCityMapping();
         setupDropdowns();
         setupClickListeners();
+        setupTutorialVideo();
     }
 
     private void initializeViews() {
@@ -72,6 +76,8 @@ public class AddLocationActivity extends BaseActivity {
         etCity = findViewById(R.id.et_city);
         etProvince = findViewById(R.id.et_province);
         ivSelectedImage = findViewById(R.id.iv_selected_image);
+        ivTutorialThumbnail = findViewById(R.id.iv_tutorial_thumbnail);
+        btnPlayTutorial = findViewById(R.id.btn_play_tutorial);
         layoutImagePlaceholder = findViewById(R.id.layout_image_placeholder);
         btnSubmitLocation = findViewById(R.id.btn_submit_location);
         btnLoadUrl = findViewById(R.id.btn_load_url);
@@ -192,6 +198,9 @@ public class AddLocationActivity extends BaseActivity {
             String selectedProvince = parent.getItemAtPosition(position).toString();
             updateCityDropdown(selectedProvince);
         });
+
+        // Tutorial video play button
+        btnPlayTutorial.setOnClickListener(v -> playTutorialVideo());
     }
 
     private void updateCityDropdown(String selectedProvince) {
@@ -261,6 +270,19 @@ public class AddLocationActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(description)) {
             etDescription.setError("Description is required");
+            etDescription.requestFocus();
+            return;
+        }
+
+        // Updated description length check - increased to 3000 characters
+        if (description.length() > 3000) {
+            etDescription.setError("Description cannot exceed 3000 characters (" + description.length() + "/3000)");
+            etDescription.requestFocus();
+            return;
+        }
+
+        if (description.length() < 50) {
+            etDescription.setError("Description must be at least 50 characters (" + description.length() + "/50)");
             etDescription.requestFocus();
             return;
         }
@@ -395,5 +417,70 @@ public class AddLocationActivity extends BaseActivity {
         layoutImagePlaceholder.setVisibility(View.VISIBLE);
 
         tilCity.setHint("City *");
+    }
+
+    private void playTutorialVideo() {
+        try {
+            android.content.Intent youtubeIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(TUTORIAL_VIDEO_URL));
+            youtubeIntent.setPackage("com.google.android.youtube");
+
+            // Check if YouTube app is installed
+            if (youtubeIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(youtubeIntent);
+                Toast.makeText(this, "Opening tutorial in YouTube app", Toast.LENGTH_SHORT).show();
+            } else {
+                // Fallback to web browser
+                android.content.Intent webIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(TUTORIAL_VIDEO_URL));
+                startActivity(webIntent);
+                Toast.makeText(this, "Opening tutorial in browser", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error playing tutorial video: " + e.getMessage());
+            Toast.makeText(this, "Unable to play tutorial video", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Improved tutorial video setup with better instructions
+    private void setupTutorialVideo() {
+        // Load tutorial video thumbnail
+        String videoId = extractYouTubeVideoId(TUTORIAL_VIDEO_URL);
+        if (videoId != null && !videoId.equals("YOUR_TUTORIAL_VIDEO_ID")) {
+            String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+
+            Glide.with(this)
+                .load(thumbnailUrl)
+                .placeholder(R.drawable.ic_image_placeholder)
+                .error(R.drawable.ic_image_placeholder)
+                .centerCrop()
+                .into(ivTutorialThumbnail);
+        } else {
+            // Use a default image for tutorial placeholder
+            ivTutorialThumbnail.setImageResource(R.drawable.ic_image_placeholder);
+        }
+
+        // Setup click listeners for video elements
+        ivTutorialThumbnail.setOnClickListener(v -> playTutorialVideo());
+    }
+
+    private String extractYouTubeVideoId(String youtubeUrl) {
+        try {
+            String videoId = null;
+
+            if (youtubeUrl.contains("youtube.com/watch?v=")) {
+                videoId = youtubeUrl.substring(youtubeUrl.indexOf("v=") + 2);
+            } else if (youtubeUrl.contains("youtu.be/")) {
+                videoId = youtubeUrl.substring(youtubeUrl.lastIndexOf("/") + 1);
+            }
+
+            // Remove any additional parameters
+            if (videoId != null && videoId.contains("&")) {
+                videoId = videoId.substring(0, videoId.indexOf("&"));
+            }
+
+            return videoId;
+        } catch (Exception e) {
+            Log.e(TAG, "Error extracting YouTube video ID: " + e.getMessage());
+            return null;
+        }
     }
 }

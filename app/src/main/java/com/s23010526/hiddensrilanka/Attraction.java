@@ -15,11 +15,31 @@ public class Attraction {
     private String contributorName;
     private long contributedAt;
 
+    // Location fields
+    private String city;
+    private String province;
+
     // Field to identify placeholder entries
     private boolean isPlaceholder;
 
     // Firebase requires a public, no-argument constructor
     public Attraction() {
+    }
+
+    // Constructor with all fields including contributor info and location
+    public Attraction(String documentId, String name, String category, String description,
+                     String youtubeUrl, List<String> images, String contributorName, long contributedAt,
+                     String city, String province) {
+        this.documentId = documentId;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.youtubeUrl = youtubeUrl;
+        this.images = images;
+        this.contributorName = contributorName;
+        this.contributedAt = contributedAt;
+        this.city = city;
+        this.province = province;
     }
 
     // Constructor with all fields including contributor info
@@ -33,6 +53,8 @@ public class Attraction {
         this.images = images;
         this.contributorName = contributorName;
         this.contributedAt = contributedAt;
+        this.city = "";
+        this.province = "";
     }
 
     // Original constructor for backward compatibility
@@ -45,6 +67,8 @@ public class Attraction {
         this.images = images;
         this.contributorName = "Unknown";
         this.contributedAt = 0;
+        this.city = "";
+        this.province = "";
     }
 
     // Getters and Setters
@@ -152,6 +176,23 @@ public class Attraction {
 
     public void setPlaceholder(boolean placeholder) {
         isPlaceholder = placeholder;
+    }
+
+    // New getters and setters for location fields
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     // Helper method to get formatted contribution date
