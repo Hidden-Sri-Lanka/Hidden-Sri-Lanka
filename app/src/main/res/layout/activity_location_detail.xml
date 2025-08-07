@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/offWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Main Image Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/iv_location_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Location image" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Location Info Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Location Name -->
+                <TextView
+                    android:id="@+id/tv_location_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location Name"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/DeepForestGreen"
+                    android:fontFamily="serif"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- City and Category Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_location_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="City"
+                        android:textSize="14sp"
+                        android:textColor="@color/GoldYellow"
+                        android:drawableStart="@drawable/ic_location_on"
+                        android:drawablePadding="4dp"
+                        android:drawableTint="@color/GoldYellow" />
+
+                    <TextView
+                        android:id="@+id/tv_location_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textSize="12sp"
+                        android:textColor="@color/DeepForestGreen"
+                        android:background="@drawable/category_tag_background"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp" />
+
+                </LinearLayout>
+
+                <!-- Description -->
+                <TextView
+                    android:id="@+id/tv_location_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location description will appear here..."
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Contributed By -->
+                <TextView
+                    android:id="@+id/tv_contributor_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contributed by: Anonymous"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray"
+                    android:textStyle="italic"
+                    android:drawableStart="@drawable/ic_person"
+                    android:drawablePadding="6dp"
+                    android:drawableTint="@color/gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Action Buttons Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <!-- Get Directions Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_get_directions"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Get Directions"
+                    android:textColor="@color/white"
+                    android:fontFamily="cursive"
+                    app:backgroundTint="@color/DeepForestGreen"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_directions"
+                    app:iconTint="@color/white" />
+
+                <!-- Share Location Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_share_location"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Share"
+                    android:textColor="@color/DeepForestGreen"
+                    android:fontFamily="cursive"
+                    app:strokeColor="@color/DeepForestGreen"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_share"
+                    app:iconTint="@color/DeepForestGreen" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

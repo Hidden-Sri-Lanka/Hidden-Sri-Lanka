@@ -136,4 +136,75 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
+    <!-- UNIFIED CARD DESIGN SYSTEM -->
+
+    <!-- Primary Card Style - Main content cards -->
+    <style name="PrimaryCard">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <!-- Secondary Card Style - Information/feature cards -->
+    <style name="SecondaryCard">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardBackgroundColor">@color/GoldSand</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <!-- Attraction Card Style - Specific for attraction items -->
+    <style name="AttractionCard" parent="PrimaryCard">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">12dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <!-- Header Card Style - For page headers -->
+    <style name="HeaderCard">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="cardBackgroundColor">@color/DeepForestGreen</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <!-- Card Content Padding -->
+    <style name="CardContentPadding">
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <!-- Card Title Text -->
+    <style name="CardTitleText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/NavyBlue</item>
+        <item name="android:fontFamily">cursive</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Card Subtitle Text -->
+    <style name="CardSubtitleText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:fontFamily">cursive</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Card Description Text -->
+    <style name="CardDescriptionText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/NavyBlue</item>
+        <item name="android:fontFamily">cursive</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+
 </resources>

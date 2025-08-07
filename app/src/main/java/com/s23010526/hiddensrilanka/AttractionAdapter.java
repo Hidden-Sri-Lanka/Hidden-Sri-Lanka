@@ -66,27 +66,16 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
             if (currentAttraction.getImages() != null && !currentAttraction.getImages().isEmpty()) {
                 String imageUrl = currentAttraction.getImages().get(0);
 
-                Glide.with(holder.itemView.getContext())
-                        .load(imageUrl)
-                        .placeholder(R.drawable.ic_image_placeholder)
-                        .error(R.drawable.ic_image_placeholder)
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                Log.w("GlideDebug", "Failed to load image: " + imageUrl);
-                                if (e != null) {
-                                    Log.w("GlideDebug", "Error: " + e.getMessage());
-                                }
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                Log.d("GlideDebug", "Successfully loaded image: " + imageUrl);
-                                return false;
-                            }
-                        })
-                        .into(holder.imageViewAttraction);
+                // Process Google Photos URLs before loading
+                if (isGooglePhotosUrl(imageUrl)) {
+                    Log.d("GlideDebug", "Processing Google Photos URL: " + imageUrl);
+                    GooglePhotosUrlHelper.processImageUrl(holder.itemView.getContext(), imageUrl, processedUrl -> {
+                        loadImageWithGlide(holder, processedUrl);
+                    });
+                } else {
+                    // Direct image URL - load directly
+                    loadImageWithGlide(holder, imageUrl);
+                }
             } else {
                 Log.w("GlideDebug", "Image URL list is null or empty for: " + currentAttraction.getName());
                 holder.imageViewAttraction.setImageResource(R.drawable.ic_image_placeholder);
@@ -104,29 +93,22 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
                         "Let's add some attractions! 🚀",
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Navigate to LocationDetailScreenActivity with attraction data
-                Intent intent = new Intent(holder.itemView.getContext(), LocationDetailScreenActivity.class);
+                // Navigate to LocationDetailActivity with attraction data
+                Intent intent = new Intent(holder.itemView.getContext(), LocationDetailActivity.class);
 
                 // Pass all attraction data as extras
-                intent.putExtra("ATTRACTION_NAME", currentAttraction.getName());
-                intent.putExtra("ATTRACTION_CATEGORY", currentAttraction.getCategory());
-                intent.putExtra("ATTRACTION_DESCRIPTION", currentAttraction.getDescription());
-                intent.putExtra("ATTRACTION_CONTRIBUTOR", currentAttraction.getContributorName());
-                intent.putExtra("ATTRACTION_CONTRIBUTED_AT", currentAttraction.getContributedAt());
-                intent.putExtra("ATTRACTION_YOUTUBE_URL", currentAttraction.getYoutubeUrl());
-                intent.putExtra("ATTRACTION_CITY", currentAttraction.getCity());
+                intent.putExtra("location_name", currentAttraction.getName());
+                intent.putExtra("category", currentAttraction.getCategory());
+                intent.putExtra("description", currentAttraction.getDescription());
+                intent.putExtra("contributor_name", currentAttraction.getContributorName());
+                intent.putExtra("youtube_url", currentAttraction.getYoutubeUrl());
 
-                // Pass images as ArrayList
-                if (currentAttraction.getImages() != null) {
-                    intent.putStringArrayListExtra("ATTRACTION_IMAGES",
-                            new java.util.ArrayList<>(currentAttraction.getImages()));
+                // Pass first image URL if available
+                if (currentAttraction.getImages() != null && !currentAttraction.getImages().isEmpty()) {
+                    intent.putExtra("image_url", currentAttraction.getImages().get(0));
                 }
 
                 holder.itemView.getContext().startActivity(intent);
-
-                Toast.makeText(holder.itemView.getContext(),
-                        "Opening " + currentAttraction.getName(),
-                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -148,5 +130,44 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
             nameTextView = itemView.findViewById(R.id.textView_attraction_name);
             categoryTextView = itemView.findViewById(R.id.textView_attraction_category);
         }
+    }
+
+    /**
+     * Check if URL is a Google Photos URL that needs processing
+     */
+    private boolean isGooglePhotosUrl(String url) {
+        return url != null && (
+                url.contains("photos.app.goo.gl") ||
+                url.contains("photos.google.com/share") ||
+                url.contains("photos.google.com/u/") ||
+                url.contains("photos.google.com/album")
+        );
+    }
+
+    /**
+     * Load image with Glide using the processed URL
+     */
+    private void loadImageWithGlide(AttractionViewHolder holder, String imageUrl) {
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_image_placeholder)
+                .error(R.drawable.ic_image_placeholder)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.w("GlideDebug", "Failed to load image: " + imageUrl);
+                        if (e != null) {
+                            Log.w("GlideDebug", "Error: " + e.getMessage());
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        Log.d("GlideDebug", "Successfully loaded image: " + imageUrl);
+                        return false;
+                    }
+                })
+                .into(holder.imageViewAttraction);
     }
 }

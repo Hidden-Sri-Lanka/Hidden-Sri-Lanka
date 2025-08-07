@@ -224,13 +224,14 @@ public class HomeActivity extends BaseActivity {
                                     // Check if location is in Sri Lanka
                                     if (isInSriLanka(location.getLatitude(), location.getLongitude())) {
                                         Toast.makeText(this, "📍 Detected location: " + currentCity, Toast.LENGTH_SHORT).show();
+                                        // Load attractions for Sri Lankan city
+                                        loadAttractionsFromFirestore(currentCity, "All");
                                     } else {
                                         Toast.makeText(this, "🌍 Foreign location detected: " + currentCity +
-                                                     "\n🔄 Tap refresh to try again or test with Sri Lankan cities", Toast.LENGTH_LONG).show();
+                                                     "\n🎯 Showing all Sri Lankan attractions", Toast.LENGTH_LONG).show();
+                                        // Show all attractions from all Sri Lankan cities
+                                        loadAllAttractionsFromFirestore("All");
                                     }
-
-                                    // Always check Firebase for attractions in the detected city
-                                    loadAttractionsFromFirestore(currentCity, "All");
                                     return;
                                 } else {
                                     Log.w(TAG, "Could not determine city name from geocoding");
@@ -450,4 +451,102 @@ public class HomeActivity extends BaseActivity {
     }
 
     // Call this method once to populate your database (you can trigger it with a button or on first run)
+
+    /**
+     * New method to load all attractions from all Sri Lankan cities
+     * This is used when location is detected outside Sri Lanka (like Mountain View)
+     */
+    private void loadAllAttractionsFromFirestore(String category) {
+        progressBar.setVisibility(View.VISIBLE);
+        attractionList.clear();
+
+        // List of major Sri Lankan cities to search
+        String[] sriLankanCities = {
+            "Colombo", "Kandy", "Galle", "Anuradhapura", "Nuwara Eliya",
+            "Matale", "Kurunegala", "Badulla", "Ratnapura", "Trincomalee",
+            "Batticaloa", "Jaffna", "Negombo", "Kalutara", "Gampaha",
+            "Hambantota", "Polonnaruwa", "Kegalle", "Puttalam", "Vavuniya",
+            "Kahawatta", "Bandarawela", "Ella", "Haputale", "Dambulla"
+        };
+
+        Log.d(TAG, "Loading all attractions from multiple Sri Lankan cities for category: " + category);
+
+        // Counter to track completed queries
+        final int[] completedQueries = {0};
+        final int totalQueries = sriLankanCities.length;
+
+        for (String city : sriLankanCities) {
+            Query query = firestoreDb.collection("cities").document(city).collection("attractions");
+
+            // Only apply category filter if it's not "All"
+            if (!"All".equalsIgnoreCase(category)) {
+                query = query.whereEqualTo("category", category);
+            }
+
+            query.get().addOnCompleteListener(task -> {
+                completedQueries[0]++;
+
+                if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                    // Add attractions from this city
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Attraction attraction = document.toObject(Attraction.class);
+                        attraction.setDocumentId(document.getId());
+                        // Add city info to help users know where it is
+                        attraction.setCity(city);
+                        attractionList.add(attraction);
+                    }
+                    Log.d(TAG, "Added " + task.getResult().size() + " attractions from " + city);
+                }
+
+                // Check if all queries are completed
+                if (completedQueries[0] >= totalQueries) {
+                    // All queries completed
+                    progressBar.setVisibility(View.GONE);
+
+                    if (attractionList.isEmpty()) {
+                        // No attractions found anywhere - show general placeholder
+                        showGeneralPlaceholder();
+                    } else {
+                        // Sort attractions by name for better organization
+                        attractionList.sort((a1, a2) -> a1.getName().compareToIgnoreCase(a2.getName()));
+                        adapter.notifyDataSetChanged();
+
+                        String filterText = "All".equalsIgnoreCase(category) ? "all" : category;
+                        Toast.makeText(this, "🎯 Found " + attractionList.size() + " " + filterText +
+                                     " attractions across Sri Lanka", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Show general placeholder when no attractions found anywhere
+     */
+    private void showGeneralPlaceholder() {
+        Attraction placeholder = new Attraction();
+        placeholder.setDocumentId("placeholder_general");
+        placeholder.setName("Welcome to Hidden Sri Lanka! 🇱🇰");
+        placeholder.setCategory("Getting Started");
+        placeholder.setDescription("Welcome to Hidden Sri Lanka! We're building a community-driven database of amazing places across Sri Lanka. " +
+                "Start exploring by:\n\n" +
+                "🔍 Searching for specific cities in the search bar\n" +
+                "📍 Enabling location services if you're in Sri Lanka\n" +
+                "➕ Adding your own favorite hidden gems\n\n" +
+                "Help us discover the beauty of Sri Lanka together!");
+        placeholder.setYoutubeUrl("");
+
+        List<String> placeholderImages = new ArrayList<>();
+        placeholder.setImages(placeholderImages);
+
+        placeholder.setContributorName("Hidden Sri Lanka Team");
+        placeholder.setContributedAt(System.currentTimeMillis());
+        placeholder.setPlaceholder(true);
+
+        attractionList.clear();
+        attractionList.add(placeholder);
+        adapter.notifyDataSetChanged();
+
+        Toast.makeText(this, "🌟 Welcome! Start by searching for Sri Lankan cities or adding attractions", Toast.LENGTH_LONG).show();
+    }
 }

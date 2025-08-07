@@ -46,19 +46,24 @@ dependencies {
     // This line manages all Firebase library versions.
     implementation(platform(libs.firebase.bom))
 
-    // Versions are handled by the BoM so  dont need to  specify them here.
-    implementation(libs.firebase.auth)       // For  login system
+    // Versions are handled by the BoM so dont need to specify them here.
+    implementation(libs.firebase.auth)       // For login system
     implementation(libs.firebase.database)   // For login system
-    implementation(libs.firebase.firestore)  // For location content
-    implementation(libs.firebase.storage)    // For image uploads - ADDED
+    implementation(libs.firebase.firestore)  // For storing location data
+    implementation(libs.firebase.storage)    // For storing images
 
-    implementation(libs.glide)
-    annotationProcessor(libs.glide.compiler)
+    // --- Google Play Services ---
+    implementation("com.google.android.gms:play-services-location:21.0.1") // For location services
+    implementation("com.google.android.gms:play-services-auth:20.7.0") // For Google Sign-In
 
-    // Google Play Services for location
-    implementation(libs.play.services.location)
+    // --- CardView for unified design system ---
+    implementation("androidx.cardview:cardview:1.0.0")
 
+    // --- Image Loading ---
+    implementation(libs.glide)               // For loading images
+    annotationProcessor(libs.glide.compiler) // For Glide annotation processing
 
+    // --- Testing ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Google Photos icon representation -->
+    <path
+        android:fillColor="@color/GoldYellow"
+        android:pathData="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2ZM21,9V7L20,8L19,7V9C19,10.1 18.1,11 17,11S15,10.1 15,9V7L14,8L13,7V9C13,11.2 14.8,13 17,13S21,11.2 21,9ZM11,7V9C11,11.2 9.2,13 7,13S3,11.2 3,9V7L4,8L5,7V9C5,10.1 5.9,11 7,11S9,10.1 9,9V7L10,8L11,7ZM12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16ZM17,14C18.1,14 19,14.9 19,16C19,17.1 18.1,18 17,18C15.9,18 15,17.1 15,16C15,14.9 15.9,14 17,14ZM7,14C8.1,14 9,14.9 9,16C9,17.1 8.1,18 7,18C5.9,18 5,17.1 5,16C5,14.9 5.9,14 7,14Z"/>
+</vector>
+

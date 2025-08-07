@@ -19,11 +19,17 @@ public class Attraction {
     private String city;
     private String province;
 
+    // Additional fields for LocationDetailActivity
+    private String imageUrl;
+    private double latitude;
+    private double longitude;
+
     // Field to identify placeholder entries
     private boolean isPlaceholder;
 
     // Firebase requires a public, no-argument constructor
     public Attraction() {
+        this.images = new ArrayList<>();
     }
 
     // Constructor with all fields including contributor info and location
@@ -35,7 +41,7 @@ public class Attraction {
         this.category = category;
         this.description = description;
         this.youtubeUrl = youtubeUrl;
-        this.images = images;
+        this.images = images != null ? images : new ArrayList<>();
         this.contributorName = contributorName;
         this.contributedAt = contributedAt;
         this.city = city;
@@ -50,25 +56,20 @@ public class Attraction {
         this.category = category;
         this.description = description;
         this.youtubeUrl = youtubeUrl;
-        this.images = images;
+        this.images = images != null ? images : new ArrayList<>();
         this.contributorName = contributorName;
         this.contributedAt = contributedAt;
-        this.city = "";
-        this.province = "";
     }
 
-    // Original constructor for backward compatibility
-    public Attraction(String documentId, String name, String category, String description, String youtubeUrl, List<String> images) {
+    // Constructor for basic attraction
+    public Attraction(String documentId, String name, String category, String description,
+                     String youtubeUrl, List<String> images) {
         this.documentId = documentId;
         this.name = name;
         this.category = category;
         this.description = description;
         this.youtubeUrl = youtubeUrl;
-        this.images = images;
-        this.contributorName = "Unknown";
-        this.contributedAt = 0;
-        this.city = "";
-        this.province = "";
+        this.images = images != null ? images : new ArrayList<>();
     }
 
     // Getters and Setters
@@ -116,43 +117,10 @@ public class Attraction {
         return images;
     }
 
-    @SuppressWarnings("unchecked")
-    public void setImages(Object imagesData) {
-        if (imagesData == null) {
-            this.images = new ArrayList<>();
-        } else if (imagesData instanceof List) {
-            // If it's already a List, cast it with proper type checking
-            List<?> rawList = (List<?>) imagesData;
-            this.images = new ArrayList<>();
-            for (Object item : rawList) {
-                if (item instanceof String) {
-                    this.images.add((String) item);
-                }
-            }
-        } else if (imagesData instanceof String) {
-            // If it's a String, convert it to a List
-            String imageString = (String) imagesData;
-            if (imageString.trim().isEmpty()) {
-                this.images = new ArrayList<>();
-            } else if (imageString.contains(",")) {
-                // Handle comma-separated string
-                this.images = new ArrayList<>();
-                String[] urlArray = imageString.split(",");
-                for (String url : urlArray) {
-                    this.images.add(url.trim());
-                }
-            } else {
-                // Single URL
-                this.images = new ArrayList<>();
-                this.images.add(imageString.trim());
-            }
-        } else {
-            // Fallback for any other data type
-            this.images = new ArrayList<>();
-        }
+    public void setImages(List<String> images) {
+        this.images = images != null ? images : new ArrayList<>();
     }
 
-    // New getters and setters for contributor information
     public String getContributorName() {
         return contributorName;
     }
@@ -169,16 +137,6 @@ public class Attraction {
         this.contributedAt = contributedAt;
     }
 
-    // Getter and setter for isPlaceholder
-    public boolean isPlaceholder() {
-        return isPlaceholder;
-    }
-
-    public void setPlaceholder(boolean placeholder) {
-        isPlaceholder = placeholder;
-    }
-
-    // New getters and setters for location fields
     public String getCity() {
         return city;
     }
@@ -195,10 +153,77 @@ public class Attraction {
         this.province = province;
     }
 
-    // Helper method to get formatted contribution date
-    public String getFormattedContributionDate() {
-        if (contributedAt == 0) return "Unknown";
-        return new java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault())
-                .format(new java.util.Date(contributedAt));
+    // New getters and setters for missing fields
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public boolean isPlaceholder() {
+        return isPlaceholder;
+    }
+
+    public void setPlaceholder(boolean placeholder) {
+        isPlaceholder = placeholder;
+    }
+
+    // Utility methods
+    public String getFirstImageUrl() {
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            return imageUrl;
+        }
+        if (images != null && !images.isEmpty()) {
+            return images.get(0);
+        }
+        return null;
+    }
+
+    public void addImage(String imageUrl) {
+        if (this.images == null) {
+            this.images = new ArrayList<>();
+        }
+        this.images.add(imageUrl);
+    }
+
+    public boolean hasImages() {
+        return (imageUrl != null && !imageUrl.isEmpty()) ||
+               (images != null && !images.isEmpty());
+    }
+
+    public boolean hasLocation() {
+        return latitude != 0.0 && longitude != 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return "Attraction{" +
+                "documentId='" + documentId + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", contributorName='" + contributorName + '\'' +
+                ", hasImages=" + hasImages() +
+                ", hasLocation=" + hasLocation() +
+                '}';
     }
 }

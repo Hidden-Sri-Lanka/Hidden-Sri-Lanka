@@ -10,10 +10,11 @@ public class SessionManager {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
 
+    private Context context; // Add missing context field
     private final SharedPreferences pref;
     private final SharedPreferences.Editor editor;
-
     public SessionManager(Context context) {
+        this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
     }

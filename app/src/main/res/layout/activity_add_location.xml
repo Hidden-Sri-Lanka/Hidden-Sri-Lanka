@@ -16,18 +16,16 @@
 
         <!-- Header Card -->
         <androidx.cardview.widget.CardView
+            style="@style/HeaderCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/DeepForestGreen">
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
+                style="@style/CardContentPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
                 android:gravity="center">
 
                 <ImageView
@@ -60,18 +58,16 @@
 
         <!-- Instructional Video Card -->
         <androidx.cardview.widget.CardView
+            style="@style/PrimaryCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/white">
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
+                style="@style/CardContentPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,13 +84,13 @@
                         android:layout_marginEnd="8dp" />
 
                     <TextView
+                        style="@style/CardTitleText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="How to Add a Location"
-                        android:textColor="@color/NavyBlue"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textAlignment="textStart"
+                        android:layout_marginBottom="0dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -139,26 +135,23 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    style="@style/CardSubtitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Watch this quick tutorial to learn how to add locations effectively"
-                    android:textColor="@color/light_gray"
-                    android:textSize="12sp"
-                    android:textAlignment="center" />
+                    android:text="Watch this quick tutorial to learn how to add locations effectively" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Form Card -->
         <androidx.cardview.widget.CardView
+            style="@style/PrimaryCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="@color/white">
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                style="@style/CardContentPadding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -296,7 +289,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="16dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxStrokeColor="@color/DeepForestGreen"
                     app:hintTextColor="@color/NavyBlue">
@@ -312,7 +305,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Image URL Input (Now Required) -->
+                <!-- Smart Image URL Input (Handles both Google Photos and direct URLs) -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -329,13 +322,15 @@
                     android:layout_marginBottom="12dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxStrokeColor="@color/DeepForestGreen"
-                    app:hintTextColor="@color/NavyBlue">
+                    app:hintTextColor="@color/NavyBlue"
+                    app:helperText="Paste any image URL or Google Photos share link"
+                    app:helperTextTextColor="@color/GoldSand">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_image_url"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Image URL *"
+                        android:hint="Image URL or Google Photos Link *"
                         android:inputType="textUri"
                         android:textColor="@color/NavyBlue"
                         android:fontFamily="cursive" />
@@ -394,7 +389,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="16dp"
                     android:text="Load Image from URL"
                     android:textColor="@color/DeepForestGreen"
                     android:fontFamily="cursive"
@@ -402,6 +397,21 @@
                     app:cornerRadius="8dp"
                     app:icon="@drawable/ic_link"
                     app:iconTint="@color/DeepForestGreen" />
+
+                <!-- Import from Google Photos Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_google_photos"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:text="Import from Google Photos"
+                    android:textColor="@color/GoldYellow"
+                    android:fontFamily="cursive"
+                    app:strokeColor="@color/GoldYellow"
+                    app:cornerRadius="8dp"
+                    app:icon="@drawable/ic_google_photos"
+                    app:iconTint="@color/GoldYellow" />
 
                 <!-- Submit Button -->
                 <com.google.android.material.button.MaterialButton
@@ -420,7 +430,7 @@
 
                 <!-- Progress Bar for loading states -->
                 <ProgressBar
-                    android:id="@+id/progress_bar"
+                    android:id="@+id/progress_bar_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

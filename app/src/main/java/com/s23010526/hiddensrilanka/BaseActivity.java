@@ -166,7 +166,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         } else if (itemId == R.id.nav_log_out) {
             // Clear session data
             sessionManager.logoutUser();
-
+            
             // Redirect to WelcomeActivity and clear the activity stack
             intent = new Intent(this, WelcomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

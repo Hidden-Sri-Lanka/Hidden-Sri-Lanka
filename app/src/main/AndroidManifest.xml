@@ -21,6 +21,9 @@
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
+            android:name=".LocationDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddLocationActivity"
             android:exported="false" />
         <activity

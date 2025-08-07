@@ -2,54 +2,48 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AttractionCard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="20dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="30dp"
-    app:cardElevation="20dp">
-    <!--Template for Home Card-->
+    android:layout_height="wrap_content">
+
     <LinearLayout
+        style="@style/CardContentPadding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
 
-
-        <!--        Sample Placeholder images Thay wil Replace when Home page Populated with
-        Database Retrieved images -->
-        <ImageView
-            android:id="@+id/imageView_attraction"
+        <!-- Attraction Image -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-        <!--This will also automaticaly Populate with Database -->
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/imageView_attraction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Attraction Name -->
         <TextView
             android:id="@+id/textView_attraction_name"
+            style="@style/CardTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="casual"
-            android:text="Attraction Name"
-            android:textAlignment="center"
-            android:textColor="@color/NavyBlue"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        <!--Same-->
+            android:text="Attraction Name" />
+
+        <!-- Attraction Category -->
         <TextView
             android:id="@+id/textView_attraction_category"
+            style="@style/CardSubtitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-light"
-            android:text="Category"
-            android:textAlignment="center"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:text="Category" />
 
     </LinearLayout>
 

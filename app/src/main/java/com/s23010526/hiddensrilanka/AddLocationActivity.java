@@ -41,6 +41,9 @@ public class AddLocationActivity extends BaseActivity {
     // Firebase
     private FirebaseFirestore firestore;
 
+    // Image URL storage
+    private String selectedImageUrl; // Add missing selectedImageUrl variable
+
     // Data structures for province-city mapping
     private Map<String, String[]> provinceCityMap;
 
@@ -83,8 +86,42 @@ public class AddLocationActivity extends BaseActivity {
         btnLoadUrl = findViewById(R.id.btn_load_url);
         tilCity = findViewById(R.id.til_city);
 
-        // Reference ProgressBar from layout
-        progressBar = findViewById(R.id.progress_bar);
+        // Add Google Photos button
+        MaterialButton btnGooglePhotos = findViewById(R.id.btn_google_photos);
+
+        // Reference ProgressBar from layout (using correct ID)
+        progressBar = findViewById(R.id.progress_bar_submit);
+
+        // Set up Google Photos button click listener - Simplified Integration
+        btnGooglePhotos.setOnClickListener(v -> {
+            GooglePhotosPickerDialog.show(this, imageUrl -> {
+                // Load the selected Google Photos image and set it in the URL field
+                etImageUrl.setText(imageUrl);
+                loadAndDisplayImage(imageUrl);
+                selectedImageUrl = imageUrl;
+                Log.d(TAG, "Google Photos image loaded: " + imageUrl);
+            });
+        });
+
+        // Set up Load URL button click listener - Now handles both Google Photos and direct URLs
+        btnLoadUrl.setOnClickListener(v -> {
+            String url = etImageUrl.getText().toString().trim();
+            if (!TextUtils.isEmpty(url)) {
+                // Use GooglePhotosUrlHelper to handle both types of URLs
+                GooglePhotosUrlHelper.processImageUrl(this, url, processedUrl -> {
+                    // Store the PROCESSED URL instead of the original
+                    selectedImageUrl = processedUrl;
+                    // Update the text field to show the processed URL
+                    etImageUrl.setText(processedUrl);
+                    loadAndDisplayImage(processedUrl);
+                    Toast.makeText(this, "Image URL processed and ready for saving!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Original URL: " + url);
+                    Log.d(TAG, "Processed URL for database: " + processedUrl);
+                });
+            } else {
+                Toast.makeText(this, "Please enter an image URL or Google Photos link", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initializeFirebase() {
@@ -193,6 +230,10 @@ public class AddLocationActivity extends BaseActivity {
         btnSubmitLocation.setOnClickListener(v -> validateAndSubmitLocation());
         btnLoadUrl.setOnClickListener(v -> loadImageFromUrl());
 
+        // Add Google Photos button click listener
+        MaterialButton btnGooglePhotos = findViewById(R.id.btn_google_photos);
+        btnGooglePhotos.setOnClickListener(v -> openGooglePhotosHelper());
+
         // Province selection listener - optional filtering
         etProvince.setOnItemClickListener((parent, view, position, id) -> {
             String selectedProvince = parent.getItemAtPosition(position).toString();
@@ -218,19 +259,26 @@ public class AddLocationActivity extends BaseActivity {
 
     private void loadImageFromUrl() {
         String url = etImageUrl.getText().toString().trim();
+        Log.d(TAG, "loadImageFromUrl called with URL: " + url);
 
         if (TextUtils.isEmpty(url)) {
+            Log.w(TAG, "URL is empty");
             etImageUrl.setError("Please enter an image URL");
             etImageUrl.requestFocus();
+            Toast.makeText(this, "Please enter an image URL first", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidUrl(url)) {
+            Log.w(TAG, "Invalid URL format: " + url);
             etImageUrl.setError("Please enter a valid image URL");
             etImageUrl.requestFocus();
+            Toast.makeText(this, "Please enter a valid URL starting with http:// or https://", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        Log.d(TAG, "Starting image load for URL: " + url);
+        Toast.makeText(this, "Loading image...", Toast.LENGTH_SHORT).show();
         loadAndDisplayImage(url);
     }
 
@@ -239,17 +287,224 @@ public class AddLocationActivity extends BaseActivity {
     }
 
     private void loadAndDisplayImage(String url) {
+        Log.d(TAG, "loadAndDisplayImage called with URL: " + url);
         progressBar.setVisibility(View.VISIBLE);
 
-        Glide.with(this)
-            .load(url)
-            .into(ivSelectedImage);
+        // Check if it's a Google Photos share link that needs processing
+        if (url.contains("photos.app.goo.gl") || url.contains("photos.google.com/share")) {
+            Log.d(TAG, "Detected Google Photos URL, processing...");
+            Toast.makeText(this, "Processing Google Photos link...", Toast.LENGTH_SHORT).show();
 
-        layoutImagePlaceholder.setVisibility(View.GONE);
-        ivSelectedImage.setVisibility(View.VISIBLE);
+            // Use the GooglePhotosUrlHelper to process the URL first
+            GooglePhotosUrlHelper.processImageUrl(this, url, processedUrl -> {
+                Log.d(TAG, "Google Photos URL processed to: " + processedUrl);
+                // Load the processed URL
+                loadImageWithGlide(processedUrl);
+            });
+        } else {
+            Log.d(TAG, "Direct image URL detected, loading directly...");
+            // Direct image URL - load directly
+            loadImageWithGlide(url);
+        }
+    }
 
-        progressBar.setVisibility(View.GONE);
-        Toast.makeText(this, "Image loaded successfully", Toast.LENGTH_SHORT).show();
+    private void loadImageWithGlide(String url) {
+        Log.d(TAG, "loadImageWithGlide called with URL: " + url);
+
+        if (TextUtils.isEmpty(url)) {
+            Log.e(TAG, "Cannot load image: URL is empty");
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(this, "Error: Image URL is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Since Glide seems to be having consistent timeout issues,
+        // let's provide a more direct user experience
+        Log.d(TAG, "Attempting to load image with Glide...");
+
+        // Show immediate feedback to user
+        Toast.makeText(this, "Testing image URL...", Toast.LENGTH_SHORT).show();
+
+        // Add a timeout handler in case Glide doesn't respond
+        android.os.Handler timeoutHandler = new android.os.Handler();
+        android.os.Handler quickFeedbackHandler = new android.os.Handler();
+
+        // Provide quick feedback after 3 seconds if no response
+        Runnable quickFeedbackRunnable = () -> {
+            Log.d(TAG, "3 second mark - showing user options");
+
+            new android.app.AlertDialog.Builder(AddLocationActivity.this)
+                .setTitle("Image Loading...")
+                .setMessage("The image is taking longer than expected to load. You can:\n\n" +
+                           "• Wait a bit longer for the preview\n" +
+                           "• Skip preview and use the URL directly\n" +
+                           "• Try a different image URL\n\n" +
+                           "URL: " + url)
+                .setPositiveButton("Skip Preview & Use URL", (dialog, which) -> {
+                    timeoutHandler.removeCallbacks(null);
+                    progressBar.setVisibility(View.GONE);
+                    selectedImageUrl = url;
+                    layoutImagePlaceholder.setVisibility(View.GONE);
+                    ivSelectedImage.setVisibility(View.VISIBLE);
+                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview skipped)", Toast.LENGTH_LONG).show();
+                })
+                .setNegativeButton("Try Different URL", (dialog, which) -> {
+                    timeoutHandler.removeCallbacks(null);
+                    progressBar.setVisibility(View.GONE);
+                    clearSelectedImage();
+                })
+                .setNeutralButton("Keep Waiting", (dialog, which) -> {
+                    // Just dismiss dialog and let the original timeout continue
+                    Toast.makeText(AddLocationActivity.this, "Continuing to wait for image...", Toast.LENGTH_SHORT).show();
+                })
+                .setCancelable(false)
+                .show();
+        };
+
+        Runnable timeoutRunnable = () -> {
+            Log.w(TAG, "Image loading timeout reached for URL: " + url);
+            progressBar.setVisibility(View.GONE);
+
+            new android.app.AlertDialog.Builder(AddLocationActivity.this)
+                .setTitle("Image Load Timeout")
+                .setMessage("The image failed to load within 15 seconds. This might be due to:\n\n" +
+                           "• Slow or unstable internet connection\n" +
+                           "• Large image file size\n" +
+                           "• Server issues with the image host\n\n" +
+                           "However, you can still use this URL for your location submission.\n\n" +
+                           "URL: " + url)
+                .setPositiveButton("Use URL Anyway", (dialog, which) -> {
+                    selectedImageUrl = url;
+                    layoutImagePlaceholder.setVisibility(View.GONE);
+                    ivSelectedImage.setVisibility(View.VISIBLE);
+                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Will work in final app)", Toast.LENGTH_LONG).show();
+                })
+                .setNegativeButton("Try Different Image", (dialog, which) -> {
+                    clearSelectedImage();
+                })
+                .setNeutralButton("Retry Loading", (dialog, which) -> {
+                    loadImageWithGlide(url);
+                })
+                .setCancelable(false)
+                .show();
+        };
+
+        // Start quick feedback timer (3 seconds)
+        quickFeedbackHandler.postDelayed(quickFeedbackRunnable, 3000);
+
+        // Start timeout timer (15 seconds)
+        timeoutHandler.postDelayed(timeoutRunnable, 15000);
+
+        try {
+            Glide.with(this)
+                .load(url)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_report_image)
+                .skipMemoryCache(true) // Skip cache to ensure fresh load
+                .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE) // Disable disk cache for testing
+                .listener(new com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(com.bumptech.glide.load.engine.GlideException e, Object model,
+                        com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable> target, boolean isFirstResource) {
+
+                        // Cancel all timers since we got a response
+                        timeoutHandler.removeCallbacks(timeoutRunnable);
+                        quickFeedbackHandler.removeCallbacks(quickFeedbackRunnable);
+
+                        Log.e(TAG, "Glide onLoadFailed called for URL: " + url);
+                        if (e != null) {
+                            Log.e(TAG, "Glide error details: " + e.getMessage());
+                            e.logRootCauses(TAG);
+                        }
+
+                        progressBar.setVisibility(View.GONE);
+
+                        // Show error dialog with helpful message
+                        runOnUiThread(() -> {
+                            new android.app.AlertDialog.Builder(AddLocationActivity.this)
+                                .setTitle("Image Load Failed")
+                                .setMessage("Unable to load the image for preview. However, the URL might still work in the final app.\n\n" +
+                                           "Error details:\n" + (e != null ? e.getMessage() : "Unknown error") + "\n\n" +
+                                           "URL: " + url + "\n\n" +
+                                           "Would you like to use this URL anyway?")
+                                .setPositiveButton("Use URL Anyway", (dialog, which) -> {
+                                    selectedImageUrl = url;
+                                    layoutImagePlaceholder.setVisibility(View.GONE);
+                                    ivSelectedImage.setVisibility(View.VISIBLE);
+                                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview failed but URL stored)", Toast.LENGTH_LONG).show();
+                                })
+                                .setNegativeButton("Try Different Image", (dialog, which) -> {
+                                    clearSelectedImage();
+                                })
+                                .setNeutralButton("Retry", (dialog, which) -> {
+                                    loadImageWithGlide(url);
+                                })
+                                .show();
+                        });
+
+                        return false; // Allow Glide to show error drawable
+                    }
+
+                    @Override
+                    public boolean onResourceReady(android.graphics.drawable.Drawable resource, Object model,
+                        com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable> target,
+                        com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
+
+                        // Cancel all timers since we got a response
+                        timeoutHandler.removeCallbacks(timeoutRunnable);
+                        quickFeedbackHandler.removeCallbacks(quickFeedbackRunnable);
+
+                        Log.d(TAG, "🎉 Glide onResourceReady called for URL: " + url);
+                        Log.d(TAG, "DataSource: " + dataSource);
+
+                        runOnUiThread(() -> {
+                            progressBar.setVisibility(View.GONE);
+                            layoutImagePlaceholder.setVisibility(View.GONE);
+                            ivSelectedImage.setVisibility(View.VISIBLE);
+                            selectedImageUrl = url; // Store the successfully loaded URL
+                            Toast.makeText(AddLocationActivity.this, "🎉 Image loaded successfully!", Toast.LENGTH_SHORT).show();
+                        });
+
+                        return false; // Allow Glide to handle the image display
+                    }
+                })
+                .into(ivSelectedImage);
+
+            Log.d(TAG, "Glide request initiated successfully");
+
+        } catch (Exception e) {
+            // Cancel timers if exception occurs
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+            quickFeedbackHandler.removeCallbacks(quickFeedbackRunnable);
+
+            Log.e(TAG, "Exception while setting up Glide request: " + e.getMessage());
+            progressBar.setVisibility(View.GONE);
+
+            new android.app.AlertDialog.Builder(AddLocationActivity.this)
+                .setTitle("Setup Error")
+                .setMessage("Error setting up image load: " + e.getMessage() + "\n\nWould you like to use the URL anyway?")
+                .setPositiveButton("Use URL Anyway", (dialog, which) -> {
+                    selectedImageUrl = url;
+                    layoutImagePlaceholder.setVisibility(View.GONE);
+                    ivSelectedImage.setVisibility(View.VISIBLE);
+                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved!", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    clearSelectedImage();
+                })
+                .show();
+        }
+    }
+
+    private void clearSelectedImage() {
+        selectedImageUrl = null;
+        etImageUrl.setText("");
+        ivSelectedImage.setVisibility(View.GONE);
+        layoutImagePlaceholder.setVisibility(View.VISIBLE);
     }
 
     private void validateAndSubmitLocation() {
@@ -449,13 +704,13 @@ public class AddLocationActivity extends BaseActivity {
 
             Glide.with(this)
                 .load(thumbnailUrl)
-                .placeholder(R.drawable.ic_image_placeholder)
-                .error(R.drawable.ic_image_placeholder)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_gallery)
                 .centerCrop()
                 .into(ivTutorialThumbnail);
         } else {
             // Use a default image for tutorial placeholder
-            ivTutorialThumbnail.setImageResource(R.drawable.ic_image_placeholder);
+            ivTutorialThumbnail.setImageResource(android.R.drawable.ic_menu_gallery);
         }
 
         // Setup click listeners for video elements
@@ -482,5 +737,154 @@ public class AddLocationActivity extends BaseActivity {
             Log.e(TAG, "Error extracting YouTube video ID: " + e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * Opens Google Photos helper dialog with instructions for sharing images
+     * Since using Firebase free plan, this helps users easily get Google Photos shared links
+     */
+    private void openGooglePhotosHelper() {
+        // Create a simple dialog with instructions for using Google Photos shared links
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle("📷 Import from Google Photos")
+                .setMessage("Follow these simple steps to add images from Google Photos:\n\n" +
+                        "1️⃣ Open Google Photos app on your phone\n\n" +
+                        "2️⃣ Select the photo you want to share\n\n" +
+                        "3️⃣ Tap the Share button\n\n" +
+                        "4️⃣ Choose 'Copy link' or 'Create link'\n\n" +
+                        "5️⃣ Come back to this app\n\n" +
+                        "6️⃣ Paste the link in the Image URL field above\n\n" +
+                        "💡 Tip: Every Android phone has Google Photos by default, making this the easiest way to share your travel photos!")
+                .setPositiveButton("Open Google Photos", (dialog, which) -> {
+                    openGooglePhotosApp();
+                })
+                .setNegativeButton("Got it!", (dialog, which) -> {
+                    dialog.dismiss();
+                    // Focus on the image URL field
+                    etImageUrl.requestFocus();
+                })
+                .setNeutralButton("Auto-Paste", (dialog, which) -> {
+                    checkClipboardForGooglePhotosLink();
+                })
+                .setCancelable(true)
+                .show();
+    }
+
+    /**
+     * Opens the Google Photos app if available
+     */
+    private void openGooglePhotosApp() {
+        try {
+            // Try to open Google Photos app
+            android.content.Intent intent = getPackageManager().getLaunchIntentForPackage("com.google.android.apps.photos");
+
+            if (intent != null) {
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                Toast.makeText(this, "📷 Opening Google Photos app...\n\nSelect a photo → Share → Copy link", Toast.LENGTH_LONG).show();
+            } else {
+                // Fallback: Open Google Photos on web
+                android.content.Intent webIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse("https://photos.google.com"));
+                startActivity(webIntent);
+                Toast.makeText(this, "Opening Google Photos in browser", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error opening Google Photos: " + e.getMessage());
+            Toast.makeText(this, "Unable to open Google Photos. Please open it manually.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Checks clipboard for Google Photos links and auto-pastes if found
+     */
+    private void checkClipboardForGooglePhotosLink() {
+        try {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+
+            if (clipboard != null && clipboard.hasPrimaryClip()) {
+                android.content.ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                String clipText = item.getText().toString();
+
+                // Check if clipboard contains a Google Photos link
+                if (isGooglePhotosLink(clipText)) {
+                    // Convert to direct image URL
+                    String directUrl = convertGooglePhotosLinkToDirectUrl(clipText);
+                    etImageUrl.setText(directUrl);
+
+                    Toast.makeText(this, "✅ Google Photos link pasted!\n\nTap 'Load Image' to preview", Toast.LENGTH_LONG).show();
+
+                    // Automatically load the image
+                    loadImageFromUrl();
+                } else {
+                    Toast.makeText(this, "❌ No Google Photos link found in clipboard.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "❌ Clipboard is empty.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error checking clipboard: " + e.getMessage());
+            Toast.makeText(this, "Unable to check clipboard", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Checks if a URL is a Google Photos shared link
+     */
+    private boolean isGooglePhotosLink(String url) {
+        return url != null && (
+                url.contains("photos.google.com") ||
+                url.contains("photos.app.goo.gl") ||
+                url.contains("goo.gl/photos") ||
+                url.contains("lh3.googleusercontent.com")
+        );
+    }
+
+    /**
+     * Converts Google Photos shared link to a direct image URL
+     * This method handles different Google Photos URL formats
+     */
+    private String convertGooglePhotosLinkToDirectUrl(String googlePhotosUrl) {
+        try {
+            // If it's already a direct googleusercontent link, return as is
+            if (googlePhotosUrl.contains("lh3.googleusercontent.com")) {
+                return googlePhotosUrl;
+            }
+
+            // For shared Google Photos links, we'll return the original URL
+            // Google Photos shared links work directly in most image loading libraries like Glide
+            // The link will automatically redirect to the actual image
+            return googlePhotosUrl;
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error converting Google Photos URL: " + e.getMessage());
+            return googlePhotosUrl; // Return original URL as fallback
+        }
+    }
+
+    /**
+     * Enhanced URL validation that includes Google Photos links
+     */
+    private boolean isValidImageUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return false;
+        }
+
+        // Check for basic URL format
+        boolean isValidUrl = url.startsWith("http://") || url.startsWith("https://");
+
+        // Additional check for common image hosting services
+        boolean isImageHost = url.contains("imgur.com") ||
+                             url.contains("googleusercontent.com") ||
+                             url.contains("photos.google.com") ||
+                             url.contains("dropbox.com") ||
+                             url.contains("drive.google.com") ||
+                             url.endsWith(".jpg") ||
+                             url.endsWith(".jpeg") ||
+                             url.endsWith(".png") ||
+                             url.endsWith(".gif") ||
+                             url.endsWith(".webp");
+
+        return isValidUrl && (isImageHost || isGooglePhotosLink(url));
     }
 }

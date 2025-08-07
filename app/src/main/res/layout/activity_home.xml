@@ -42,7 +42,9 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             app:singleSelection="true"
-            app:singleLine="true">
+            app:singleLine="true"
+            app:chipSpacing="8dp"
+            app:chipSpacingHorizontal="8dp">
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Filter"

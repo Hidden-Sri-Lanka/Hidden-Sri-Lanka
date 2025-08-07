@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--Cleanup done 2025-08-04 -->
-<!--    Primary Color Palette for Hidden Sri Lanka-->
-<!--    Background Colors-->
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
+    <!-- Primary Color Palette for Hidden Sri Lanka -->
+
+    <!-- Background Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="offWhite">#F8F8F8</color>
 
-<!--    Brand Colors-->
-<!--    Primary text, headings, and main UI elements-->
+    <!-- Brand Colors -->
     <color name="NavyBlue">#2C3E50</color>
-
-<!--    Primary buttons and forest-themed elements-->
-    <color name="DeepForestGreen">#3A6B35</color>
-
-<!--    Secondary buttons and links-->
+    <color name="DeepForestGreen">#1B4332</color>
+    <color name="ForestGreen">#2D5A40</color>
     <color name="Tanbrown">#B38867</color>
-
-<!--    Accent colors for highlights, ratings, and special features-->
     <color name="GoldSand">#D4A373</color>
-    <color name="GoldYellow">#FFAE00</color>
-
-<!--    Secondary action color-->
+    <color name="GoldYellow">#FFD700</color>
     <color name="Blue2">#0E28EB</color>
+    <color name="LightSand">#F5E6D3</color>
 
-<!--    Utility Colors (only keep what's actually used)-->
+    <!-- Material Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <!-- Utility Colors -->
+    <color name="gray">#808080</color>
+    <color name="lightGray">#D3D3D3</color>
     <color name="light_gray">#C8C8C8</color>
-    <color name="toolbar_background_color">#FFFFFF</color>
-
-<!--    Transparent Colors (only commonly used ones)-->
+    <color name="darkGray">#404040</color>
+    <color name="transparent">#00000000</color>
     <color name="white_transparent">#80FFFFFF</color>
     <color name="black_transparent">#80000000</color>
 
+    <!-- Status Colors -->
+    <color name="error">#F44336</color>
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FF9800</color>
+
+    <!-- Toolbar -->
+    <color name="toolbar_background_color">#FFFFFF</color>
 </resources>
