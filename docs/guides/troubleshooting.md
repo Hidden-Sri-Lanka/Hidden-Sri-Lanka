@@ -255,4 +255,5 @@ To help us solve your problem:
 4. **Test with different user account** if possible
 
 ---
+
 *Most issues can be resolved with these solutions. If problems persist, don't hesitate to reach out for additional support through the app's About Us section.*

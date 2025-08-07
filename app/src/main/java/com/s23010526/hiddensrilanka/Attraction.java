@@ -3,36 +3,79 @@ package com.s23010526.hiddensrilanka;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Attraction - Data model class for tourist attractions in Sri Lanka
+ *
+ * This class demonstrates key object-oriented programming and Android development concepts:
+ * 1. Data encapsulation with private fields and public getters/setters
+ * 2. Firebase integration with proper constructor patterns
+ * 3. Flexible data structure supporting multiple use cases
+ * 4. Location-based data modeling with coordinates and administrative divisions
+ * 5. Support for placeholder entries and dynamic content loading
+ *
+ * Academic Learning Outcomes:
+ * - Object-oriented design principles
+ * - Database integration patterns
+ * - Data validation and type safety
+ * - Memory-efficient collection usage
+ * - Flexible architecture for different data sources
+ */
 public class Attraction {
-    private String documentId;
-    private String name;
-    private String category;
-    private String description;
-    private String youtubeUrl;
-    private List<String> images;
+    // Core identification and content fields
+    private String documentId;      // Firebase document ID for database operations
+    private String name;           // Primary attraction name (e.g., "Udawalawe National Park")
+    private String category;       // Type classification (Historical, Waterfall, Beach, etc.)
+    private String description;    // Detailed description for display
+    private String youtubeUrl;     // Optional video content URL
+    private List<String> images;   // Collection of image URLs (supports multiple photos)
 
-    // New fields for contributor information
-    private String contributorName;
-    private long contributedAt;
+    // Contributor tracking fields - demonstrates community aspect
+    private String contributorName; // User who added this attraction
+    private long contributedAt;     // Timestamp of contribution (Unix timestamp)
 
-    // Location fields
-    private String city;
-    private String province;
+    // Geographic classification fields - supports location-based queries
+    private String city;           // City/town location (e.g., "Embilipitiya")
+    private String province;       // Administrative province in Sri Lanka
 
-    // Additional fields for LocationDetailActivity
-    private String imageUrl;
-    private double latitude;
-    private double longitude;
+    // Enhanced location fields for navigation and mapping
+    private String imageUrl;       // Primary image URL (for backward compatibility)
+    private double latitude;       // GPS coordinate for precise location
+    private double longitude;      // GPS coordinate for precise location
 
-    // Field to identify placeholder entries
-    private boolean isPlaceholder;
+    // Special state field for UI placeholder handling
+    private boolean isPlaceholder; // Indicates "grow our database" entries
 
-    // Firebase requires a public, no-argument constructor
+    /**
+     * Default constructor required by Firebase
+     *
+     * Firebase requires a public, no-argument constructor for automatic
+     * object serialization/deserialization from Firestore documents.
+     *
+     * Academic Learning: Understanding framework requirements and
+     * designing classes that work with external libraries.
+     */
     public Attraction() {
+        // Initialize collections to prevent null pointer exceptions
         this.images = new ArrayList<>();
     }
 
-    // Constructor with all fields including contributor info and location
+    /**
+     * Comprehensive constructor for creating complete attraction objects
+     *
+     * This constructor demonstrates proper object initialization with
+     * all required fields and null-safety for optional parameters.
+     *
+     * @param documentId Firebase document identifier
+     * @param name Attraction name
+     * @param category Attraction type/category
+     * @param description Detailed description
+     * @param youtubeUrl Optional video URL
+     * @param images List of image URLs
+     * @param contributorName User who added this attraction
+     * @param contributedAt Timestamp of contribution
+     * @param city City location
+     * @param province Province location
+     */
     public Attraction(String documentId, String name, String category, String description,
                      String youtubeUrl, List<String> images, String contributorName, long contributedAt,
                      String city, String province) {
@@ -41,6 +84,7 @@ public class Attraction {
         this.category = category;
         this.description = description;
         this.youtubeUrl = youtubeUrl;
+        // Null-safe initialization - prevents runtime errors
         this.images = images != null ? images : new ArrayList<>();
         this.contributorName = contributorName;
         this.contributedAt = contributedAt;
@@ -48,7 +92,21 @@ public class Attraction {
         this.province = province;
     }
 
-    // Constructor with all fields including contributor info
+    /**
+     * Constructor with all fields including contributor info
+     *
+     * This constructor is used when contributor information is available,
+     * but detailed location data is not required.
+     *
+     * @param documentId Firebase document identifier
+     * @param name Attraction name
+     * @param category Attraction type/category
+     * @param description Detailed description
+     * @param youtubeUrl Optional video URL
+     * @param images List of image URLs
+     * @param contributorName User who added this attraction
+     * @param contributedAt Timestamp of contribution
+     */
     public Attraction(String documentId, String name, String category, String description,
                      String youtubeUrl, List<String> images, String contributorName, long contributedAt) {
         this.documentId = documentId;
@@ -61,7 +119,20 @@ public class Attraction {
         this.contributedAt = contributedAt;
     }
 
-    // Constructor for basic attraction
+    /**
+     * Constructor for basic attraction
+     *
+     * This constructor is used for creating attraction objects with
+     * only the essential information. Ideal for placeholder entries
+     * or simplified views.
+     *
+     * @param documentId Firebase document identifier
+     * @param name Attraction name
+     * @param category Attraction type/category
+     * @param description Detailed description
+     * @param youtubeUrl Optional video URL
+     * @param images List of image URLs
+     */
     public Attraction(String documentId, String name, String category, String description,
                      String youtubeUrl, List<String> images) {
         this.documentId = documentId;

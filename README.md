@@ -4,14 +4,36 @@
 
 A mobile application for discovering hidden gems and lesser-known attractions across Sri Lanka, powered by community contributions and location-based recommendations.
 
+**Academic Project**: Mobile Application Development  
+**Institution**: Open University of Sri Lanka (OUSL)  
+**Degree Program**: Bachelor of Software Engineering  
+**Project Focus**: Android development with Firebase integration
+
 ## 📱 Features
 
 - **🌍 Location-Based Discovery**: Automatically detects your location and shows nearby attractions
 - **🔍 Smart Filtering**: Filter attractions by categories (Historical Sites, Waterfalls, Beaches, etc.)
-- **➕ Community Contributions**: Add new hidden gems to help fellow travelers
+- **➕ Community Contributions**: Add new hidden gems with Google Photos integration
+- **📍 Intelligent Directions**: Three-level fallback system for navigation (coordinates → geocoding → search)
+- **🖼️ Google Photos Integration**: Seamless image sharing using Google Photos links
 - **🔐 Persistent Login**: Stay logged in across app sessions
-- **📍 Manual Search**: Search for attractions in specific Sri Lankan cities
-- **📱 Modern UI**: Clean, intuitive Material Design interface
+- **📱 Manual Search**: Search for attractions in specific Sri Lankan cities
+- **🎨 Modern UI**: Clean, intuitive Material Design interface
+- **📲 Robust Error Handling**: Comprehensive fallback systems for reliability
+
+## 🔧 Recent Improvements
+
+As part of my development process, I've implemented several key fixes and enhancements:
+
+### Data Flow Fixes
+- **Intent Data Passing**: Resolved issue where location details page showed empty data due to mismatched intent keys
+- **Image Loading**: Fixed Google Photos URLs not displaying in location details by adding proper URL processing
+- **Navigation System**: Implemented intelligent directions with geocoding fallback when coordinates are missing
+
+### User Experience Enhancements
+- **Smart Directions**: Now works even when location coordinates aren't stored in database
+- **Image Support**: Enhanced Google Photos integration across all screens
+- **Error Recovery**: Added comprehensive error handling with user-friendly fallbacks
 
 ## 🚀 Quick Start
 
@@ -23,7 +45,7 @@ A mobile application for discovering hidden gems and lesser-known attractions ac
 ### Installation
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/Hidden-Sri-Lanka.git
+   git clone https://github.com/Hidden-Sri-Lanka/Hidden-Sri-Lanka.git
    cd Hidden-Sri-Lanka
    ```
 
@@ -39,147 +61,83 @@ A mobile application for discovering hidden gems and lesser-known attractions ac
    ./gradlew installDebug
    ```
 
+## 🏗️ Architecture & Technical Details
+
+This project demonstrates several key Android development concepts learned during my studies:
+
+### Core Technologies
+- **Android SDK**: Native Android development with Java
+- **Firebase**: Real-time database and authentication
+- **Glide**: Efficient image loading and caching
+- **Material Design**: Modern UI/UX principles
+- **Location Services**: GPS integration and geocoding
+- **Intent System**: Activity communication and data passing
+
+### Key Learning Outcomes
+- **Activity Lifecycle**: Proper management of Android activity states
+- **Background Processing**: Threading for network operations and geocoding
+- **Error Handling**: Implementing robust fallback systems
+- **Database Integration**: Firestore integration with real-time updates
+- **Image Processing**: Google Photos URL conversion and image loading
+- **User Experience**: Creating intuitive navigation and feedback systems
+
 ## 📚 Documentation
 
 ### Core Features
 - [🔐 Authentication System](docs/features/authentication.md) - Login, signup, and session management
 - [🏠 Home & Discovery](docs/features/home-discovery.md) - Location detection and attraction browsing
 - [🔍 Filtering System](docs/features/filtering.md) - Category-based attraction filtering
-- [📍 Location Details](docs/features/location-details.md) - Detailed attraction information
-- [➕ Add Locations](docs/features/add-locations.md) - Community contribution system
+- [📍 Location Details](docs/features/location-details.md) - Detailed attraction information with intelligent directions
+- [➕ Add Locations](docs/features/add-locations.md) - Community contribution system with Google Photos
 - [🧭 Navigation](docs/features/navigation.md) - App navigation and menu system
+- [🖼️ Google Photos Integration](docs/features/google-photos-integration.md) - Image sharing and URL processing
 
-### Setup & Development
-- [⚙️ Installation Guide](docs/setup/installation.md) - Complete setup instructions
-- [🔥 Firebase Integration](docs/setup/firebase.md) - Backend configuration
-- [🏗️ Architecture](docs/setup/architecture.md) - App structure and design patterns
-- [📡 API Reference](docs/api/endpoints.md) - Firebase collections and data models
+### Development Guides
+- [📋 Installation Guide](docs/setup/installation.md) - Complete setup instructions
+- [🏗️ Architecture Overview](docs/setup/architecture.md) - Technical architecture and design patterns
+- [🔥 Firebase Configuration](docs/setup/firebase.md) - Database and authentication setup
+- [🐛 Troubleshooting](docs/guides/troubleshooting.md) - Common issues and solutions
 
-### User Guides
-- [🚀 Getting Started](docs/guides/getting-started.md) - First-time user guide
-- [🤝 Contributing Locations](docs/guides/contributing.md) - How to add new attractions
-- [🔧 Troubleshooting](docs/guides/troubleshooting.md) - Common issues and solutions
+## 🎓 Academic Context
 
-## 🏗️ Architecture
+This application serves as my final project for the Mobile Application Development course at OUSL. The project showcases:
 
-```
-┌─────────────────────────────────────────┐
-│                View Layer               │
-│  Activities, Layouts, Adapters         │
-├─────────────────────────────────────────┤
-│              Controller Layer           │
-│  BaseActivity, Session Management      │
-├─────────────────────────────────────────┤
-│                Model Layer              │
-│  Data Classes, Firebase Integration     │
-└─────────────────────────────────────────┘
-```
+### Learning Objectives Met
+- **Android Fundamentals**: Activities, intents, and lifecycle management
+- **Database Integration**: Real-time data synchronization with Firestore
+- **Location Services**: GPS integration and geocoding APIs
+- **Image Processing**: Efficient loading and Google Photos integration
+- **User Interface Design**: Material Design principles and responsive layouts
+- **Error Management**: Comprehensive error handling and user feedback
+- **Testing & Debugging**: Systematic approach to identifying and fixing issues
 
-### Key Components
-- **BaseActivity Pattern**: Consistent navigation and session management
-- **SessionManager**: Persistent login with SharedPreferences
-- **Firebase Integration**: Firestore for attractions, Realtime DB for users
-- **Location Services**: GPS-based attraction discovery
-
-## 🛠️ Tech Stack
-
-- **Android**: Native Android with Java
-- **UI Framework**: Material Design Components
-- **Backend**: Firebase (Firestore + Realtime Database)
-- **Authentication**: Custom Firebase authentication
-- **Location**: Google Play Services Location API
-- **Image Loading**: Glide
-- **Build System**: Gradle with Kotlin DSL
-
-## 📊 Project Status
-
-### ✅ Completed Features
-- [x] User authentication (login/signup)
-- [x] Persistent login sessions
-- [x] Location-based attraction discovery
-- [x] Category filtering system
-- [x] Add new locations feature
-- [x] Navigation drawer with menu
-- [x] Search functionality
-- [x] Community contribution system
-
-### 🚧 In Development
-- [ ] Google Maps integration
-- [ ] User profiles and preferences
-- [ ] Favorites system
-- [ ] Photo upload functionality
-- [ ] Dark theme support
-
-### 🗺️ Future Plans
-- [ ] Offline map support
-- [ ] User reviews and ratings
-- [ ] Social features (follow travelers)
-- [ ] Advanced search filters
-- [ ] Multi-language support
-- [ ] AR features for attraction discovery
+### Development Challenges Overcome
+1. **Data Passing Between Activities**: Resolved intent key mismatches that prevented proper data flow
+2. **Image Loading Issues**: Implemented Google Photos URL processing for seamless image display
+3. **Navigation Reliability**: Created intelligent fallback system for directions when coordinates are missing
+4. **Performance Optimization**: Implemented efficient background processing for geocoding operations
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Here's how you can help:
+While this is primarily an academic project, I welcome feedback and suggestions from fellow students and developers. If you find any issues or have improvement suggestions:
 
-### Adding Attractions
-1. Use the "Add Location" feature in the app
-2. Provide detailed descriptions and quality images
-3. Follow our [Contributing Guidelines](docs/guides/contributing.md)
+1. Open an issue describing the problem or enhancement
+2. For bug reports, include device information and reproduction steps
+3. Feel free to suggest new features that could enhance the learning experience
 
-### Code Contributions
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## 📞 Contact
 
-### Bug Reports
-- Use GitHub Issues to report bugs
-- Include device model, Android version, and steps to reproduce
-- Check [Troubleshooting Guide](docs/guides/troubleshooting.md) first
+**Student**: [Your Name]  
+**Institution**: Open University of Sri Lanka  
+**Program**: Bachelor of Software Engineering  
+**Course**: Mobile Application Development  
 
-## 📱 Screenshots
-
-| Splash Screen | Home Screen | Add Location |
-|---------------|-------------|--------------|
-| ![Splash](img-Markdown/Splash_Screen.png) | ![Home](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Add](img-Markdown/Explor_and_Shere.png) |
-
-| Login | Location Details | Navigation |
-|-------|------------------|------------|
-| ![Login](img-Markdown/Login.png) | ![Details](img-Markdown/Location_Details.png) | ![Nav](img-Markdown/sidePanel.png) |
+For academic inquiries or technical questions about this project, please use the GitHub issues section.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
-
-**Developer**: S23010526  
-**University**: OUSl (Open University Of Sri Lanka) </br>
-**Course**: Mobile Application Development  
-
-## 🙏 Acknowledgments
-
-- **Firebase** for providing robust backend services
-- **Material Design** for the beautiful UI components
-
-## 📞 Support
-
-- **Documentation**: Check our comprehensive [docs](docs/)
-- **Issues**: Use GitHub Issues for bug reports
-- **Contact**: Through app's "About Us" section
-
-## 🌟 Show Your Support
-
-If you find this project helpful, please consider:
-- ⭐ Starring the repository
-- 🐛 Reporting bugs and issues
-- 🗺️ Contributing new attraction locations
-- 📢 Sharing with fellow travelers
+This project is developed for academic purposes as part of my degree program at OUSL. Please respect the educational nature of this work.
 
 ---
 
-**Made with ❤️ for Sri Lankan travelers and adventure seekers**
-
-*Discover the island's hidden treasures, one location at a time* 🌴
+*Developed with dedication to showcasing practical Android development skills and contributing to Sri Lanka's tourism discovery platform.*
