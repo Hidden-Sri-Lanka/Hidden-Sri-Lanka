@@ -156,16 +156,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Team
 
 **Developer**: S23010526  
-**University**: SLIIT (Sri Lanka Institute of Information Technology)  
+**University**: OUSl (Open University Of Sri Lanka)
 **Course**: Mobile Application Development  
 
 ## 🙏 Acknowledgments
 
 - **Firebase** for providing robust backend services
 - **Material Design** for the beautiful UI components
-- **Sri Lankan Tourism Board** for inspiration
-- **Community Contributors** for sharing hidden gems
-- **SLIIT** for educational support
 
 ## 📞 Support
 
