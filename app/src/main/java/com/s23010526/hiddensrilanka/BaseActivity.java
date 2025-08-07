@@ -27,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     protected ActivityBaseBinding binding; // Binding for the base layout
     private ActionBarDrawerToggle drawerToggle;
+    protected SessionManager sessionManager; // Add SessionManager
 
     @LayoutRes
     protected abstract int getLayoutResourceId(); // Child activities need to provide their content layout
@@ -36,6 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize SessionManager
+        sessionManager = new SessionManager(this);
 
         binding = ActivityBaseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -160,9 +164,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         } else if (itemId == R.id.nav_profile) {
             Toast.makeText(this, "Profile Feature not available Now ...", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_log_out) {
-            intent = new Intent(this, LoginActivity.class);
+            // Clear session data
+            sessionManager.logoutUser();
+
+            // Redirect to WelcomeActivity and clear the activity stack
+            intent = new Intent(this, WelcomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            Toast.makeText(this, "Log Out", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
         }
 
         if (intent != null) {

@@ -1,117 +1,188 @@
-# Hidden Sri Lanka Mobile App
-Welcome to the official repository for Hidden Sri Lanka, your ultimate mobile guide to uncovering the undiscovered gems of Sri Lanka! This app is designed to help tourists explore beautiful, lesser-known destinations beyond the typical guidebook.
+# Hidden Sri Lanka 🇱🇰
 
-## 🎨 Image Gallery
-Here’s a glimpse into the app's design and user interface.
+> Discover the wonders beyond the guidebook
 
-| About Us         | Explore and Share          | Home Screen                    |
-|------------------|---------------------------|-------------------------------|
-| ![About Us](img-Markdown/About_Us.png) | ![Explore_and_Share](img-Markdown/Explor_and_Shere.png) | ![Home Screen](img-Markdown/Hidden_Sri_Lanka_home_screen.png) |
+A mobile application for discovering hidden gems and lesser-known attractions across Sri Lanka, powered by community contributions and location-based recommendations.
 
-| Location Details         | Login           | Map                       |
-|-------------------------|-----------------|---------------------------|
-| ![Location Details](img-Markdown/Location_Details.png) | ![Login](img-Markdown/Login.png) | ![Map](img-Markdown/map.png) |
+## 📱 Features
 
-| Settings          | Side Panel           | Sign Up                   |
-|-------------------|---------------------|---------------------------|
-| ![Settings](img-Markdown/Setings.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Sign Up](img-Markdown/SinUp.png) |
+- **🌍 Location-Based Discovery**: Automatically detects your location and shows nearby attractions
+- **🔍 Smart Filtering**: Filter attractions by categories (Historical Sites, Waterfalls, Beaches, etc.)
+- **➕ Community Contributions**: Add new hidden gems to help fellow travelers
+- **🔐 Persistent Login**: Stay logged in across app sessions
+- **📍 Manual Search**: Search for attractions in specific Sri Lankan cities
+- **📱 Modern UI**: Clean, intuitive Material Design interface
 
-| Splash Screen           | Welcome Screen          |
-|------------------------|------------------------|
-| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome Screen](img-Markdown/Welcome.png) |
+## 🚀 Quick Start
 
+### Prerequisites
+- Android Studio Arctic Fox (2020.3.1) or newer
+- Android SDK API 21+ (Android 5.0+)
+- Firebase account for backend services
 
-## 🎯 About The Project
-Hidden Sri Lanka is your ultimate mobile companion designed to help tourists discover and navigate the countless beautiful but lesser-known destinations across Sri Lanka. Our mission is to uncover the wonders beyond the guidebook, providing accessible and reliable information about hidden beaches, scenic hikes, and unique cultural sites, ensuring an enhanced tourist experience for every explorer.
+### Installation
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/Hidden-Sri-Lanka.git
+   cd Hidden-Sri-Lanka
+   ```
 
-## ✨ Key Features
+2. **Setup Firebase**
+   - Create a Firebase project
+   - Add your `google-services.json` to `app/` directory
+   - Enable Firestore and Realtime Database
+   - Configure authentication
 
-- **User Authentication 🔑**: Secure sign-up and login functionality using Firebase Realtime Database.
+3. **Build and Run**
+   ```bash
+   ./gradlew clean build
+   ./gradlew installDebug
+   ```
 
-- **Dynamic Home Page 🏞️:** Displays a list of nearby attractions fetched from a Firestore database based on the user's current city.
+## 📚 Documentation
 
-- **Location-Based Discovery 📍**: Utilizes the device's location to find and suggest local points of interest.
+### Core Features
+- [🔐 Authentication System](docs/features/authentication.md) - Login, signup, and session management
+- [🏠 Home & Discovery](docs/features/home-discovery.md) - Location detection and attraction browsing
+- [🔍 Filtering System](docs/features/filtering.md) - Category-based attraction filtering
+- [📍 Location Details](docs/features/location-details.md) - Detailed attraction information
+- [➕ Add Locations](docs/features/add-locations.md) - Community contribution system
+- [🧭 Navigation](docs/features/navigation.md) - App navigation and menu system
 
-- **Category Filtering 🗂️:** Users can filter attractions by categories such as "Historical Site," "WaterFall," and more.
+### Setup & Development
+- [⚙️ Installation Guide](docs/setup/installation.md) - Complete setup instructions
+- [🔥 Firebase Integration](docs/setup/firebase.md) - Backend configuration
+- [🏗️ Architecture](docs/setup/architecture.md) - App structure and design patterns
+- [📡 API Reference](docs/api/endpoints.md) - Firebase collections and data models
 
-- **Interactive Map View 🗺️**: An integrated map to explore all locations visually. (Feature in development).
+### User Guides
+- [🚀 Getting Started](docs/guides/getting-started.md) - First-time user guide
+- [🤝 Contributing Locations](docs/guides/contributing.md) - How to add new attractions
+- [🔧 Troubleshooting](docs/guides/troubleshooting.md) - Common issues and solutions
 
-- **Favorites System ❤️**: Ability for users to save their favorite attractions. (Feature in development).
+## 🏗️ Architecture
 
-- **Centralized Navigation 🧭**: A smooth and consistent user experience with a navigation drawer and a shared BaseActivity.
+```
+┌─────────────────────────────────────────┐
+│                View Layer               │
+│  Activities, Layouts, Adapters         │
+├─────────────────────────────────────────┤
+│              Controller Layer           │
+│  BaseActivity, Session Management      │
+├─────────────────────────────────────────┤
+│                Model Layer              │
+│  Data Classes, Firebase Integration     │
+└─────────────────────────────────────────┘
+```
 
-- **Search Functionality 🔍**: A search bar is integrated into the toolbar for finding specific locations.
+### Key Components
+- **BaseActivity Pattern**: Consistent navigation and session management
+- **SessionManager**: Persistent login with SharedPreferences
+- **Firebase Integration**: Firestore for attractions, Realtime DB for users
+- **Location Services**: GPS-based attraction discovery
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-This project is built using a variety of modern Android development technologies:
+- **Android**: Native Android with Java
+- **UI Framework**: Material Design Components
+- **Backend**: Firebase (Firestore + Realtime Database)
+- **Authentication**: Custom Firebase authentication
+- **Location**: Google Play Services Location API
+- **Image Loading**: Glide
+- **Build System**: Gradle with Kotlin DSL
 
-**Language:**
+## 📊 Project Status
 
-- Java
+### ✅ Completed Features
+- [x] User authentication (login/signup)
+- [x] Persistent login sessions
+- [x] Location-based attraction discovery
+- [x] Category filtering system
+- [x] Add new locations feature
+- [x] Navigation drawer with menu
+- [x] Search functionality
+- [x] Community contribution system
 
-**Architecture:**
+### 🚧 In Development
+- [ ] Google Maps integration
+- [ ] User profiles and preferences
+- [ ] Favorites system
+- [ ] Photo upload functionality
+- [ ] Dark theme support
 
-Activity-based structure with a central BaseActivity for shared UI and logic.
+### 🗺️ Future Plans
+- [ ] Offline map support
+- [ ] User reviews and ratings
+- [ ] Social features (follow travelers)
+- [ ] Advanced search filters
+- [ ] Multi-language support
+- [ ] AR features for attraction discovery
 
-**Database:**
+## 🤝 Contributing
 
-- Firebase Realtime Database: For user authentication and data storage.
+We welcome contributions from the community! Here's how you can help:
 
-- Cloud Firestore: For storing and querying attraction data.
+### Adding Attractions
+1. Use the "Add Location" feature in the app
+2. Provide detailed descriptions and quality images
+3. Follow our [Contributing Guidelines](docs/guides/contributing.md)
 
-**Android Components:**
+### Code Contributions
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- RecyclerView with CardView for displaying lists of attractions.
+### Bug Reports
+- Use GitHub Issues to report bugs
+- Include device model, Android version, and steps to reproduce
+- Check [Troubleshooting Guide](docs/guides/troubleshooting.md) first
 
-- DrawerLayout and NavigationView for the side menu.
+## 📱 Screenshots
 
-- Toolbar for a consistent action bar.
+| Splash Screen | Home Screen | Add Location |
+|---------------|-------------|--------------|
+| ![Splash](img-Markdown/Splash_Screen.png) | ![Home](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Add](img-Markdown/Explor_and_Shere.png) |
 
-- Google Maps API for map-related features.
+| Login | Location Details | Navigation |
+|-------|------------------|------------|
+| ![Login](img-Markdown/Login.png) | ![Details](img-Markdown/Location_Details.png) | ![Nav](img-Markdown/sidePanel.png) |
 
-### Libraries:
+## 📄 License
 
-- **Glide**: For efficient image loading and caching from URLs.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- **Google Play Services (Location)**: To get the user's current location.
+## 👥 Team
 
-- **Material Components for Android**: For modern UI elements like ChipGroup and MaterialButton.
+**Developer**: S23010526  
+**University**: SLIIT (Sri Lanka Institute of Information Technology)  
+**Course**: Mobile Application Development  
 
-## 🗄️ Project Structure
-The project is organized into several key components:
+## 🙏 Acknowledgments
 
-**Activities**: Each screen is an Activity (e.g., HomeActivity, LoginActivity, AboutUsActivity).
+- **Firebase** for providing robust backend services
+- **Material Design** for the beautiful UI components
+- **Sri Lankan Tourism Board** for inspiration
+- **Community Contributors** for sharing hidden gems
+- **SLIIT** for educational support
 
-**BaseActivity.java**: An abstract base class that all other activities extend. It contains the common logic for the navigation drawer, toolbar, and options menu, reducing code duplication.
+## 📞 Support
 
-**AttractionAdapter.java**: A RecyclerView.Adapter responsible for binding the Attraction data to the list items displayed on the home screen.
+- **Documentation**: Check our comprehensive [docs](docs/)
+- **Issues**: Use GitHub Issues for bug reports
+- **Contact**: Through app's "About Us" section
 
-### Data Models:
+## 🌟 Show Your Support
 
-**Attraction.java**: A POJO class representing a single tourist attraction.
+If you find this project helpful, please consider:
+- ⭐ Starring the repository
+- 🐛 Reporting bugs and issues
+- 🗺️ Contributing new attraction locations
+- 📢 Sharing with fellow travelers
 
-**HelperClass.java**: A helper class for structuring user data for Firebase Realtime Database.
+---
 
-**Layouts (.xml)**: All UI layouts are defined in XML, including activities, list items, and menus.
+**Made with ❤️ for Sri Lankan travelers and adventure seekers**
 
-**Resources**: Contains all non-code assets, such as strings (strings.xml), colors (colors.xml), and styles (styles.xml).
-
-## 💾 Database Information
-The application utilizes two separate Firebase databases for different purposes:
-
-<i>Firebase Realtime Database</i>
-
-**Purpose**: Manages user accounts (username, email, password).
-
-**Structure**: User data is stored under a users node, with each user identified by their username.
-
-- **Cloud Firestore**
-
-Purpose: Stores and serves all the data related to tourist attractions.
-
-Structure: Data is organized by city. Each city is a document within a cities collection, and each city document contains an attractions sub-collection. This allows for efficient querying of attractions based on a specific city.
-
-## 👨‍💻 Developer
-Name: Asitha Kanchana Palliyaguru <br>
-This project was developed as part of the **EEI4369 Mobile Application Development Design Project**.
+*Discover the island's hidden treasures, one location at a time* 🌴

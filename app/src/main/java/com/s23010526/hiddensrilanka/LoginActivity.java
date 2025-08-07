@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginUsername, loginPassword;
     Button loginButton;
     Button signUpRederect;
+    private SessionManager sessionManager;
 
     // Define your database URL as a constant i have given reson in Signup Activity
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
@@ -36,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        // Initialize SessionManager
+        sessionManager = new SessionManager(this);
 
         loginUsername = findViewById(R.id.userName);
         loginPassword = findViewById(R.id.password);
@@ -113,9 +117,20 @@ public class LoginActivity extends AppCompatActivity {
                         if (Objects.equals(passwordFromDB, userPassword)) {
                             credentialsValid = true;
                             loginPassword.setError(null);
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            // Pass the actual username from DB if it can differ in case from input
+
+                            // Get user data from database
                             String actualUsernameFromDB = userSnapshot.child("username").getValue(String.class);
+                            String emailFromDB = userSnapshot.child("email").getValue(String.class);
+                            String nameFromDB = userSnapshot.child("name").getValue(String.class);
+
+                            // Save session data
+                            sessionManager.createLoginSession(
+                                    actualUsernameFromDB != null ? actualUsernameFromDB : userName,
+                                    emailFromDB != null ? emailFromDB : "",
+                                    nameFromDB != null ? nameFromDB : ""
+                            );
+
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             intent.putExtra("USERNAME", actualUsernameFromDB != null ? actualUsernameFromDB : userName);
                             startActivity(intent);
                             finish();

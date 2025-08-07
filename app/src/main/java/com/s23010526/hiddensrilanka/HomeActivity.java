@@ -306,6 +306,7 @@ public class HomeActivity extends BaseActivity {
     private void tryLoadFromCity(String cityName, String category, int fallbackIndex) {
         Query query = firestoreDb.collection("cities").document(cityName).collection("attractions");
 
+        // Only apply category filter if it's not "All"
         if (!"All".equalsIgnoreCase(category)) {
             query = query.whereEqualTo("category", category);
         }
@@ -315,6 +316,9 @@ public class HomeActivity extends BaseActivity {
                 Log.d(TAG, "Query successful for " + cityName + ". Found " + task.getResult().size() + " documents.");
 
                 if (!task.getResult().isEmpty()) {
+                    // Clear previous results and add new ones
+                    attractionList.clear();
+
                     // Found attractions for this city - show them
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Attraction attraction = document.toObject(Attraction.class);
@@ -325,11 +329,12 @@ public class HomeActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(this, "Found " + attractionList.size() + " attractions in " + cityName, Toast.LENGTH_SHORT).show();
+                    String filterText = "All".equalsIgnoreCase(category) ? "all" : category;
+                    Toast.makeText(this, "Found " + attractionList.size() + " " + filterText + " attractions in " + cityName, Toast.LENGTH_SHORT).show();
                 } else {
                     // No attractions found for this city - show community growth entry
                     Log.d(TAG, "No attractions found for " + cityName + ", showing community growth entry");
-                    showPlaceholderEntry(cityName); // Changed back to show the grow database entry
+                    showPlaceholderEntry(cityName);
                 }
             } else {
                 Exception exception = task.getException();

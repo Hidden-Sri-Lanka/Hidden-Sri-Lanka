@@ -18,11 +18,15 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     // private static final long SPLASH_TIMEOUT = 5000;  (Changed to another method for delay )
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize SessionManager
+        sessionManager = new SessionManager(this);
 
         // -------------------------------------- Fading Animation & Transition Logic ------------------------------------------
         ImageView imageViewToFadeIn = findViewById(R.id.splashImage);
@@ -39,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // Animation ended, NOW start the transition to WelcomeActivity
-                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                startActivity(intent);
+                // Check if user is already logged in
+                if (sessionManager.isLoggedIn()) {
+                    // User is logged in, go directly to HomeActivity
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra("USERNAME", sessionManager.getUsername());
+                    startActivity(intent);
+                } else {
+                    // User is not logged in, go to WelcomeActivity
+                    Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    startActivity(intent);
+                }
 
                 // Finish this MainActivity so the user can't navigate back to the splash screen
                 finish();
