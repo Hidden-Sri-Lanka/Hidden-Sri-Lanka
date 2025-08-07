@@ -40,6 +40,36 @@ This project includes comprehensive documentation to help you understand, setup,
 
 - **[Project Documentation README](docs/README.md)** - Documentation overview and structure
 
+## 📱 App Screenshots
+
+### Main Application Flow
+
+<div align="center">
+
+| Splash Screen | Welcome Screen | Login Screen |
+|:-------------:|:--------------:|:------------:|
+| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome](img-Markdown/Welcome.png) | ![Login](img-Markdown/Login.png) |
+
+| Sign Up | Home Screen | Location Details |
+|:-------:|:-----------:|:----------------:|
+| ![Sign Up](img-Markdown/SinUp.png) | ![Home Screen](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Location Details](img-Markdown/Location_Details.png) |
+
+</div>
+
+### Core Features
+
+<div align="center">
+
+| Map Integration | Side Panel | Settings |
+|:---------------:|:----------:|:--------:|
+| ![Map](img-Markdown/map.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Settings](img-Markdown/Setings.png) |
+
+| Explore & Share | About Us | App Icon |
+|:---------------:|:--------:|:--------:|
+| ![Explore and Share](img-Markdown/Explor_and_Shere.png) | ![About Us](img-Markdown/About_Us.png) | ![Hidden Sri Lanka](img-Markdown/Hidden_Sri_Lanka.png) |
+
+</div>
+
 ## 🏗️ Project Structure
 
 ```text
