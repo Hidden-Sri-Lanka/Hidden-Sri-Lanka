@@ -1,143 +1,203 @@
-# Hidden Sri Lanka 🇱🇰
+# Hidden Sri Lanka Mobile App
 
-> Discover the wonders beyond the guidebook
+## 📱 Android Application Module
 
-A mobile application for discovering hidden gems and lesser-known attractions across Sri Lanka, powered by community contributions and location-based recommendations.
-
-**Academic Project**: Mobile Application Development  
-**Institution**: Open University of Sri Lanka (OUSL)  
-**Degree Program**: Bachelor of Software Engineering  
-**Project Focus**: Android development with Firebase integration
-
-## 📱 Features
-
-- **🌍 Location-Based Discovery**: Automatically detects your location and shows nearby attractions
-- **🔍 Smart Filtering**: Filter attractions by categories (Historical Sites, Waterfalls, Beaches, etc.)
-- **➕ Community Contributions**: Add new hidden gems with Google Photos integration
-- **📍 Intelligent Directions**: Three-level fallback system for navigation (coordinates → geocoding → search)
-- **🖼️ Google Photos Integration**: Seamless image sharing using Google Photos links
-- **🔐 Persistent Login**: Stay logged in across app sessions
-- **📱 Manual Search**: Search for attractions in specific Sri Lankan cities
-- **🎨 Modern UI**: Clean, intuitive Material Design interface
-- **📲 Robust Error Handling**: Comprehensive fallback systems for reliability
-
-## 🔧 Recent Improvements
-
-As part of my development process, I've implemented several key fixes and enhancements:
-
-### Data Flow Fixes
-- **Intent Data Passing**: Resolved issue where location details page showed empty data due to mismatched intent keys
-- **Image Loading**: Fixed Google Photos URLs not displaying in location details by adding proper URL processing
-- **Navigation System**: Implemented intelligent directions with geocoding fallback when coordinates are missing
-
-### User Experience Enhancements
-- **Smart Directions**: Now works even when location coordinates aren't stored in database
-- **Image Support**: Enhanced Google Photos integration across all screens
-- **Error Recovery**: Added comprehensive error handling with user-friendly fallbacks
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Android Studio Arctic Fox (2020.3.1) or newer
-- Android SDK API 21+ (Android 5.0+)
-- Firebase account for backend services
-
-### Installation
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Hidden-Sri-Lanka/Hidden-Sri-Lanka.git
-   cd Hidden-Sri-Lanka
-   ```
-
-2. **Setup Firebase**
-   - Create a Firebase project
-   - Add your `google-services.json` to `app/` directory
-   - Enable Firestore and Realtime Database
-   - Configure authentication
-
-3. **Build and Run**
-   ```bash
-   ./gradlew clean build
-   ./gradlew installDebug
-   ```
-
-## 🏗️ Architecture & Technical Details
-
-This project demonstrates several key Android development concepts learned during my studies:
-
-### Core Technologies
-- **Android SDK**: Native Android development with Java
-- **Firebase**: Real-time database and authentication
-- **Glide**: Efficient image loading and caching
-- **Material Design**: Modern UI/UX principles
-- **Location Services**: GPS integration and geocoding
-- **Intent System**: Activity communication and data passing
-
-### Key Learning Outcomes
-- **Activity Lifecycle**: Proper management of Android activity states
-- **Background Processing**: Threading for network operations and geocoding
-- **Error Handling**: Implementing robust fallback systems
-- **Database Integration**: Firestore integration with real-time updates
-- **Image Processing**: Google Photos URL conversion and image loading
-- **User Experience**: Creating intuitive navigation and feedback systems
+This directory contains the main Android application code for the Hidden Sri Lanka project, developed as part of my Mobile Application Development course at OUSL.
 
 ## 📚 Documentation
 
-### Core Features
-- [🔐 Authentication System](docs/features/authentication.md) - Login, signup, and session management
-- [🏠 Home & Discovery](docs/features/home-discovery.md) - Location detection and attraction browsing
-- [🔍 Filtering System](docs/features/filtering.md) - Category-based attraction filtering
-- [📍 Location Details](docs/features/location-details.md) - Detailed attraction information with intelligent directions
-- [➕ Add Locations](docs/features/add-locations.md) - Community contribution system with Google Photos
-- [🧭 Navigation](docs/features/navigation.md) - App navigation and menu system
-- [🖼️ Google Photos Integration](docs/features/google-photos-integration.md) - Image sharing and URL processing
+This project includes comprehensive documentation to help you understand, setup, and contribute to the Hidden Sri Lanka mobile application.
 
-### Development Guides
-- [📋 Installation Guide](docs/setup/installation.md) - Complete setup instructions
-- [🏗️ Architecture Overview](docs/setup/architecture.md) - Technical architecture and design patterns
-- [🔥 Firebase Configuration](docs/setup/firebase.md) - Database and authentication setup
-- [🐛 Troubleshooting](docs/guides/troubleshooting.md) - Common issues and solutions
+### 📖 Getting Started
+
+- **[Getting Started Guide](docs/guides/getting-started.md)** - Step-by-step setup instructions
+- **[Installation Guide](docs/setup/installation.md)** - Detailed installation procedures
+- **[Firebase Setup](docs/setup/firebase.md)** - Firebase configuration and setup
+- **[Architecture Overview](docs/setup/architecture.md)** - Project architecture and design patterns
+
+### 🚀 Features Documentation
+
+- **[Home & Discovery](docs/features/home-discovery.md)** - Main screen functionality and location discovery
+- **[Location Details](docs/features/location-details.md)** - Detailed view implementation and features
+- **[Add Locations](docs/features/add-locations.md)** - Community contribution and location submission
+- **[Authentication](docs/features/authentication.md)** - User login and account management
+- **[Filtering System](docs/features/filtering.md)** - Search and filter functionality
+- **[Google Photos Integration](docs/features/google-photos-integration.md)** - Image handling and Google Photos API
+- **[Navigation System](docs/features/navigation.md)** - Maps integration and directions
+
+### 🔧 API & Technical Reference
+
+- **[API Endpoints](docs/api/endpoints.md)** - Backend API documentation and usage
+- **[Design System](docs/design-system.md)** - UI/UX guidelines and component library
+
+### 🤝 Contributing & Support
+
+- **[Contributing Guide](docs/guides/contributing.md)** - How to contribute to the project
+- **[Troubleshooting](docs/guides/troubleshooting.md)** - Common issues and solutions
+- **[Viva Guide](docs/viva-guide.md)** - Academic presentation and defense preparation
+
+### 📋 Additional Resources
+
+- **[Project Documentation README](docs/README.md)** - Documentation overview and structure
+
+## 🏗️ Project Structure
+
+```text
+app/
+├── src/main/java/com/s23010526/hiddensrilanka/
+│   ├── Activities/
+│   │   ├── MainActivity.java
+│   │   ├── HomeActivity.java
+│   │   ├── LocationDetailActivity.java
+│   │   ├── AddLocationActivity.java
+│   │   └── LoginActivity.java
+│   ├── Adapters/
+│   │   └── AttractionAdapter.java
+│   ├── Models/
+│   │   └── Attraction.java
+│   ├── Helpers/
+│   │   └── GooglePhotosUrlHelper.java
+│   └── Utils/
+└── src/main/res/
+    ├── layout/
+    ├── values/
+    └── drawable/
+```
+
+## 🔧 Technical Implementation
+
+### Core Components
+
+#### Activities
+
+- **HomeActivity**: Location detection, attraction display, and filtering
+- **LocationDetailActivity**: Detailed attraction view with intelligent directions
+- **AddLocationActivity**: Community contribution form with Google Photos integration
+- **LoginActivity**: Authentication and session management
+
+#### Key Classes
+
+- **AttractionAdapter**: RecyclerView adapter with proper intent data passing
+- **GooglePhotosUrlHelper**: URL processing for seamless image integration
+- **Attraction**: Data model with comprehensive field mapping
+
+### Recent Development Work
+
+#### Bug Fixes Implemented
+
+1. **Intent Data Passing Issue** (Fixed: August 2025)
+   - Problem: Location details page showing empty data
+   - Solution: Corrected intent extra keys between activities
+   - Files modified: `AttractionAdapter.java`, `LocationDetailActivity.java`
+
+2. **Google Photos Image Loading** (Fixed: August 2025)
+   - Problem: Images not displaying in details page
+   - Solution: Added URL processing to LocationDetailActivity
+   - Files modified: `LocationDetailActivity.java`
+
+3. **Directions Button Functionality** (Enhanced: August 2025)
+   - Problem: Button not working when coordinates missing
+   - Solution: Implemented three-level fallback system
+   - Files modified: `LocationDetailActivity.java`
+
+#### Technical Improvements
+
+- **Smart Geocoding**: Automatic coordinate resolution for missing location data
+- **Error Handling**: Comprehensive exception management across all activities
+- **Background Processing**: Proper threading for network operations
+- **Lambda Expression Fixes**: Resolved compilation issues with final variables
+
+## 🎯 Learning Outcomes Demonstrated
+
+### Android Development Skills
+
+- **Activity Communication**: Proper intent usage and data passing
+- **Lifecycle Management**: Handling activity states and background operations
+- **UI/UX Design**: Material Design implementation with responsive layouts
+- **Database Integration**: Firestore real-time data synchronization
+- **Location Services**: GPS integration and geocoding API usage
+- **Image Processing**: Efficient loading with Glide and URL conversion
+
+### Problem-Solving Approach
+
+- **Systematic Debugging**: Using logs and systematic testing to identify issues
+- **Fallback Systems**: Implementing robust error recovery mechanisms
+- **User Experience**: Ensuring functionality works under various conditions
+- **Code Quality**: Proper variable scoping and lambda expression handling
+
+## 🔥 Firebase Configuration
+
+The app integrates with Firebase for:
+
+- **Firestore Database**: Real-time attraction data storage
+- **Authentication**: User login and session management
+- **Security Rules**: Proper data access control
+
+Configuration file: `google-services.json` (not included in repository for security)
+
+## 🧪 Testing Approach
+
+### Manual Testing Scenarios
+
+- Location detection across different cities
+- Image loading with various URL formats
+- Directions functionality with and without coordinates
+- Error handling under poor network conditions
+- Cross-activity data flow validation
+
+### Debug Implementation
+
+- Comprehensive logging throughout the application
+- Error state handling with user-friendly messages
+- Performance monitoring for image loading and geocoding
+
+## 📊 Performance Considerations
+
+### Optimizations Implemented
+
+- **Image Caching**: Glide library for efficient memory usage
+- **Background Processing**: Non-blocking UI for network operations
+- **Database Queries**: Efficient Firestore query structure
+- **Memory Management**: Proper activity lifecycle handling
+
+## 🚀 Build Configuration
+
+- **Target SDK**: API 34 (Android 14)
+- **Minimum SDK**: API 21 (Android 5.0)
+- **Build Tools**: Gradle with modern Android build system
+- **Dependencies**: Material Design, Firebase, Glide, Location Services
+
+## 📝 Change Log
+
+### August 2025
+
+- **Intent Data Passing Fix**: Resolved empty details page issue
+- **Google Photos Integration**: Enhanced image loading across all screens
+- **Intelligent Directions**: Implemented geocoding fallback system
+- **Error Handling**: Added comprehensive exception management
+- **Code Quality**: Fixed lambda expression compilation issues
+
+### June 2025
+
+- **Initial Development**: GitHub repository initialization
+- **Core Features**: Basic app structure and Firebase integration
+- **Author**: Asitha Kanchana (Student ID: S23010526)
 
 ## 🎓 Academic Context
 
-This application serves as my final project for the Mobile Application Development course at OUSL. The project showcases:
+This mobile application demonstrates practical implementation of concepts learned in the Mobile Application Development course at OUSL, including:
 
-### Learning Objectives Met
-- **Android Fundamentals**: Activities, intents, and lifecycle management
-- **Database Integration**: Real-time data synchronization with Firestore
-- **Location Services**: GPS integration and geocoding APIs
-- **Image Processing**: Efficient loading and Google Photos integration
-- **User Interface Design**: Material Design principles and responsive layouts
-- **Error Management**: Comprehensive error handling and user feedback
-- **Testing & Debugging**: Systematic approach to identifying and fixing issues
-
-### Development Challenges Overcome
-1. **Data Passing Between Activities**: Resolved intent key mismatches that prevented proper data flow
-2. **Image Loading Issues**: Implemented Google Photos URL processing for seamless image display
-3. **Navigation Reliability**: Created intelligent fallback system for directions when coordinates are missing
-4. **Performance Optimization**: Implemented efficient background processing for geocoding operations
-
-## 🤝 Contributing
-
-While this is primarily an academic project, I welcome feedback and suggestions from fellow students and developers. If you find any issues or have improvement suggestions:
-
-1. Open an issue describing the problem or enhancement
-2. For bug reports, include device information and reproduction steps
-3. Feel free to suggest new features that could enhance the learning experience
-
-## 📞 Contact
-
-**Student**: [Your Name]  
-**Institution**: Open University of Sri Lanka  
-**Program**: Bachelor of Software Engineering  
-**Course**: Mobile Application Development  
-
-For academic inquiries or technical questions about this project, please use the GitHub issues section.
-
-## 📄 License
-
-This project is developed for academic purposes as part of my degree program at OUSL. Please respect the educational nature of this work.
+- Modern Android development practices
+- Real-time database integration
+- Location-based services
+- Image processing and optimization
+- Error handling and user experience design
+- Systematic debugging and problem-solving
 
 ---
 
-*Developed with dedication to showcasing practical Android development skills and contributing to Sri Lanka's tourism discovery platform.*
+**Developer**: Asitha Kanchana  
+**Student ID**: S23010526  
+**Institution**: Open University of Sri Lanka  
+**Course**: Mobile Application Development  
+**Degree**: Bachelor of Software Engineering
