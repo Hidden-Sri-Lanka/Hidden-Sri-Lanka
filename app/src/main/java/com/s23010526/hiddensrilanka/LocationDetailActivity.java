@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
+import java.util.ArrayList;
 
 /**
  * Location Detail Activity - Shows complete information about a selected attraction
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
  * 3. Three-level fallback system for navigation
  * 4. Background thread management for geocoding
  * 5. Comprehensive error handling and user feedback
+ * 6. Horizontal scrolling image gallery with ViewPager2
  *
  * Academic Learning Outcomes:
  * - Activity lifecycle management
@@ -26,18 +28,24 @@ import com.bumptech.glide.Glide;
  * - Location services integration
  * - Image processing with Glide library
  * - Thread management and UI updates
+ * - ViewPager2 implementation for smooth scrolling
  */
 public class LocationDetailActivity extends AppCompatActivity {
 
     // UI Components - Following Material Design principles
-    private ImageView ivLocationImage;      // Hero image with Google Photos support
-    private TextView tvLocationName;        // Primary attraction name
-    private TextView tvLocationCity;        // Location context
-    private TextView tvLocationCategory;    // Attraction type (Historical, Waterfall, etc.)
-    private TextView tvLocationDescription; // Full description text
-    private TextView tvContributorName;     // Attribution to user who added location
-    private Button btnGetDirections;       // Smart navigation button with fallbacks
-    private Button btnShareLocation;       // Native Android sharing integration
+    private ViewPager2 vpLocationImages;       // Horizontal scrolling image pager
+    private TextView tvImageCounter;           // Shows current image position (e.g., "2 / 5")
+    private TextView tvLocationName;           // Primary attraction name
+    private TextView tvLocationCity;           // Location context
+    private TextView tvLocationCategory;       // Attraction type (Historical, Waterfall, etc.)
+    private TextView tvLocationDescription;    // Full description text
+    private TextView tvContributorName;        // Attribution to user who added location
+    private Button btnGetDirections;          // Smart navigation button with fallbacks
+    private Button btnShareLocation;          // Native Android sharing integration
+
+    // Image pager components
+    private ImagePagerAdapter imagePagerAdapter;
+    private ArrayList<String> imageUrls;
 
     // Data model - Holds all attraction information
     private Attraction currentAttraction;
@@ -64,14 +72,15 @@ public class LocationDetailActivity extends AppCompatActivity {
      * Demonstrates proper UI initialization patterns in Android
      */
     private void initializeViews() {
-        ivLocationImage = findViewById(R.id.iv_location_image);
+        vpLocationImages = findViewById(R.id.vp_location_images);
+        tvImageCounter = findViewById(R.id.tv_image_counter);
         tvLocationName = findViewById(R.id.tv_location_name);
         tvLocationCity = findViewById(R.id.tv_location_city);
         tvLocationCategory = findViewById(R.id.tv_location_category);
         tvLocationDescription = findViewById(R.id.tv_location_description);
         tvContributorName = findViewById(R.id.tv_contributor_name);
         btnGetDirections = findViewById(R.id.btn_get_directions);
-        btnShareLocation = findViewById(R.id.btn_share_location);
+        // btnShareLocation = findViewById(R.id.btn_share_location); // Commented out as button is not in layout
     }
 
     /**
@@ -99,6 +108,9 @@ public class LocationDetailActivity extends AppCompatActivity {
         double latitude = intent.getDoubleExtra("attraction_latitude", 0.0);
         double longitude = intent.getDoubleExtra("attraction_longitude", 0.0);
 
+        // Extract multiple images if available (for image gallery support)
+        ArrayList<String> imagesList = intent.getStringArrayListExtra("attraction_images");
+
         // Create and populate attraction object for easier data management
         currentAttraction = new Attraction();
         currentAttraction.setName(name);
@@ -108,6 +120,21 @@ public class LocationDetailActivity extends AppCompatActivity {
         currentAttraction.setImageUrl(imageUrl);
         currentAttraction.setLatitude(latitude);
         currentAttraction.setLongitude(longitude);
+
+        // Handle multiple images - if available, use them; otherwise fall back to single image
+        if (imagesList != null && !imagesList.isEmpty()) {
+            // Multiple images available - set them in the attraction
+            currentAttraction.setImages(imagesList);
+            android.util.Log.d("LocationDetail", "Loaded " + imagesList.size() + " images for gallery");
+        } else if (imageUrl != null && !imageUrl.isEmpty()) {
+            // Single image available - create a list with just this image for consistency
+            ArrayList<String> singleImageList = new ArrayList<>();
+            singleImageList.add(imageUrl);
+            currentAttraction.setImages(singleImageList);
+            android.util.Log.d("LocationDetail", "Using single image in gallery");
+        } else {
+            android.util.Log.d("LocationDetail", "No images available");
+        }
 
         // Display all the loaded data in the UI
         displayAttractionData(contributorName);
@@ -136,36 +163,100 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * Smart image loading with Google Photos URL processing
-     *
-     * Key Feature: This method demonstrates how to handle different types of image URLs
-     * including Google Photos share links which need special processing.
-     *
-     * Technical Implementation:
-     * 1. Detect if URL is a Google Photos share link
-     * 2. Process Google Photos URLs to get direct image URLs
-     * 3. Load images efficiently using Glide library
-     * 4. Handle errors gracefully with placeholder images
+     * Smart image loading with multiple image support
+     * Handles both single images (backward compatibility) and multiple images (new feature)
      */
     private void loadLocationImage() {
-        String imageUrl = currentAttraction.getImageUrl();
+        // Initialize image gallery
+        setupImagePager();
 
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            // Check if this is a Google Photos URL that requires processing
-            if (isGooglePhotosUrl(imageUrl)) {
-                // Process Google Photos share link to get direct image URL
-                // This is done asynchronously to avoid blocking the UI thread
-                GooglePhotosUrlHelper.processImageUrl(this, imageUrl, processedUrl -> {
-                    loadImageWithGlide(processedUrl);
-                });
+        // Get images from the attraction
+        if (currentAttraction.hasImages()) {
+            // Multiple images available - show gallery
+            imageUrls = new ArrayList<>(currentAttraction.getImages());
+            setupMultipleImages();
+        } else if (currentAttraction.getImageUrl() != null && !currentAttraction.getImageUrl().isEmpty()) {
+            // Single image (backward compatibility)
+            imageUrls = new ArrayList<>();
+            imageUrls.add(currentAttraction.getImageUrl());
+            setupSingleImage();
+        } else {
+            // No images available
+            setupNoImages();
+        }
+    }
+
+    /**
+     * Set up the image pager ViewPager2 for horizontal scrolling
+     */
+    private void setupImagePager() {
+        imageUrls = new ArrayList<>();
+        imagePagerAdapter = new ImagePagerAdapter(this, imageUrls);
+        vpLocationImages.setAdapter(imagePagerAdapter);
+
+        // Register a page change callback to update the image counter
+        vpLocationImages.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                updateImageCounter(position);
+            }
+        });
+    }
+
+    /**
+     * Update the image counter text view
+     */
+    private void updateImageCounter(int position) {
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            // Show current position (1-based) and total count
+            tvImageCounter.setText((position + 1) + " / " + imageUrls.size());
+        } else {
+            // Hide counter if no images are available
+            tvImageCounter.setText("");
+        }
+    }
+
+    /**
+     * Handle multiple images - show horizontal scrolling pager
+     */
+    private void setupMultipleImages() {
+        if (!imageUrls.isEmpty()) {
+            // Update the adapter with new image URLs
+            imagePagerAdapter.updateImages(imageUrls);
+            vpLocationImages.setVisibility(android.view.View.VISIBLE);
+
+            // Show counter if more than one image
+            if (imageUrls.size() > 1) {
+                tvImageCounter.setVisibility(android.view.View.VISIBLE);
+                updateImageCounter(0); // Start with first image
+                android.util.Log.d("LocationDetail", "Showing horizontal scrolling with " + imageUrls.size() + " images");
             } else {
-                // Direct image URL - load immediately with Glide
-                loadImageWithGlide(imageUrl);
+                tvImageCounter.setVisibility(android.view.View.GONE);
+                android.util.Log.d("LocationDetail", "Single image - hiding counter");
             }
         } else {
-            // No image URL provided - show placeholder
-            ivLocationImage.setImageResource(R.drawable.ic_image_placeholder);
+            android.util.Log.d("LocationDetail", "No images to display");
         }
+    }
+
+    /**
+     * Handle single image - show in pager without counter
+     */
+    private void setupSingleImage() {
+        if (!imageUrls.isEmpty()) {
+            imagePagerAdapter.updateImages(imageUrls);
+            vpLocationImages.setVisibility(android.view.View.VISIBLE);
+            tvImageCounter.setVisibility(android.view.View.GONE);
+        }
+    }
+
+    /**
+     * Handle no images - show placeholder
+     */
+    private void setupNoImages() {
+        vpLocationImages.setVisibility(android.view.View.GONE);
+        tvImageCounter.setVisibility(android.view.View.GONE);
     }
 
     /**
@@ -181,18 +272,6 @@ public class LocationDetailActivity extends AppCompatActivity {
         );
     }
 
-    /**
-     * Load image using Glide library with proper error handling
-     * Demonstrates efficient image loading with caching and error states
-     */
-    private void loadImageWithGlide(String imageUrl) {
-        Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.ic_image_placeholder)  // Show while loading
-                .error(R.drawable.ic_image_error)              // Show if loading fails
-                .centerCrop()                                   // Scale appropriately
-                .into(ivLocationImage);
-    }
 
     /**
      * Set up button click listeners for user interactions
@@ -203,7 +282,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         btnGetDirections.setOnClickListener(v -> openInGoogleMaps());
 
         // Share Location button - Uses Android's native sharing capabilities
-        btnShareLocation.setOnClickListener(v -> shareLocation());
+        // btnShareLocation.setOnClickListener(v -> shareLocation()); // Commented out as button is not in layout
     }
 
     /**
@@ -274,7 +353,8 @@ public class LocationDetailActivity extends AppCompatActivity {
         } catch (Exception e) {
             // Comprehensive error handling with user feedback
             android.util.Log.e("LocationDetail", "Error opening maps: " + e.getMessage());
-            Toast.makeText(this, "Unable to open maps app", Toast.LENGTH_SHORT).show();
+            // Only show toast for actual errors that prevent the action
+            Toast.makeText(this, "Unable to open maps", Toast.LENGTH_SHORT).show();
         }
     }
 

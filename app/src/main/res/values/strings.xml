@@ -1,71 +1,77 @@
 <resources>
 
-    <!--    TODO: Reove UnNessosry Stings -->
-    <!--    TODO: add more Strings that way codes will more clear -->
-
+    <!-- Application Identity -->
     <string name="app_name">Hidden Sri Lanka</string>
     <string name="sID">S23010526</string>
     <string name="devName">Asitha Kanchana Palliyaguru</string>
 
+    <!-- Google Maps API Configuration -->
+    <string name="google_maps_key">AIzaSyDkxygECK5OFLmyPMKKZVe362toOuDkkH0</string>
 
-    <!--    nav bar strings-->
+    <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>
-
-    <!--Paragraphes-->
-    <string name="aboutParagraph">Hidden Sri Lanka \n is your ultimate mobile companion designed to help tourists discover and navigate the countless beautiful but lesser-known destinations across Sri Lanka. Our mission is to uncover the wonders beyond the guidebook, providing accessible and reliable information about hidden beaches, scenic hikes, and unique cultural sites, ensuring an enhanced tourist experience for every explorer. </string>
-    <string name="devBy">Developed by: P.G.Asitha Kanchana \n
-        (Student ID: S23010526) \n
-        As part of EEI4369 Mobile Application Development Design Project.\n</string>
-
-    <!--Comminng zoon-->
-
-
-    <string name="search_hint">Search…</string>
-    <string name="searching_for_query">Searching for: %1$s</string>
-    <string name="search_icon_clicked">Search icon clicked!</string>
-
-
-    <!--    These are for Placeholders till creating button action pages-->
-    <string name="feature_privacy_policy">Privacy Policy</string>
-    <string name="feature_terms_conditions">Terms &amp; Conditions</string>
-    <string name="feature_contact_us">Contact Us</string>
-    <string name="coming_soon_suffix">feature is coming soon!</string>
-
-    <!-- Example Nav Menu Item Titles -->
     <string name="nav_home_title">Home</string>
     <string name="nav_settings_title">Settings</string>
-
-    <!--    About Us Page-->
-    <string name="title_about_us">About Us</string>
-    <string name="app_logo_description">App Logo</string>
-    <string name="app_title">Hidden Sri Lanka</string>
-    <string name="mission_title">Mission 🎯</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="terms_of_service">Terms of Service</string>
-    <string name="contact_us_email">Contact Us: asitha.contact.me@gmail.com</string>
-
-    <!--    Map -->
     <string name="nav_explore_on_map_title">Explore on Map</string>
-    <!--    Un Nessosory-->
 
+    <!-- Search Functionality -->
+    <string name="search_hint">Search…</string>
+    <string name="searching_for_query">Searching for: %1$s</string>
 
+    <!-- Authentication -->
     <string name="Login">Login</string>
-    <string name="not_yet_registered_sign_up_now">Not Yet Registered? Sign Up Now</string>
-    <string name="uncover_the_wonders_beyond_the_guidebook">Uncover the Wonders Beyond the Guidebook</string>
-    <string name="next">Next</string>
-    <string name="lets_explore_button">Let\'s Explore</string>
-
-    <!-- Sign Up Page -->
     <string name="sign_up">Sign Up</string>
     <string name="user_name">User Name</string>
     <string name="email_address">Email Address</string>
     <string name="new_password">New Password</string>
     <string name="retype_password">Retype Password</string>
+    <string name="not_yet_registered_sign_up_now">Not Yet Registered? Sign Up Now</string>
     <string name="already_registered_login">Already Registered? Login</string>
 
     <!-- Onboarding -->
+    <string name="uncover_the_wonders_beyond_the_guidebook">Uncover the Wonders Beyond the Guidebook</string>
     <string name="discover_sri_lanka_s_hidden_wonders">Discover Sri Lanka\'s Hidden Wonders</string>
     <string name="simple_paragraph_1">Explore breathtaking destinations that are off the beaten path. From pristine beaches to ancient temples, discover the authentic beauty of Sri Lanka through local insights and hidden gems.</string>
+    <string name="next">Next</string>
+    <string name="lets_explore_button">Let\'s Explore</string>
+
+    <!-- About Us Page -->
+    <string name="title_about_us">About Us</string>
+    <string name="app_logo_description">App Logo</string>
+    <string name="app_title">Hidden Sri Lanka</string>
+    <string name="mission_title">Mission 🎯</string>
+    <string name="aboutParagraph">Hidden Sri Lanka is your ultimate mobile companion designed to help tourists discover and navigate the countless beautiful but lesser-known destinations across Sri Lanka. Our mission is to uncover the wonders beyond the guidebook, providing accessible and reliable information about hidden beaches, scenic hikes, and unique cultural sites, ensuring an enhanced tourist experience for every explorer.</string>
+    <string name="devBy">Developed by: P.G.Asitha Kanchana\n(Student ID: S23010526)\nAs part of EEI4369 Mobile Application Development Design Project.</string>
+    <string name="contact_us_email">Contact Us: asitha.contact.me@gmail.com</string>
+
+    <!-- Location Details -->
+    <string name="contributed_by">Contributed by: %1$s</string>
+    <string name="added_on">Added on: %1$s</string>
+    <string name="distance_unknown">Distance unknown</string>
+
+    <!-- Legal and Support -->
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="feature_privacy_policy">Privacy Policy</string>
+    <string name="feature_terms_conditions">Terms &amp; Conditions</string>
+    <string name="feature_contact_us">Contact Us</string>
+    <string name="coming_soon_suffix">feature is coming soon!</string>
+
+    <!-- Map Functionality -->
+    <string name="my_location">My Location</string>
+    <string name="map_type">Map Type</string>
+    <string name="toggle_clustering">Toggle Clustering</string>
+    <string name="filter_options">Filter Options</string>
+    <string name="satellite_view">Satellite View</string>
+    <string name="terrain_view">Terrain View</string>
+    <string name="normal_view">Normal View</string>
+    <string name="clustering_enabled">Clustering Enabled</string>
+    <string name="clustering_disabled">Clustering Disabled</string>
+    <string name="filter_options_coming_soon">Filter options coming soon!</string>
+    <string name="location_not_available">Location not available</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="failed_to_load_attractions">Failed to load attractions</string>
+    <string name="lets_add_some_attractions">Let\'s add some attractions! 🚀</string>
 
 </resources>

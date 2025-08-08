@@ -55,6 +55,7 @@ dependencies {
     // --- Google Play Services ---
     implementation("com.google.android.gms:play-services-location:21.0.1") // For location services
     implementation("com.google.android.gms:play-services-auth:20.7.0") // For Google Sign-In
+    implementation("com.google.android.gms:play-services-maps:18.2.0") // For Google Maps
 
     // --- CardView for unified design system ---
     implementation("androidx.cardview:cardview:1.0.0")

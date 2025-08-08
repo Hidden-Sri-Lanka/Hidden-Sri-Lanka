@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ProgressBar;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
@@ -22,18 +25,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddLocationActivity extends BaseActivity {
+public class AddLocationActivity extends BaseActivity implements ImageGalleryAdapter.OnImageClickListener {
 
     private static final String TAG = "AddLocationActivity";
 
     // UI Components
     private EditText etLocationName, etDescription, etYoutubeUrl, etContributorName, etImageUrl;
     private AutoCompleteTextView etCategory, etCity, etProvince;
-    private ImageView ivSelectedImage, ivTutorialThumbnail, btnPlayTutorial;
-    private LinearLayout layoutImagePlaceholder;
-    private MaterialButton btnSubmitLocation, btnLoadUrl;
+    private ImageView ivTutorialThumbnail, btnPlayTutorial;
+    private LinearLayout layoutGalleryPlaceholder;
+    private MaterialButton btnSubmitLocation, btnLoadUrl, btnGooglePhotos, btnClearImages;
     private TextInputLayout tilCity;
-    private ProgressBar progressBar; // Replace ProgressDialog with ProgressBar
+    private ProgressBar progressBar;
+    private RecyclerView rvImageGallery;
 
     // Tutorial video URL - Replace with your actual instructional video
     private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/watch?v=YOUR_TUTORIAL_VIDEO_ID"; // Replace with actual tutorial video
@@ -41,8 +45,9 @@ public class AddLocationActivity extends BaseActivity {
     // Firebase
     private FirebaseFirestore firestore;
 
-    // Image URL storage
-    private String selectedImageUrl; // Add missing selectedImageUrl variable
+    // Image gallery data
+    private ArrayList<String> imageUrls;
+    private ImageGalleryAdapter imageGalleryAdapter;
 
     // Data structures for province-city mapping
     private Map<String, String[]> provinceCityMap;
@@ -78,50 +83,25 @@ public class AddLocationActivity extends BaseActivity {
         etCategory = findViewById(R.id.et_category);
         etCity = findViewById(R.id.et_city);
         etProvince = findViewById(R.id.et_province);
-        ivSelectedImage = findViewById(R.id.iv_selected_image);
         ivTutorialThumbnail = findViewById(R.id.iv_tutorial_thumbnail);
         btnPlayTutorial = findViewById(R.id.btn_play_tutorial);
-        layoutImagePlaceholder = findViewById(R.id.layout_image_placeholder);
+        layoutGalleryPlaceholder = findViewById(R.id.layout_gallery_placeholder);
         btnSubmitLocation = findViewById(R.id.btn_submit_location);
         btnLoadUrl = findViewById(R.id.btn_load_url);
+        btnGooglePhotos = findViewById(R.id.btn_google_photos);
+        btnClearImages = findViewById(R.id.btn_clear_images);
         tilCity = findViewById(R.id.til_city);
-
-        // Add Google Photos button
-        MaterialButton btnGooglePhotos = findViewById(R.id.btn_google_photos);
-
-        // Reference ProgressBar from layout (using correct ID)
         progressBar = findViewById(R.id.progress_bar_submit);
 
-        // Set up Google Photos button click listener - Simplified Integration
-        btnGooglePhotos.setOnClickListener(v -> {
-            GooglePhotosPickerDialog.show(this, imageUrl -> {
-                // Load the selected Google Photos image and set it in the URL field
-                etImageUrl.setText(imageUrl);
-                loadAndDisplayImage(imageUrl);
-                selectedImageUrl = imageUrl;
-                Log.d(TAG, "Google Photos image loaded: " + imageUrl);
-            });
-        });
+        // Initialize RecyclerView for image gallery
+        rvImageGallery = findViewById(R.id.rv_image_gallery);
+        rvImageGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        imageUrls = new ArrayList<>();
+        imageGalleryAdapter = new ImageGalleryAdapter(this, imageUrls, true); // true = show remove buttons
+        imageGalleryAdapter.setOnImageClickListener(this);
+        rvImageGallery.setAdapter(imageGalleryAdapter);
 
-        // Set up Load URL button click listener - Now handles both Google Photos and direct URLs
-        btnLoadUrl.setOnClickListener(v -> {
-            String url = etImageUrl.getText().toString().trim();
-            if (!TextUtils.isEmpty(url)) {
-                // Use GooglePhotosUrlHelper to handle both types of URLs
-                GooglePhotosUrlHelper.processImageUrl(this, url, processedUrl -> {
-                    // Store the PROCESSED URL instead of the original
-                    selectedImageUrl = processedUrl;
-                    // Update the text field to show the processed URL
-                    etImageUrl.setText(processedUrl);
-                    loadAndDisplayImage(processedUrl);
-                    Toast.makeText(this, "Image URL processed and ready for saving!", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Original URL: " + url);
-                    Log.d(TAG, "Processed URL for database: " + processedUrl);
-                });
-            } else {
-                Toast.makeText(this, "Please enter an image URL or Google Photos link", Toast.LENGTH_SHORT).show();
-            }
-        });
+        updateGalleryVisibility();
     }
 
     private void initializeFirebase() {
@@ -230,9 +210,11 @@ public class AddLocationActivity extends BaseActivity {
         btnSubmitLocation.setOnClickListener(v -> validateAndSubmitLocation());
         btnLoadUrl.setOnClickListener(v -> loadImageFromUrl());
 
-        // Add Google Photos button click listener
-        MaterialButton btnGooglePhotos = findViewById(R.id.btn_google_photos);
+        // Google Photos button click listener
         btnGooglePhotos.setOnClickListener(v -> openGooglePhotosHelper());
+
+        // Clear Images button click listener
+        btnClearImages.setOnClickListener(v -> clearImageGallery());
 
         // Province selection listener - optional filtering
         etProvince.setOnItemClickListener((parent, view, position, id) -> {
@@ -257,29 +239,38 @@ public class AddLocationActivity extends BaseActivity {
         }
     }
 
+    private void updateGalleryVisibility() {
+        if (imageUrls.isEmpty()) {
+            layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
+            btnClearImages.setVisibility(View.GONE);
+        } else {
+            layoutGalleryPlaceholder.setVisibility(View.GONE);
+            btnClearImages.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void loadImageFromUrl() {
         String url = etImageUrl.getText().toString().trim();
-        Log.d(TAG, "loadImageFromUrl called with URL: " + url);
 
         if (TextUtils.isEmpty(url)) {
-            Log.w(TAG, "URL is empty");
             etImageUrl.setError("Please enter an image URL");
-            etImageUrl.requestFocus();
-            Toast.makeText(this, "Please enter an image URL first", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidUrl(url)) {
-            Log.w(TAG, "Invalid URL format: " + url);
-            etImageUrl.setError("Please enter a valid image URL");
-            etImageUrl.requestFocus();
-            Toast.makeText(this, "Please enter a valid URL starting with http:// or https://", Toast.LENGTH_SHORT).show();
+            etImageUrl.setError("Please enter a valid URL");
             return;
         }
 
-        Log.d(TAG, "Starting image load for URL: " + url);
-        Toast.makeText(this, "Loading image...", Toast.LENGTH_SHORT).show();
-        loadAndDisplayImage(url);
+        // Add image to gallery
+        imageUrls.add(url);
+        imageGalleryAdapter.notifyItemInserted(imageUrls.size() - 1);
+        updateGalleryVisibility();
+
+        // Clear the input field
+        etImageUrl.setText("");
+
+        Toast.makeText(this, "Image added to gallery!", Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValidUrl(String url) {
@@ -343,10 +334,9 @@ public class AddLocationActivity extends BaseActivity {
                 .setPositiveButton("Skip Preview & Use URL", (dialog, which) -> {
                     timeoutHandler.removeCallbacks(null);
                     progressBar.setVisibility(View.GONE);
-                    selectedImageUrl = url;
-                    layoutImagePlaceholder.setVisibility(View.GONE);
-                    ivSelectedImage.setVisibility(View.VISIBLE);
-                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    imageUrls.add(url);
+                    imageGalleryAdapter.notifyDataSetChanged();
+                    layoutGalleryPlaceholder.setVisibility(View.GONE);
                     Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview skipped)", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Try Different URL", (dialog, which) -> {
@@ -375,10 +365,8 @@ public class AddLocationActivity extends BaseActivity {
                            "However, you can still use this URL for your location submission.\n\n" +
                            "URL: " + url)
                 .setPositiveButton("Use URL Anyway", (dialog, which) -> {
-                    selectedImageUrl = url;
-                    layoutImagePlaceholder.setVisibility(View.GONE);
-                    ivSelectedImage.setVisibility(View.VISIBLE);
-                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    imageUrls.add(url);
+                    layoutGalleryPlaceholder.setVisibility(View.GONE);
                     Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Will work in final app)", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Try Different Image", (dialog, which) -> {
@@ -430,10 +418,8 @@ public class AddLocationActivity extends BaseActivity {
                                            "URL: " + url + "\n\n" +
                                            "Would you like to use this URL anyway?")
                                 .setPositiveButton("Use URL Anyway", (dialog, which) -> {
-                                    selectedImageUrl = url;
-                                    layoutImagePlaceholder.setVisibility(View.GONE);
-                                    ivSelectedImage.setVisibility(View.VISIBLE);
-                                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                                    imageUrls.add(url);
+                                    layoutGalleryPlaceholder.setVisibility(View.GONE);
                                     Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview failed but URL stored)", Toast.LENGTH_LONG).show();
                                 })
                                 .setNegativeButton("Try Different Image", (dialog, which) -> {
@@ -462,16 +448,17 @@ public class AddLocationActivity extends BaseActivity {
 
                         runOnUiThread(() -> {
                             progressBar.setVisibility(View.GONE);
-                            layoutImagePlaceholder.setVisibility(View.GONE);
-                            ivSelectedImage.setVisibility(View.VISIBLE);
-                            selectedImageUrl = url; // Store the successfully loaded URL
+                            layoutGalleryPlaceholder.setVisibility(View.GONE);
+                            imageUrls.add(url); // Add the successfully loaded URL to the gallery
+                            imageGalleryAdapter.notifyDataSetChanged();
+                            updateGalleryVisibility();
                             Toast.makeText(AddLocationActivity.this, "🎉 Image loaded successfully!", Toast.LENGTH_SHORT).show();
                         });
 
                         return false; // Allow Glide to handle the image display
                     }
-                })
-                .into(ivSelectedImage);
+                });
+                // Remove the .into(ivSelectedImage) since we're not using a single image view anymore
 
             Log.d(TAG, "Glide request initiated successfully");
 
@@ -487,10 +474,8 @@ public class AddLocationActivity extends BaseActivity {
                 .setTitle("Setup Error")
                 .setMessage("Error setting up image load: " + e.getMessage() + "\n\nWould you like to use the URL anyway?")
                 .setPositiveButton("Use URL Anyway", (dialog, which) -> {
-                    selectedImageUrl = url;
-                    layoutImagePlaceholder.setVisibility(View.GONE);
-                    ivSelectedImage.setVisibility(View.VISIBLE);
-                    ivSelectedImage.setImageResource(android.R.drawable.ic_menu_gallery);
+                    imageUrls.add(url);
+                    layoutGalleryPlaceholder.setVisibility(View.GONE);
                     Toast.makeText(AddLocationActivity.this, "✅ Image URL saved!", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {
@@ -501,10 +486,16 @@ public class AddLocationActivity extends BaseActivity {
     }
 
     private void clearSelectedImage() {
-        selectedImageUrl = null;
         etImageUrl.setText("");
-        ivSelectedImage.setVisibility(View.GONE);
-        layoutImagePlaceholder.setVisibility(View.VISIBLE);
+        // Removed ivSelectedImage reference since we're using gallery now
+        updateGalleryVisibility();
+    }
+
+    private void clearImageGallery() {
+        imageUrls.clear();
+        imageGalleryAdapter.notifyDataSetChanged();
+        layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Image gallery cleared", Toast.LENGTH_SHORT).show();
     }
 
     private void validateAndSubmitLocation() {
@@ -566,19 +557,18 @@ public class AddLocationActivity extends BaseActivity {
             return;
         }
 
-        // Check if image URL is provided
-        String providedImageUrl = etImageUrl.getText().toString().trim();
-        if (TextUtils.isEmpty(providedImageUrl)) {
-            etImageUrl.setError("Please provide an image URL");
-            etImageUrl.requestFocus();
+        // Check if at least one image URL is provided
+        if (imageUrls.isEmpty()) {
+            Toast.makeText(this, "Please add at least one image URL", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Validate image URL
-        if (!isValidUrl(providedImageUrl)) {
-            etImageUrl.setError("Please enter a valid image URL");
-            etImageUrl.requestFocus();
-            return;
+        // Validate each image URL
+        for (String imageUrl : imageUrls) {
+            if (!isValidUrl(imageUrl)) {
+                Toast.makeText(this, "Invalid image URL: " + imageUrl, Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         // Validate YouTube URL if provided
@@ -589,7 +579,7 @@ public class AddLocationActivity extends BaseActivity {
         }
 
         // All validations passed, submit the location
-        submitLocation(locationName, description, category, city, contributorName, youtubeUrl, province, providedImageUrl);
+        submitLocation(locationName, description, category, city, contributorName, youtubeUrl, province, imageUrls);
     }
 
     private boolean isValidYouTubeUrl(String url) {
@@ -597,16 +587,16 @@ public class AddLocationActivity extends BaseActivity {
     }
 
     private void submitLocation(String locationName, String description, String category,
-                              String city, String contributorName, String youtubeUrl, String province, String imageUrl) {
+                              String city, String contributorName, String youtubeUrl, String province, ArrayList<String> imageUrls) {
         progressBar.setVisibility(View.VISIBLE);
 
         saveLocationToFirestore(locationName, description, category, city,
-                              contributorName, youtubeUrl, imageUrl, province);
+                              contributorName, youtubeUrl, imageUrls, province);
     }
 
     private void saveLocationToFirestore(String locationName, String description, String category,
                                        String city, String contributorName, String youtubeUrl,
-                                       String finalImageUrl, String province) {
+                                       ArrayList<String> imageUrls, String province) {
 
         // Create location data map
         Map<String, Object> locationData = new HashMap<>();
@@ -619,10 +609,8 @@ public class AddLocationActivity extends BaseActivity {
         locationData.put("contributedAt", System.currentTimeMillis());
         locationData.put("youtubeUrl", youtubeUrl.isEmpty() ? "" : youtubeUrl);
 
-        // Create images list with the provided URL
-        List<String> images = new ArrayList<>();
-        images.add(finalImageUrl);
-        locationData.put("images", images);
+        // Create images list with the provided URLs
+        locationData.put("images", imageUrls);
 
         // Save to Firestore under cities/{city}/attractions collection
         firestore.collection("cities")
@@ -668,8 +656,9 @@ public class AddLocationActivity extends BaseActivity {
         etYoutubeUrl.setText("");
         etImageUrl.setText("");
 
-        ivSelectedImage.setVisibility(View.GONE);
-        layoutImagePlaceholder.setVisibility(View.VISIBLE);
+        imageUrls.clear();
+        imageGalleryAdapter.notifyDataSetChanged();
+        layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
 
         tilCity.setHint("City *");
     }
@@ -886,5 +875,25 @@ public class AddLocationActivity extends BaseActivity {
                              url.endsWith(".webp");
 
         return isValidUrl && (isImageHost || isGooglePhotosLink(url));
+    }
+
+    @Override
+    public void onImageClick(int position, String imageUrl) {
+        // Handle image click events from the gallery
+        Log.d(TAG, "Image clicked: " + imageUrl);
+        // Show full-screen image activity or any other action
+        Toast.makeText(this, "Image URL: " + imageUrl, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onImageRemove(int position) {
+        // Handle image removal from gallery
+        if (position >= 0 && position < imageUrls.size()) {
+            imageUrls.remove(position);
+            imageGalleryAdapter.notifyItemRemoved(position);
+            imageGalleryAdapter.notifyItemRangeChanged(position, imageUrls.size());
+            updateGalleryVisibility();
+            Toast.makeText(this, "Image removed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

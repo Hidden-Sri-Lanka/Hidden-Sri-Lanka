@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.io.BufferedReader;
@@ -51,7 +50,8 @@ public class GooglePhotosUrlHelper {
             if (validateAnyImageUrl(url)) {
                 processImageUrl(context, url, callback);
             } else {
-                Toast.makeText(context, "Please enter a valid image URL or Google Photos link", Toast.LENGTH_LONG).show();
+                // Just call callback with null instead of showing toast
+                callback.onImageUrlProcessed(null);
             }
         });
 
@@ -63,17 +63,91 @@ public class GooglePhotosUrlHelper {
      * Public method to process image URL - converts Google Photos share links if needed
      * This method handles both Google Photos links and direct image URLs
      */
-    public static void processImageUrl(Context context, String url, ImageUrlCallback callback) {
-        if (isGooglePhotosShareLink(url)) {
-            // Show loading message
-            Toast.makeText(context, "Processing Google Photos link...", Toast.LENGTH_SHORT).show();
+    public static void processImageUrl(Context context, String imageUrl, ImageUrlCallback callback) {
+        // Validate input
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            android.util.Log.w("GooglePhotosHelper", "Empty or null image URL provided");
+            callback.onImageUrlProcessed(null);
+            return;
+        }
 
-            // Extract direct image URL from share link
-            new ExtractImageUrlTask(context, callback).execute(url);
-        } else {
-            // Direct image URL - use as is
-            callback.onUrlSelected(url);
-            Toast.makeText(context, "Image processed successfully!", Toast.LENGTH_SHORT).show();
+        final String finalImageUrl = imageUrl.trim(); // Create final copy for lambda
+
+        // Check if it's a Google Photos URL that needs processing
+        if (!isGooglePhotosUrl(finalImageUrl)) {
+            // Direct image URL - return as is
+            callback.onImageUrlProcessed(finalImageUrl);
+            return;
+        }
+
+        // Process Google Photos URL in background thread
+        new Thread(() -> {
+            try {
+                String processedUrl = extractDirectImageUrl(finalImageUrl);
+
+                // Update UI on main thread
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    callback.onImageUrlProcessed(processedUrl);
+                });
+
+            } catch (Exception e) {
+                android.util.Log.e("GooglePhotosHelper", "Error processing URL: " + e.getMessage());
+
+                // Fall back to original URL on main thread
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    callback.onImageUrlProcessed(finalImageUrl);
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * Interface for URL processing callback
+     */
+    public interface ImageUrlCallback {
+        void onImageUrlProcessed(String imageUrl);
+
+        // For backward compatibility with existing code
+        default void onUrlSelected(String imageUrl) {
+            onImageUrlProcessed(imageUrl);
+        }
+    }
+
+    /**
+     * Check if URL is a Google Photos URL that needs processing
+     */
+    public static boolean isGooglePhotosUrl(String url) {
+        return url != null && (
+                url.contains("photos.app.goo.gl") ||
+                url.contains("photos.google.com/share") ||
+                url.contains("photos.google.com/u/") ||
+                url.contains("photos.google.com/album")
+        );
+    }
+
+    /**
+     * Extract direct image URL from Google Photos share link
+     */
+    private static String extractDirectImageUrl(String shareUrl) {
+        try {
+            // Method 1: Try to follow redirects
+            String finalUrl = followRedirects(shareUrl);
+            if (finalUrl != null && finalUrl.contains("googleusercontent.com")) {
+                return finalUrl;
+            }
+
+            // Method 2: Try HTML extraction
+            String htmlUrl = extractImageFromHtml(shareUrl);
+            if (htmlUrl != null && !htmlUrl.isEmpty()) {
+                return htmlUrl;
+            }
+
+            // Fallback: return original URL
+            return shareUrl;
+
+        } catch (Exception e) {
+            android.util.Log.e("GooglePhotosHelper", "Error extracting URL: " + e.getMessage());
+            return shareUrl;
         }
     }
 
@@ -180,11 +254,9 @@ public class GooglePhotosUrlHelper {
         protected void onPostExecute(String result) {
             if (result != null && !result.isEmpty()) {
                 callback.onUrlSelected(result);
-                Toast.makeText(context, "Google Photos link processed - attempting to load image...", Toast.LENGTH_SHORT).show();
             } else {
                 // Fallback - use original URL
                 callback.onUrlSelected(originalUrl);
-                Toast.makeText(context, "Using original Google Photos link...", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -274,12 +346,5 @@ public class GooglePhotosUrlHelper {
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView);
-    }
-
-    /**
-     * Interface for URL selection callback
-     */
-    public interface ImageUrlCallback {
-        void onUrlSelected(String imageUrl);
     }
 }

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -134,43 +133,42 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         Class<?> currentActivityClass = this.getClass();
 
+        // Convert switch to if-else to avoid Android Gradle Plugin 8.0 warnings
         if (itemId == R.id.nav_home) {
-            if (currentActivityClass != HomeActivity.class) {
-                intent = new Intent(this, HomeActivity.class);
-            }
-            Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, MainActivity.class);
         } else if (itemId == R.id.nav_settings) {
             if (currentActivityClass != SettingsActivity.class) {
                 intent = new Intent(this, SettingsActivity.class);
             }
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_exp_map) {
             if (currentActivityClass != FullMapViewActivity.class) {
                 intent = new Intent(this, FullMapViewActivity.class);
             }
-            Toast.makeText(this, "Map Page Clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_add_location) {
             if (currentActivityClass != AddLocationActivity.class) {
                 intent = new Intent(this, AddLocationActivity.class);
             }
-            Toast.makeText(this, "Add Location Clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_favorit) {
-            Toast.makeText(this, "Favorites Feature Coming Soon...", Toast.LENGTH_SHORT).show();
+            // Navigate to feature coming soon activity instead of showing toast
+            intent = new Intent(this, FetureCommingSoonActivity.class);
         } else if (itemId == R.id.nav_about_us) {
             if (currentActivityClass != AboutUsActivity.class) {
                 intent = new Intent(this, AboutUsActivity.class);
             }
-            Toast.makeText(this, "About Us Clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_profile) {
-            Toast.makeText(this, "Profile Feature not available Now ...", Toast.LENGTH_SHORT).show();
+            // Navigate to feature coming soon activity instead of showing toast
+            intent = new Intent(this, FetureCommingSoonActivity.class);
         } else if (itemId == R.id.nav_log_out) {
             // Clear session data
-            sessionManager.logoutUser();
-            
+            if (sessionManager != null) {
+                sessionManager.logoutUser();
+            }
+
             // Redirect to WelcomeActivity and clear the activity stack
             intent = new Intent(this, WelcomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            return false;
         }
 
         if (intent != null) {
@@ -199,8 +197,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
 
-    protected void performSearch(String query) {
-        // Implement search functionality in child classes or here
-        Toast.makeText(this, "Search performed for query: " + query, Toast.LENGTH_SHORT).show();
+    protected void performSearch(String searchQuery) {
+        // Override in child classes to implement search functionality
+        // Base implementation can handle common search logic if needed
     }
 }

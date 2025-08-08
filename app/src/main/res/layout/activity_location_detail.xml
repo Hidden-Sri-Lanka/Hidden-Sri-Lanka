@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Main Image Card -->
+        <!-- Image Gallery Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -19,12 +19,32 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
-            <ImageView
-                android:id="@+id/iv_location_image"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="Location image" />
+                android:orientation="vertical">
+
+                <!-- Horizontal Scrolling Image ViewPager -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_location_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- Image Counter (e.g., "2 / 5") -->
+                <TextView
+                    android:id="@+id/tv_image_counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1 / 1"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@color/black_transparent"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -138,6 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_margin="10dp"
                     android:text="Get Directions"
                     android:textColor="@color/white"
                     android:fontFamily="cursive"
@@ -147,20 +168,20 @@
                     app:iconTint="@color/white" />
 
                 <!-- Share Location Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_share_location"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:text="Share"
-                    android:textColor="@color/DeepForestGreen"
-                    android:fontFamily="cursive"
-                    app:strokeColor="@color/DeepForestGreen"
-                    app:cornerRadius="8dp"
-                    app:icon="@drawable/ic_share"
-                    app:iconTint="@color/DeepForestGreen" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/btn_share_location"-->
+<!--                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="Share"-->
+<!--                    android:textColor="@color/DeepForestGreen"-->
+<!--                    android:fontFamily="cursive"-->
+<!--                    app:strokeColor="@color/DeepForestGreen"-->
+<!--                    app:cornerRadius="8dp"-->
+<!--                    app:icon="@drawable/ic_share"-->
+<!--                    app:iconTint="@color/DeepForestGreen" />-->
 
             </LinearLayout>
 

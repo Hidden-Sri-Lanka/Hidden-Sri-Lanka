@@ -1,5 +1,6 @@
 package com.s23010526.hiddensrilanka;
 
+import androidx.annotation.NonNull;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -188,8 +189,25 @@ public class Attraction {
         return images;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images != null ? images : new ArrayList<>();
+
+    /**
+     * Setter for images that handles both old String format and new List<String> format
+     * This ensures backward compatibility with existing Firestore data
+     */
+    @SuppressWarnings("unchecked")
+    public void setImages(Object images) {
+        if (images instanceof List) {
+            this.images = (List<String>) images;
+        } else if (images instanceof String) {
+            String imageUrl = (String) images;
+            if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+                this.images = new ArrayList<>();
+                this.images.add(imageUrl);
+            }
+        } else {
+            // Fallback: Initialize empty list
+            this.images = new ArrayList<>();
+        }
     }
 
     public String getContributorName() {
@@ -224,13 +242,23 @@ public class Attraction {
         this.province = province;
     }
 
-    // New getters and setters for missing fields
+    // Backward compatibility getter for single image URL
     public String getImageUrl() {
-        return imageUrl;
+        if (images != null && !images.isEmpty()) {
+            return images.get(0); // Return first image for backward compatibility
+        }
+        return imageUrl; // Fallback to old field
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        // Also add to images list if not already there
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        if (imageUrl != null && !imageUrl.trim().isEmpty() && !images.contains(imageUrl)) {
+            images.add(imageUrl);
+        }
     }
 
     public double getLatitude() {
@@ -257,33 +285,36 @@ public class Attraction {
         isPlaceholder = placeholder;
     }
 
-    // Utility methods
-    public String getFirstImageUrl() {
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            return imageUrl;
-        }
+    /**
+     * Utility method to get the primary image URL
+     * Returns the first image from the list, or null if no images
+     */
+    public String getPrimaryImageUrl() {
         if (images != null && !images.isEmpty()) {
             return images.get(0);
         }
         return null;
     }
 
-    public void addImage(String imageUrl) {
-        if (this.images == null) {
-            this.images = new ArrayList<>();
-        }
-        this.images.add(imageUrl);
+    /**
+     * Utility method to check if the attraction has any images
+     */
+    public boolean hasImages() {
+        return images != null && !images.isEmpty();
     }
 
-    public boolean hasImages() {
-        return (imageUrl != null && !imageUrl.isEmpty()) ||
-               (images != null && !images.isEmpty());
+    /**
+     * Utility method to get the number of images
+     */
+    public int getImageCount() {
+        return images != null ? images.size() : 0;
     }
 
     public boolean hasLocation() {
         return latitude != 0.0 && longitude != 0.0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Attraction{" +
@@ -291,10 +322,6 @@ public class Attraction {
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", city='" + city + '\'' +
-                ", province='" + province + '\'' +
-                ", contributorName='" + contributorName + '\'' +
-                ", hasImages=" + hasImages() +
-                ", hasLocation=" + hasLocation() +
                 '}';
     }
 }

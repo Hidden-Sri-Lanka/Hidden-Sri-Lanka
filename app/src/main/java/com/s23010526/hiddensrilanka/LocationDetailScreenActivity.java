@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -99,68 +98,102 @@ public class LocationDetailScreenActivity extends BaseActivity {
         tvDescription.setText(attractionDescription != null ? attractionDescription : "No description available.");
 
         // Set category chip
-        if (attractionCategory != null) {
+        if (chipCategory != null && attractionCategory != null) {
             chipCategory.setText(attractionCategory);
-            chipCategory.setVisibility(View.VISIBLE);
-        } else {
-            chipCategory.setVisibility(View.GONE);
         }
 
         // Set contributor information
-        if (contributorName != null && !contributorName.isEmpty() && !contributorName.equals("Unknown")) {
-            tvContributor.setText("Contributed by: " + contributorName);
-            tvContributor.setVisibility(View.VISIBLE);
-        } else {
-            tvContributor.setVisibility(View.GONE);
+        if (tvContributor != null && contributorName != null) {
+            tvContributor.setText(getString(R.string.contributed_by, contributorName));
         }
 
-        // Set contribution date
-        if (contributedAt > 0) {
-            String formattedDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-                    .format(new Date(contributedAt));
-            tvContributedDate.setText("Added on: " + formattedDate);
-            tvContributedDate.setVisibility(View.VISIBLE);
-        } else {
-            tvContributedDate.setVisibility(View.GONE);
+        // Set contributed date
+        if (tvContributedDate != null && contributedAt > 0) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+            String formattedDate = dateFormat.format(new Date(contributedAt));
+            tvContributedDate.setText(getString(R.string.added_on, formattedDate));
         }
 
-        // Load main image
-        if (imageUrls != null && !imageUrls.isEmpty()) {
-            String mainImageUrl = imageUrls.get(0);
-            Glide.with(this)
-                    .load(mainImageUrl)
-                    .placeholder(R.drawable.ic_image_placeholder)
-                    .error(R.drawable.ic_image_placeholder)
-                    .centerCrop()
-                    .into(ivMainImage);
+        // Setup main image and image gallery
+        setupImageGallery();
 
-            // Setup image gallery if multiple images
-            if (imageUrls.size() > 1) {
-                setupImageGallery();
+        // Show/hide YouTube button based on availability
+        if (btnWatchVideo != null) {
+            if (youtubeUrl != null && !youtubeUrl.trim().isEmpty()) {
+                btnWatchVideo.setVisibility(View.VISIBLE);
             } else {
-                rvImageGallery.setVisibility(View.GONE);
+                btnWatchVideo.setVisibility(View.GONE);
             }
-        } else {
-            ivMainImage.setImageResource(R.drawable.ic_image_placeholder);
-            rvImageGallery.setVisibility(View.GONE);
-        }
-
-        // Show/hide YouTube button
-        if (youtubeUrl != null && !youtubeUrl.isEmpty()) {
-            btnWatchVideo.setVisibility(View.VISIBLE);
-        } else {
-            btnWatchVideo.setVisibility(View.GONE);
         }
     }
 
     private void setupImageGallery() {
-        // Create a horizontal RecyclerView for additional images
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rvImageGallery.setLayoutManager(layoutManager);
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            // Set main image (first image)
+            if (ivMainImage != null) {
+                Glide.with(this)
+                        .load(imageUrls.get(0))
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
+                        .centerCrop()
+                        .into(ivMainImage);
+            }
 
-        // You can create an ImageGalleryAdapter here if needed
-        // For now, we'll keep it simple
-        rvImageGallery.setVisibility(View.VISIBLE);
+            // Setup image gallery if more than one image
+            if (imageUrls.size() > 1) {
+                setupImageGalleryRecyclerView();
+                rvImageGallery.setVisibility(View.VISIBLE);
+            } else {
+                rvImageGallery.setVisibility(View.GONE);
+            }
+        } else {
+            // No images available
+            if (ivMainImage != null) {
+                ivMainImage.setImageResource(R.drawable.ic_image_placeholder);
+            }
+            rvImageGallery.setVisibility(View.GONE);
+        }
+    }
+
+    private void setupImageGalleryRecyclerView() {
+        // Create a copy of imageUrls starting from the second image (index 1)
+        ArrayList<String> galleryImages = new ArrayList<>();
+        if (imageUrls.size() > 1) {
+            for (int i = 1; i < imageUrls.size(); i++) {
+                galleryImages.add(imageUrls.get(i));
+            }
+        }
+
+        // Setup RecyclerView with horizontal layout
+        rvImageGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        // Create adapter (false = don't show remove buttons)
+        ImageGalleryAdapter galleryAdapter = new ImageGalleryAdapter(this, galleryImages, false);
+        galleryAdapter.setOnImageClickListener(new ImageGalleryAdapter.OnImageClickListener() {
+            @Override
+            public void onImageClick(int position, String imageUrl) {
+                // When gallery image is clicked, make it the main image
+                setMainImage(imageUrl);
+            }
+
+            @Override
+            public void onImageRemove(int position) {
+                // Not used in detail view (remove buttons are hidden)
+            }
+        });
+
+        rvImageGallery.setAdapter(galleryAdapter);
+    }
+
+    private void setMainImage(String imageUrl) {
+        if (ivMainImage != null) {
+            Glide.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .error(R.drawable.ic_image_placeholder)
+                    .centerCrop()
+                    .into(ivMainImage);
+        }
     }
 
     private void openGoogleMaps() {
@@ -181,51 +214,47 @@ public class LocationDetailScreenActivity extends BaseActivity {
             // Check if Google Maps app is installed
             if (mapIntent.resolveActivity(getPackageManager()) != null) {
                 startActivity(mapIntent);
-                Toast.makeText(this, "Opening in Google Maps", Toast.LENGTH_SHORT).show();
             } else {
                 // Fallback to web browser
                 Uri webUri = Uri.parse("https://www.google.com/maps/search/" + Uri.encode(query));
                 Intent webIntent = new Intent(Intent.ACTION_VIEW, webUri);
                 startActivity(webIntent);
-                Toast.makeText(this, "Opening in browser", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error opening Google Maps: " + e.getMessage());
-            Toast.makeText(this, "Unable to open maps", Toast.LENGTH_SHORT).show();
+            // Log error instead of showing toast to user
+            Log.e(TAG, "Unable to open maps: " + e.getMessage());
         }
     }
 
     private void shareLocation() {
         try {
-            String shareText = "📍 Check out this amazing place in Sri Lanka!\n\n" +
-                             "🏛️ " + (attractionName != null ? attractionName : "Unknown Location") + "\n" +
-                             "📂 Category: " + (attractionCategory != null ? attractionCategory : "Unknown") + "\n\n" +
-                             "📝 " + (attractionDescription != null ?
-                                     (attractionDescription.length() > 100 ?
-                                      attractionDescription.substring(0, 100) + "..." :
-                                      attractionDescription) : "No description available") + "\n\n" +
-                             "🤝 Contributed by: " + (contributorName != null && !contributorName.isEmpty() ? contributorName : "Community") + "\n\n" +
-                             "🔍 Search '" + (attractionName != null ? attractionName : "this location") +
-                             (cityName != null ? " " + cityName : "") + "' on Google Maps\n\n" +
-                             "📱 Shared via Hidden Sri Lanka App";
+            String shareText = String.format(
+                    "🏛️ Check out this amazing place in Sri Lanka!\n\n" +
+                    "📍 %s\n" +
+                    "🌍 %s\n" +
+                    "🏷️ %s\n\n" +
+                    "%s\n\n" +
+                    "Discover more hidden gems with Hidden Sri Lanka app! 🇱🇰",
+                    attractionName, cityName, attractionCategory, attractionDescription
+            );
 
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Discover " + (attractionName != null ? attractionName : "this amazing place") + " in Sri Lanka");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Hidden Gem: " + attractionName);
 
-            startActivity(Intent.createChooser(shareIntent, "Share this location via"));
-            Toast.makeText(this, "Sharing location details", Toast.LENGTH_SHORT).show();
-
+            Intent chooser = Intent.createChooser(shareIntent, "Share this location");
+            startActivity(chooser);
         } catch (Exception e) {
-            Log.e(TAG, "Error sharing location: " + e.getMessage());
-            Toast.makeText(this, "Unable to share location", Toast.LENGTH_SHORT).show();
+            // Log error instead of showing toast to user
+            Log.e(TAG, "Unable to share location: " + e.getMessage());
         }
     }
 
     private void watchYouTubeVideo() {
         if (youtubeUrl == null || youtubeUrl.isEmpty()) {
-            Toast.makeText(this, "No video available for this location", Toast.LENGTH_SHORT).show();
+            // Simply hide the button or disable it instead of showing toast
+            btnWatchVideo.setVisibility(View.GONE);
             return;
         }
 
@@ -233,19 +262,16 @@ public class LocationDetailScreenActivity extends BaseActivity {
             // Try to open in YouTube app first
             Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl));
             youtubeIntent.setPackage("com.google.android.youtube");
-
             if (youtubeIntent.resolveActivity(getPackageManager()) != null) {
                 startActivity(youtubeIntent);
-                Toast.makeText(this, "Opening in YouTube app", Toast.LENGTH_SHORT).show();
             } else {
                 // Fallback to web browser
                 Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl));
                 startActivity(webIntent);
-                Toast.makeText(this, "Opening in browser", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error opening YouTube video: " + e.getMessage());
-            Toast.makeText(this, "Unable to open video", Toast.LENGTH_SHORT).show();
+            // Log error instead of showing toast to user
+            Log.e(TAG, "Unable to open video: " + e.getMessage());
         }
     }
 }
