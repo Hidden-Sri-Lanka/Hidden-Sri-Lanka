@@ -6,7 +6,7 @@
     <string name="devName">Asitha Kanchana Palliyaguru</string>
 
     <!-- Google Maps API Configuration -->
-    <string name="google_maps_key">AIzaSyDkxygECK5OFLmyPMKKZVe362toOuDkkH0</string>
+    <!-- API key is now securely stored in local.properties and accessed via BuildConfig -->
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open Navigation drawer</string>

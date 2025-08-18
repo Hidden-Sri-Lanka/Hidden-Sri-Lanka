@@ -1,0 +1,13 @@
+## This file must *NOT* be checked into Version Control Systems,
+# as it contains information specific to your local configuration.
+#
+# Location of the SDK. This is only used by Gradle.
+# For customization when using a Version Control System, please read the
+# header note.
+
+# Replace with your actual Android SDK path
+sdk.dir=/path/to/your/android/sdk
+
+# Google Maps API Key - Get your API key from Google Cloud Console
+# Instructions: https://developers.google.com/maps/documentation/android-sdk/get-api-key
+GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE
