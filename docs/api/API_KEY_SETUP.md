@@ -23,6 +23,13 @@ This project secures the Google Maps API key by storing it in `local.properties`
 - `AndroidManifest.xml` uses a placeholder that gets replaced during build
 - Your app can access the key via `BuildConfig.GOOGLE_MAPS_API_KEY` if needed
 
+### Add It in to `local.propaties`
+- Change **YOUR MAP API KEY** with acctul api key that you got from google cloud console 
+```bash
+# Google Maps API Key - Keep this secure!
+GOOGLE_MAPS_API_KEY=YOUR MAP API KEY
+```
+
 ### Security Benefits
 - ✅ API key is not exposed in public repositories
 - ✅ Each developer uses their own API key
