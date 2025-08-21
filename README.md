@@ -11,7 +11,63 @@ Quick Docs Shortcuts:
 
 ---
 
-## 📱 Android Application Module
+## �️ App Interface Preview
+
+### Main Application Flow
+
+<div align="center">
+
+| Splash | Welcome | Login |
+|:------:|:-------:|:-----:|
+| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome](img-Markdown/Welcome.png) | ![Login](img-Markdown/Login.png) |
+
+| Sign Up | Home | Details |
+|:-------:|:----:|:-------:|
+| ![Sign Up](img-Markdown/SinUp.png) | ![Home](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Location Details](img-Markdown/Location_Details.png) |
+
+</div>
+
+### Core Features
+
+<div align="center">
+
+| Map | Side Panel | Settings |
+|:---:|:----------:|:--------:|
+| ![Map](img-Markdown/map.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Settings](img-Markdown/Setings.png) |
+
+| Explore & Share | About Us | App Icon |
+|:---------------:|:--------:|:--------:|
+| ![Explore and Share](img-Markdown/Explor_and_Shere.png) | ![About Us](img-Markdown/About%20Us.png) | ![Hidden Sri Lanka App Icon](img-Markdown/Hidden_Sri%20Lanka.png) |
+
+| Province | City | Category |
+|:--------:|:----:|:--------:|
+| ![Province Picker](img-Markdown/province.png) | ![City Picker](img-Markdown/city.png) | ![Category Picker](img-Markdown/location_catagory.png) |
+
+</div>
+
+### Add Location Flow
+
+<div align="center">
+
+| Step 1 | Step 2 | Step 3 |
+|:------:|:------:|:------:|
+| ![Add Location - Step 1](img-Markdown/add_new_locations1.png) | ![Add Location - Step 2](img-Markdown/add_ne_location2.png) | ![Add Location - Step 3](img-Markdown/add_ne_location3.png) |
+
+</div>
+
+### Permissions & Access
+
+<div align="center">
+
+| Permissions | Side Panel | Map |
+|:-----------:|:----------:|:---:|
+| ![Permissions Screen](img-Markdown/Permissions.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Map Screen](img-Markdown/map.png) |
+
+</div>
+
+> Filenames retain original spelling (e.g., `location_catagory.png`). Can be standardized later.
+
+## �📱 Android Application Module
 
 This directory contains the main Android application code for the Hidden Sri Lanka project, developed as part of my Mobile Application Development course at OUSL.
 
@@ -61,36 +117,6 @@ This project includes comprehensive documentation to help you understand, setup,
 ### 📋 Additional Resources
 
 - **[Project Documentation README](docs/README.md)** - Documentation overview and structure
-
-## 📱 App Screenshots
-
-### Main Application Flow
-
-<div align="center">
-
-| Splash Screen | Welcome Screen | Login Screen |
-|:-------------:|:--------------:|:------------:|
-| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome](img-Markdown/Welcome.png) | ![Login](img-Markdown/Login.png) |
-
-| Sign Up | Home Screen | Location Details |
-|:-------:|:-----------:|:----------------:|
-| ![Sign Up](img-Markdown/SinUp.png) | ![Home Screen](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Location Details](img-Markdown/Location_Details.png) |
-
-</div>
-
-### Core Features
-
-<div align="center">
-
-| Map Integration | Side Panel | Settings |
-|:---------------:|:----------:|:--------:|
-| ![Map](img-Markdown/map.png) | ![Side Panel](img-Markdown/sidePanel.png) | ![Settings](img-Markdown/Setings.png) |
-
-| Explore & Share | About Us | App Icon |
-|:---------------:|:--------:|:--------:|
-| ![Explore and Share](img-Markdown/Explor_and_Shere.png) | ![About Us](img-Markdown/About_Us.png) | ![Hidden Sri Lanka](img-Markdown/Hidden_Sri_Lanka.png) |
-
-</div>
 
 ## 🏗️ Project Structure
 
