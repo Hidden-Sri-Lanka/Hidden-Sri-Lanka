@@ -126,7 +126,7 @@ app/
 ```
 
 ## 🔧 Technical Implementation
-| <img src="img-Markdown/province.png" alt="Province" width="200"/> | <img src="img-Markdown/city.png" alt="City" width="200"/> | <img src="img-Markdown/location_catagory.png" alt="Category" width="200"/> |
+
 ### Core Components
 
 #### Activities
@@ -135,9 +135,6 @@ app/
 - **LocationDetailActivity**: Detailed attraction view with intelligent directions
 - **AddLocationActivity**: Community contribution form with Google Photos integration
 - **LoginActivity**: Authentication and session management
-
-| <img src="img-Markdown/add_new_locations1.png" alt="Add Step 1" width="200"/> | <img src="img-Markdown/add_ne_location2.png" alt="Add Step 2" width="200"/> | <img src="img-Markdown/add_ne_location3.png" alt="Add Step 3" width="200"/> |
-
 - **AttractionAdapter**: RecyclerView adapter with proper intent data passing
 - **GooglePhotosUrlHelper**: URL processing for seamless image integration
 - **Attraction**: Data model with comprehensive field mapping
@@ -146,7 +143,6 @@ app/
 
 #### Bug Fixes Implemented
 
-| <img src="img-Markdown/Permissions.png" alt="Permissions" width="200"/> | <img src="img-Markdown/sidePanel.png" alt="Side Panel" width="200"/> | <img src="img-Markdown/map.png" alt="Map" width="200"/> |
    - Problem: Location details page showing empty data
    - Solution: Corrected intent extra keys between activities
    - Files modified: `AttractionAdapter.java`, `LocationDetailActivity.java`
@@ -258,7 +254,6 @@ This mobile application demonstrates practical implementation of concepts learne
 ---
 
 **Developer**: Asitha Kanchana  
-**Student ID**: S23010526  
 **Institution**: Open University of Sri Lanka  
 **Course**: Mobile Application Development  
 **Degree**: Bachelor of Software Engineering
