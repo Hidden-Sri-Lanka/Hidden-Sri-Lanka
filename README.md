@@ -19,11 +19,11 @@ Quick Docs Shortcuts:
 
 | Splash | Welcome | Login |
 |:------:|:-------:|:-----:|
-| ![Splash Screen](img-Markdown/Splash_Screen.png) | ![Welcome](img-Markdown/Welcome.png) | ![Login](img-Markdown/Login.png) |
+| <img src="img-Markdown/Splash_Screen.png" alt="Splash" width="200"/> | <img src="img-Markdown/Welcome.png" alt="Welcome" width="200"/> | <img src="img-Markdown/Login.png" alt="Login" width="200"/> |
 
 | Sign Up | Home | Details |
 |:-------:|:----:|:-------:|
-| ![Sign Up](img-Markdown/SinUp.png) | ![Home](img-Markdown/Hidden_Sri_Lanka_home_screen.png) | ![Location Details](img-Markdown/Location_Details.png) |
+| <img src="img-Markdown/SinUp.png" alt="Sign Up" width="200"/> | <img src="img-Markdown/Hidden_Sri_Lanka_home_screen.png" alt="Home" width="200"/> | <img src="img-Markdown/Location_Details.png" alt="Details" width="200"/> |
 
 </div>
 
@@ -135,15 +135,15 @@ app/
 │   │   └── Attraction.java
 │   ├── Helpers/
 │   │   └── GooglePhotosUrlHelper.java
-│   └── Utils/
+| <img src="img-Markdown/map.png" alt="Map" width="200"/> | <img src="img-Markdown/sidePanel.png" alt="Side Panel" width="200"/> | <img src="img-Markdown/Setings.png" alt="Settings" width="200"/> |
 └── src/main/res/
     ├── layout/
     ├── values/
-    └── drawable/
+| <img src="img-Markdown/Explor_and_Shere.png" alt="Explore" width="200"/> | <img src="img-Markdown/About%20Us.png" alt="About Us" width="200"/> | <img src="img-Markdown/Hidden_Sri%20Lanka.png" alt="App Icon" width="170"/> |
 ```
 
 ## 🔧 Technical Implementation
-
+| <img src="img-Markdown/province.png" alt="Province" width="200"/> | <img src="img-Markdown/city.png" alt="City" width="200"/> | <img src="img-Markdown/location_catagory.png" alt="Category" width="200"/> |
 ### Core Components
 
 #### Activities
@@ -153,7 +153,7 @@ app/
 - **AddLocationActivity**: Community contribution form with Google Photos integration
 - **LoginActivity**: Authentication and session management
 
-#### Key Classes
+| <img src="img-Markdown/add_new_locations1.png" alt="Add Step 1" width="200"/> | <img src="img-Markdown/add_ne_location2.png" alt="Add Step 2" width="200"/> | <img src="img-Markdown/add_ne_location3.png" alt="Add Step 3" width="200"/> |
 
 - **AttractionAdapter**: RecyclerView adapter with proper intent data passing
 - **GooglePhotosUrlHelper**: URL processing for seamless image integration
@@ -163,11 +163,11 @@ app/
 
 #### Bug Fixes Implemented
 
-1. **Intent Data Passing Issue** (Fixed: August 2025)
+| <img src="img-Markdown/Permissions.png" alt="Permissions" width="200"/> | <img src="img-Markdown/sidePanel.png" alt="Side Panel" width="200"/> | <img src="img-Markdown/map.png" alt="Map" width="200"/> |
    - Problem: Location details page showing empty data
    - Solution: Corrected intent extra keys between activities
    - Files modified: `AttractionAdapter.java`, `LocationDetailActivity.java`
-
+## 📱 Android Application Module
 2. **Google Photos Image Loading** (Fixed: August 2025)
    - Problem: Images not displaying in details page
    - Solution: Added URL processing to LocationDetailActivity
