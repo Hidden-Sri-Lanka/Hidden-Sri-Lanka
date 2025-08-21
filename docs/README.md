@@ -1,46 +1,60 @@
-# Hidden Sri Lanka - Documentation
+# Hidden Sri Lanka Documentation Index
 
-Welcome to the comprehensive documentation for the Hidden Sri Lanka mobile application. This documentation covers all aspects of the app's functionality, architecture, and usage.
+This folder contains all project documentation, grouped by topic. Use this index to quickly navigate.
 
-## 📱 About the App
+## Quick Start
 
-Hidden Sri Lanka is a mobile application designed to help travelers discover hidden gems and lesser-known attractions across Sri Lanka. The app provides location-based recommendations, detailed attraction information, and allows users to contribute their own discoveries.
+- Getting Started: [guides/getting-started.md](guides/getting-started.md)
+- Installation: [setup/installation.md](setup/installation.md)
+- Firebase Setup: [setup/firebase.md](setup/firebase.md)
+- Firebase Google Services Setup: [setup/firebase-google-services-setup.md](setup/firebase-google-services-setup.md)
+- Architecture Overview: [setup/architecture.md](setup/architecture.md)
 
-## 📚 Documentation Structure
+## Features
 
-### Core Features
-- [User Authentication](features/authentication.md) - Login, signup, and session management
-- [Home & Discovery](features/home-discovery.md) - Location detection and attraction browsing
-- [Filtering System](features/filtering.md) - Category-based attraction filtering
-- [Location Details](features/location-details.md) - Detailed attraction information
-- [Add Locations](features/add-locations.md) - Community contribution system
-- [Navigation](features/navigation.md) - App navigation and menu system
+- Home & Discovery: [features/home-discovery.md](features/home-discovery.md)
+- Location Details: [features/location-details.md](features/location-details.md)
+- Add Locations: [features/add-locations.md](features/add-locations.md)
+- Authentication: [features/authentication.md](features/authentication.md)
+- Filtering System: [features/filtering.md](features/filtering.md)
+- Google Photos Integration: [features/google-photos-integration.md](features/google-photos-integration.md)
+- Navigation System: [features/navigation.md](features/navigation.md)
 
-### Technical Documentation
-- [Setup Guide](setup/installation.md) - Installation and configuration
-- [Firebase Integration](setup/firebase.md) - Database and authentication setup
-- [Architecture](setup/architecture.md) - App structure and design patterns
-- [API Reference](api/endpoints.md) - Firebase collections and data models
+## UI / UX
 
-### User Guides
-- [Getting Started](guides/getting-started.md) - First-time user guide
-- [Contributing Locations](guides/contributing.md) - How to add new attractions
-- [Troubleshooting](guides/troubleshooting.md) - Common issues and solutions
+- Design System: [design-system.md](design-system.md)
+- Toast Message Guidelines: [guides/toast-message-guidelines.md](guides/toast-message-guidelines.md)
 
-## 🚀 Quick Start
+## API & Keys
 
-1. Clone the repository
-2. Follow the [Setup Guide](setup/installation.md)
-3. Configure Firebase using [Firebase Integration](setup/firebase.md)
-4. Build and run the app
+- API Endpoints: [api/endpoints.md](api/endpoints.md)
+- API Key Setup: [api/API_KEY_SETUP.md](api/API_KEY_SETUP.md)
 
-## 🤝 Contributing
+## Firebase & Security
 
-Please read our [Contributing Guide](guides/contributing.md) to learn how to add new locations and improve the app.
+- Firebase Overview: [setup/firebase.md](setup/firebase.md)
+- Firestore Rules: [firestore-rules.txt](firestore-rules.txt)
+- Firebase Storage Rules: [firebase-storage-rules.txt](firebase-storage-rules.txt)
 
-## 📞 Support
+## Engineering Guides
 
-For issues and questions, please check the [Troubleshooting Guide](guides/troubleshooting.md) or create an issue on GitHub.
+- Contributing Guide: [guides/contributing.md](guides/contributing.md)
+- Troubleshooting: [guides/troubleshooting.md](guides/troubleshooting.md)
+- Background Threading: [Explain/BackgroudTreding.md](Explain/BackgroudTreding.md)
+- Test Cases: [Explain/test-cases.md](Explain/test-cases.md)
+
+## Academic / Presentation
+
+- Viva / Presentation Guide: [viva-guide.md](viva-guide.md)
+
+## Missing / Improvements
+
+If you notice a broken link or missing topic, open an issue or PR. Suggested future docs:
+
+- Performance benchmarks
+- Release process
+- QA checklist
 
 ---
-*Last updated: August 2025*
+
+Last updated: 2025-08-21

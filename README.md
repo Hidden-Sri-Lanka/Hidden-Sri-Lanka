@@ -1,5 +1,16 @@
 # Hidden Sri Lanka Mobile App
 
+> 📚 Looking for the docs? Jump straight in: **[➡️ Full Documentation Index](docs/README.md)**
+
+Quick Docs Shortcuts:
+
+| Getting Started | Architecture | Features | API | Design System | Contributing |
+|-----------------|-------------|----------|-----|---------------|--------------|
+| [Setup Guide](docs/guides/getting-started.md) | [Architecture](docs/setup/architecture.md) | [All Features](docs/features/home-discovery.md) | [Endpoints](docs/api/endpoints.md) | [UI System](docs/design-system.md) | [Contribute](docs/guides/contributing.md) |
+
+
+---
+
 ## 📱 Android Application Module
 
 This directory contains the main Android application code for the Hidden Sri Lanka project, developed as part of my Mobile Application Development course at OUSL.
@@ -14,6 +25,7 @@ This project includes comprehensive documentation to help you understand, setup,
 - **[Installation Guide](docs/setup/installation.md)** - Detailed installation procedures
 - **[Firebase Setup](docs/setup/firebase.md)** - Firebase configuration and setup
 - **[Architecture Overview](docs/setup/architecture.md)** - Project architecture and design patterns
+- **[Firebase Google Services Setup](docs/setup/firebase-google-services-setup.md)** - Adding google-services.json & configuring Gradle
 
 ### 🚀 Features Documentation
 
@@ -28,13 +40,23 @@ This project includes comprehensive documentation to help you understand, setup,
 ### 🔧 API & Technical Reference
 
 - **[API Endpoints](docs/api/endpoints.md)** - Backend API documentation and usage
+- **[API Key Setup](docs/api/API_KEY_SETUP.md)** - Managing and securing API keys
 - **[Design System](docs/design-system.md)** - UI/UX guidelines and component library
 
 ### 🤝 Contributing & Support
 
 - **[Contributing Guide](docs/guides/contributing.md)** - How to contribute to the project
 - **[Troubleshooting](docs/guides/troubleshooting.md)** - Common issues and solutions
-- **[Viva Guide](docs/viva-guide.md)** - Academic presentation and defense preparation
+- **[Toast Message Guidelines](docs/guides/toast-message-guidelines.md)** - Consistent in-app messaging standards
+- **[Background Threading](docs/Explain/BackgroudTreding.md)** - Threading model & best practices
+- **[Test Cases Reference](docs/Explain/test-cases.md)** - Manual / scenario-based testing list
+- **[Viva Guide](docs/viva-guide.md)** - Academic presentation and defense preparation (overview)
+
+### 🔐 Firebase & Security
+
+- **[Firestore Rules](docs/firestore-rules.txt)** - Database access control
+- **[Storage Rules](docs/firebase-storage-rules.txt)** - Media storage security
+- **[API Key Setup](docs/api/API_KEY_SETUP.md)** - (Duplicate for quick access) Key management
 
 ### 📋 Additional Resources
 
