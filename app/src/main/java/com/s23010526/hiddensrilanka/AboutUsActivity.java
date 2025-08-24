@@ -1,32 +1,48 @@
 package com.s23010526.hiddensrilanka;
+// package declearation this is where i say the where classes is belong
 
+//intent is used to navigate between defferent pages
 import android.content.Intent;
+//bundle is use to pass data between activities/screens
 import android.os.Bundle;
+//View represent buttons or UI elements
 import android.view.View;
+import android.net.Uri;
+import android.widget.Toast;
 
+
+// About us activity is inherrits common feturs  from Base activity
+//i have created basic template called BaseActivity.java
+// this has reduse code repeting
 public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_about_us;
-    }
 
+        return R.layout.activity_about_us;
+    } // this telles witch xml tile to use in this case it is "activity_about_us.xml"
+
+//    about "getActivityTitle" Mothod
+        // this method sets title of the page (top of the page - toolbar/top bar)
     @Override
     protected String getActivityTitle() {
-        return "About Us";
+
+        return "About Us"; // sets as About Us
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); // this is where activity first create (birth of the screen)
 
-        // Setup click listeners for buttons if needed
+        //
         setupClickListeners();
     }
 
     private void setupClickListeners() {
-        // You can add click listeners for buttons in the about us page
-        // For example, privacy policy, terms of service, contact us buttons
+//        currently these handle by xml code
+//        findViewById(R.id.btnPrivacy).setOnClickListener(v -> privacyPolicy(v));
+//        findViewById(R.id.btnTerms).setOnClickListener(v -> Terms(v));
+//        findViewById(R.id.btnContact).setOnClickListener(v -> Contact(v));
     }
 
     // These methods can be called from XML onClick attributes
