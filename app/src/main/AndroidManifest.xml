@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+<!--Android Permissions -->
 
+    <!-- Location Permission   -->
+        <!-- Access fine location is for to get presise locations  (accurate withing few meters )      -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <!-- get approximate locations (uses wifi , network towers ) ueses less resources like battery  -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--   Internet access Permission - give access to internet (map data download,backend data sync and connetion)-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+<!--    inside "application" tag contains allthe settings and components -->
+<!--    Explain
+            supportsRtl - this is usefull when right to left languages like arabic
+            Target api (31 is android 12 ) is what i target with this app [this is not minimum  api]-->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,12 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiddenSriLanka"
         tools:targetApi="31">
+<!--        Theam is added to styles -->
 
-        <!-- Google Maps API Key - Now securely loaded from local.properties -->
+        <!-- Google Maps API Key  loaded from local.properties
+             to protect api key expose via github -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_MAPS_API_KEY}" />
 
+        <!--All the activities/pages/screens  loded in here-->
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
@@ -61,6 +74,8 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+<!--        in here main activity is the entry point when app is open this will run first
+            in intent filter "android.intent.category.LAUNCHER" this is where android tells this is the entry point of the app-->
         <activity
             android:name=".MainActivity"
             android:exported="true">
