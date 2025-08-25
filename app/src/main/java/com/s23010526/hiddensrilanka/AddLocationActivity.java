@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Create new screen called addLocationActivity that inharet feturs from BaseActivity
+//also can handle image cliks
 public class AddLocationActivity extends BaseActivity implements ImageGalleryAdapter.OnImageClickListener {
 
     private static final String TAG = "AddLocationActivity";

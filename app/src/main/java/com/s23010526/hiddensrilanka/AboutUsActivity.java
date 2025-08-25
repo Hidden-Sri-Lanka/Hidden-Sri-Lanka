@@ -39,7 +39,7 @@ public class AboutUsActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-//        currently these handle by xml code
+//        currently these handle by xml code (Un nessosry) TODO : Cleanup
 //        findViewById(R.id.btnPrivacy).setOnClickListener(v -> privacyPolicy(v));
 //        findViewById(R.id.btnTerms).setOnClickListener(v -> Terms(v));
 //        findViewById(R.id.btnContact).setOnClickListener(v -> Contact(v));
@@ -49,22 +49,48 @@ public class AboutUsActivity extends BaseActivity {
     public void privacyPolicy(View view) {
         // Navigate to privacy policy or show dialog
         // For now, show a coming soon message
-        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
-        intent.putExtra("FEATURE_NAME", "Privacy Policy");
-        startActivity(intent);
+//        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
+//        intent.putExtra("FEATURE_NAME", "Privacy Policy");
+//        startActivity(intent);
+        openUrl("https://github.com/Hidden-Sri-Lanka/Hidden-Sri-Lanka/blob/main/docs/PrivacyPolicy/PrivacyPolicy.md");
+
     }
 
     public void Terms(View view) {
         // Navigate to terms of service or show dialog
-        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
-        intent.putExtra("FEATURE_NAME", "Terms of Service");
-        startActivity(intent);
+//        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
+//        intent.putExtra("FEATURE_NAME", "Terms of Service");
+//        startActivity(intent);
+        openUrl("https://github.com/Hidden-Sri-Lanka/Hidden-Sri-Lanka/blob/main/docs/PrivacyPolicy/TermsAndConditions.md");
     }
 
     public void Contact(View view) {
         // Navigate to contact us or show dialog
-        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
-        intent.putExtra("FEATURE_NAME", "Contact Us");
-        startActivity(intent);
+//        Intent intent = new Intent(this, FetureCommingSoonActivity.class);
+//        intent.putExtra("FEATURE_NAME", "Contact Us");
+//        startActivity(intent);
+        openUrl("http://asitha.site/"); //button click handler
+    }
+    // Reusable Helper method to open URLs
+    private void openUrl(String url) { // get url as a string
+        try {
+            Uri uri = Uri.parse(url); // this will convert humen readable url to android readable url address (can check this in .net for android in ms )
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri); // this tells that i need to view this content (this is system wide action)
+            // explain
+            // when url -> web browser , phone numbers  -> dial pad, map-> open maps app
+//
+            // following part is optional it check is ther any app that can open this url
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else { // if no app can handle this request then follownig error will show
+                Toast.makeText(this, "No application can handle this request. Please install a web browser.",
+                        Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(this,
+                    "Error while opening URL: " + e.getMessage(), // if url opening is giving error
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
+// Toast massages are tempory popup massages these are deffernt comaire to error msges

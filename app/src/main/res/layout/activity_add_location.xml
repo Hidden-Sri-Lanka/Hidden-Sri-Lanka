@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Scroll View anable scrolling when content is too large to fit to phone screen -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -56,7 +58,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Instructional Video Card -->
+        <!-- Instruction Video Card -->
         <androidx.cardview.widget.CardView
             style="@style/PrimaryCard"
             android:layout_width="match_parent"
@@ -145,6 +147,7 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Form Card -->
+<!--        Uses matrial components TextInputLayout + TextInputEditText -->
         <androidx.cardview.widget.CardView
             style="@style/PrimaryCard"
             android:layout_width="match_parent"
@@ -178,6 +181,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Category -->
+<!--                Dropdown -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_category"
                     android:layout_width="match_parent"
@@ -242,6 +246,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Description -->
+<!--                Max caractor linit is set to 10000-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,7 +255,7 @@
                     app:boxStrokeColor="@color/DeepForestGreen"
                     app:hintTextColor="@color/NavyBlue"
                     app:counterEnabled="true"
-                    app:counterMaxLength="3000">
+                    app:counterMaxLength="10000">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_description"
@@ -259,7 +264,7 @@
                         android:hint="Description (Share detailed information about this amazing place) *"
                         android:inputType="textMultiLine|textCapSentences"
                         android:lines="6"
-                        android:maxLength="3000"
+                        android:maxLength="10000"
                         android:textColor="@color/NavyBlue"
                         android:fontFamily="cursive" />
 
@@ -508,3 +513,7 @@
 
     </LinearLayout>
 </ScrollView>
+
+
+<!--@colors -> colors.xml
+@style ->  style.xml-->
