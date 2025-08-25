@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Android build outputs
+app/release/
+*.apk
+/build/
+.gradle/
+local.properties
