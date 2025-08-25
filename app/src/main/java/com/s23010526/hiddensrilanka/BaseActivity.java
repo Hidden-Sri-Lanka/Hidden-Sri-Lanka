@@ -22,33 +22,35 @@ import androidx.activity.OnBackPressedCallback;
 import com.google.android.material.navigation.NavigationView;
 import com.s23010526.hiddensrilanka.databinding.ActivityBaseBinding;
 
+
+// This class is the class that provide all ther shered fetures for all activities (cmmon fetures )
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     protected ActivityBaseBinding binding; // Binding for the base layout
     private ActionBarDrawerToggle drawerToggle;
-    protected SessionManager sessionManager; // Add SessionManager
+    protected SessionManager sessionManager; // helps to login and logout
 
     @LayoutRes
-    protected abstract int getLayoutResourceId(); // Child activities need to provide their content layout
+    protected abstract int getLayoutResourceId(); // Child activities need to provide their content layout (xml file )
 
-    protected abstract String getActivityTitle(); // Child activities need to provide their titles
+    protected abstract String getActivityTitle(); // need to provide their titles (Home ,about,etc...)
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { // calling when activity starting
         super.onCreate(savedInstanceState);
 
-        // Initialize SessionManager
+        // Initialize SessionManager (login helper)
         sessionManager = new SessionManager(this);
 
-        binding = ActivityBaseBinding.inflate(getLayoutInflater());
+        binding = ActivityBaseBinding.inflate(getLayoutInflater()); //loading xml file
         setContentView(binding.getRoot());
 
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater inflater = LayoutInflater.from(this); // this will load xml uniqe iterms in to base template frame
         inflater.inflate(getLayoutResourceId(), binding.contentFrame, true);
 
         // Setup Toolbar with custom layout
         setSupportActionBar(binding.toolbar);
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) { // hides default title
             // Disable the default title since we're using custom TextView
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -56,10 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         // Set custom title text
         TextView toolbarTitle = binding.toolbar.findViewById(R.id.toolbar_title);
         if (toolbarTitle != null) {
-            toolbarTitle.setText(getActivityTitle());
+            toolbarTitle.setText(getActivityTitle()); // if title is not provbided it will automatically assign activity name  as title
         }
 
-        // Setup search field functionality
+        // add serch box and icon to the toolbar
         EditText searchField = binding.toolbar.findViewById(R.id.toolbar_search_field);
         ImageView searchIcon = binding.toolbar.findViewById(R.id.search_icon);
 
@@ -69,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
                     String query = searchField.getText().toString().trim();
                     if (!query.isEmpty()) {
-                        performSearch(query);
+                        performSearch(query); // if tutch on serch bar it will call performSearch(quary) method
                         searchField.clearFocus();
                         // Hide keyboard
                         android.view.inputmethod.InputMethodManager imm =
@@ -91,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             });
         }
 
-        // Setup Navigation Drawer
+        // Setup Navigation Drawer toggle (hamburger menue icon)
         drawerToggle = new ActionBarDrawerToggle(
                 this,
                 binding.drawerLayout,
@@ -100,12 +102,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 R.string.navigation_drawer_close
         );
         binding.drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        drawerToggle.syncState(); // setting icon animation correctly
 
         binding.navView.setNavigationItemSelectedListener(this);
         binding.navView.bringToFront();
 
-        // Handle back button press using OnBackPressedCallback (modern approach)
+        // Handle back button press using OnBackPressedCallback to manage drawer state
+        // if drower is open then close it
+        // othervise perform normal actions
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -126,6 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         });
     }
 
+    // menue iterms clicks handling
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -133,35 +138,33 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         Class<?> currentActivityClass = this.getClass();
 
-        // Convert switch to if-else to avoid Android Gradle Plugin 8.0 warnings
         if (itemId == R.id.nav_home) {
-            intent = new Intent(this, MainActivity.class);
+            intent = new Intent(this, MainActivity.class);// home page
         } else if (itemId == R.id.nav_settings) {
             if (currentActivityClass != SettingsActivity.class) {
-                intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);// settings page
             }
         } else if (itemId == R.id.nav_exp_map) {
-            if (currentActivityClass != FullMapViewActivity.class) {
+            if (currentActivityClass != FullMapViewActivity.class) {// map
                 intent = new Intent(this, FullMapViewActivity.class);
             }
         } else if (itemId == R.id.nav_add_location) {
             if (currentActivityClass != AddLocationActivity.class) {
-                intent = new Intent(this, AddLocationActivity.class);
+                intent = new Intent(this, AddLocationActivity.class);// add location page
             }
         } else if (itemId == R.id.nav_favorit) {
-            // Navigate to feature coming soon activity instead of showing toast
-            intent = new Intent(this, FetureCommingSoonActivity.class);
+
+            intent = new Intent(this, FetureCommingSoonActivity.class); // favorits page (under development )TODO : fev page dev
         } else if (itemId == R.id.nav_about_us) {
             if (currentActivityClass != AboutUsActivity.class) {
-                intent = new Intent(this, AboutUsActivity.class);
+                intent = new Intent(this, AboutUsActivity.class);// about us
             }
         } else if (itemId == R.id.nav_profile) {
-            // Navigate to feature coming soon activity instead of showing toast
-            intent = new Intent(this, FetureCommingSoonActivity.class);
+            intent = new Intent(this, FetureCommingSoonActivity.class); // TODO : profiles
         } else if (itemId == R.id.nav_log_out) {
             // Clear session data
             if (sessionManager != null) {
-                sessionManager.logoutUser();
+                sessionManager.logoutUser(); // session manager will clear all the saved data
             }
 
             // Redirect to WelcomeActivity and clear the activity stack
@@ -184,7 +187,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // No need to inflate any menu items as search is now integrated
+        // No need to inflate any menu items as search is now integrated to toolbar
         return true;
     }
 

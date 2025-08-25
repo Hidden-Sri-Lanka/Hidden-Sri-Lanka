@@ -6,6 +6,8 @@ import android.view.View; // Keep if you have onClick methods in XML for setting
 import android.widget.Toast; // Keep for specific Toasts if needed
 
 
+//This page is under develpoment
+
 public class SettingsActivity extends BaseActivity { // Changed to BaseActivity
     // TODO: SETTINGS_CONTENT_SETUP - Declare UI elements for your settings screen content here
     @Override

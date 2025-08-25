@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button signupButton;
     Button loginRedirectText;
 
-    // Define your database URL as a constant
+    // im here Define  database URL as a constant
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     @Override
@@ -36,28 +36,28 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // Initialize views
-        signupName = findViewById(R.id.userName); // This might be reused for name
-        signupUserName = findViewById(R.id.userName);
-        signupEmail = findViewById(R.id.email);
+        signupName = findViewById(R.id.userName); // TODO: This might be reused for profile name
+        signupUserName = findViewById(R.id.userName); //
+        signupEmail = findViewById(R.id.email);// text feal in xml fils
         signupPassword = findViewById(R.id.password);
         signupRePassword = findViewById(R.id.rePassword);
         signupButton = findViewById(R.id.signUpButton);
         loginRedirectText = findViewById(R.id.loginRedirectText);
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() { // when click the button
             @Override
             public void onClick(View v) {
                 // Get FirebaseDatabase instance with the correct URL
-                FirebaseDatabase database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
-                DatabaseReference reference = database.getReference("users");
+                FirebaseDatabase database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL); //
+                DatabaseReference reference = database.getReference("users");// refer to the users node
 
-                String name = signupName.getText().toString().trim();
+                String name = signupName.getText().toString().trim(); // get the text from the edit text
                 String email = signupEmail.getText().toString().trim();
                 String username = signupUserName.getText().toString().trim();
                 String password = signupPassword.getText().toString();
                 String rePassword = signupRePassword.getText().toString();
 
-                // Validation
+                // Validation(checking wheter the fealds are empty or not)
                 if (name.isEmpty()) {
                     signupName.setError("Name cannot be empty");
                     return;
@@ -79,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Create helper class instance
+                // Create helper class instance for user data storage in Firebase database
                 HelperClass helperClass = new HelperClass(name, email, username, password);
 
                 // Save to Firebase
@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void toLogin(View view) {
+    public void toLogin(View view) { // rederect to login page btn
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

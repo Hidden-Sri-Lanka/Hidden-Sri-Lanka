@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//Demo data for dev perpus
 public class DataSeeder {
     private static final String TAG = "DataSeeder";
     private FirebaseFirestore firestore;

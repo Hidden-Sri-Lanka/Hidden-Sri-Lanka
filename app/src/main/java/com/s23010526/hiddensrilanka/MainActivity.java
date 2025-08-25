@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     // private static final long SPLASH_TIMEOUT = 5000;  (Changed to another method for delay )
+//    using as splash screen
     private SessionManager sessionManager;
 
     @Override

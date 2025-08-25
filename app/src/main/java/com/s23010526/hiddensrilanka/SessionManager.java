@@ -3,10 +3,13 @@ package com.s23010526.hiddensrilanka;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
+// SessionManager class to manage user login sessions using SharedPreferences
+
 public class SessionManager {
-    private static final String PREF_NAME = "HiddenSriLankaSession";
-    private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
-    private static final String KEY_USERNAME = "username";
+    private static final String PREF_NAME = "HiddenSriLankaSession"; // SharedPreferences file name
+    private static final String KEY_IS_LOGGED_IN = "isLoggedIn";// Key to check login status
+    private static final String KEY_USERNAME = "username";// Key to store username
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
 
@@ -19,9 +22,7 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    /**
-     * Create login session
-     */
+//     Create login session
     public void createLoginSession(String username, String email, String name) {
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
         editor.putString(KEY_USERNAME, username);
@@ -30,18 +31,14 @@ public class SessionManager {
         editor.apply();
     }
 
-    /**
-     * Check login method will check user login status
-     * If false it will redirect user to login page
-     * Else do anything
-     */
+//      Check login method will check user login status
+//      If false it will redirect user to login page
+//      Else do anything
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
-    }
+    } //
 
-    /**
-     * Get stored session data
-     */
+//      Get stored session data
     public String getUsername() {
         return pref.getString(KEY_USERNAME, null);
     }
@@ -54,9 +51,7 @@ public class SessionManager {
         return pref.getString(KEY_NAME, null);
     }
 
-    /**
-     * Clear session details
-     */
+//      Clear session details
     public void logoutUser() {
         editor.clear();
         editor.apply();

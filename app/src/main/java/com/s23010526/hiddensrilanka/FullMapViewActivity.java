@@ -43,39 +43,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * FullMapViewActivity - Google Maps implementation for exploring Sri Lankan attractions
- *
- * This activity provides a comprehensive map view of all attractions with features:
- * - Interactive Google Maps with custom markers
- * - Real-time location tracking
- * - Search and filter functionality
- * - Bottom sheet with attraction details
- * - Navigation integration
- * - Different map types (Normal, Satellite, Terrain)
- * - Clustering for better performance with many markers
- *
- * @author Hidden Sri Lanka Development Team
- * @version 2.0.0
- */
+//  FullMapViewActivity - Google Maps implementation for exploring Sri Lankan attractions
+// This activity also inharent BaseActivity setups (toolbars ,sidebars,srarch,etc)
 public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final String TAG = "FullMapViewActivity";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
-    // Sri Lanka default coordinates (Colombo)
+    // Sri Lanka default coordinates (Colombo) this is the location where the map will be centered initially
     private static final LatLng DEFAULT_LOCATION = new LatLng(6.9271, 79.8612);
     private static final float DEFAULT_ZOOM = 8f;
     private static final float DETAILED_ZOOM = 15f;
 
     // UI Components
-    private GoogleMap mMap;
-    private CircularProgressIndicator loadingIndicator;
-    private EditText searchEditText;
-    private ImageView filterIcon;
-    private FloatingActionButton myLocationFab, mapTypeFab, clusterToggleFab;
-    private LinearLayout bottomSheet;
-    private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
+    private GoogleMap mMap; // Google Map instance
+    private CircularProgressIndicator loadingIndicator; // Loading spinner
+    private EditText searchEditText; // Search bar
+    private ImageView filterIcon; // Filter button
+    private FloatingActionButton myLocationFab, mapTypeFab, clusterToggleFab; // FABs for location, map type, clustering
+    private LinearLayout bottomSheet; // Bottom sheet for attraction details
+    private BottomSheetBehavior<LinearLayout> bottomSheetBehavior; // Bottom sheet behavior
 
     // Bottom sheet components
     private ImageView attractionImage, navigateButton;
@@ -114,9 +101,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         loadAttractionsFromFirestore();
     }
 
-    /**
-     * Initialize all UI components and services
-     */
+//      Initialize all UI components and services
     private void initializeComponents() {
         // Initialize Firebase and location services
         firestore = FirebaseFirestore.getInstance();
@@ -148,9 +133,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    /**
-     * Setup the Google Maps fragment
-     */
+    //     Setup the Google Maps fragment
     private void setupMapFragment() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -159,9 +142,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Setup all UI event listeners
-     */
+//      Setup all UI event listeners
     private void setupUIListeners() {
         // Search functionality
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -195,11 +176,11 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) { // Map initialization
         mMap = googleMap;
 
         // Configure map settings
-        setupMapSettings();
+        setupMapSettings(); // enable map compass and showmy location button
 
         // Set map listeners
         mMap.setOnMarkerClickListener(this);
@@ -215,9 +196,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         hideLoadingIndicator();
     }
 
-    /**
-     * Configure Google Maps settings and UI
-     */
+//      Configure Google Maps settings and UI
     private void setupMapSettings() {
         // Enable map controls
         mMap.getUiSettings().setZoomControlsEnabled(false); // We have custom FABs
@@ -228,16 +207,14 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         enableMyLocationIfPermitted();
     }
 
-    /**
-     * Load attractions from Firestore database
-     */
-    private void loadAttractionsFromFirestore() {
+//      Load attractions from Firestore database
+    private void loadAttractionsFromFirestore() { // collecting all the documents in attractions collection
         showLoadingIndicator();
 
         firestore.collection("attractions")
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null) {
+                    if (task.isSuccessful() && task.getResult() != null) { // validating if attraction name is null or not
                         allAttractions.clear();
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -252,7 +229,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
                         }
 
                         Log.d(TAG, "Loaded " + allAttractions.size() + " attractions from Firestore");
-                        filterAndDisplayAttractions();
+                        filterAndDisplayAttractions(); // draw marker on map
 
                     } else {
                         Log.w(TAG, "Error getting attractions", task.getException());
@@ -262,18 +239,14 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
                 });
     }
 
-    /**
-     * Validate attraction data before displaying
-     */
+//      Validate attraction data before displaying
     private boolean isValidAttraction(Attraction attraction) {
         return attraction.getName() != null && !attraction.getName().trim().isEmpty() &&
                attraction.getLatitude() != 0.0 && attraction.getLongitude() != 0.0 &&
                !attraction.isPlaceholder();
     }
 
-    /**
-     * Filter attractions based on search query and display on map
-     */
+//      Filter attractions based on search query and display on map
     private void filterAndDisplayAttractions() {
         filteredAttractions.clear();
 
@@ -292,9 +265,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         Log.d(TAG, "Filtered to " + filteredAttractions.size() + " attractions");
     }
 
-    /**
-     * Check if attraction matches search query
-     */
+//      Check if attraction matches search query
     private boolean matchesSearchQuery(Attraction attraction, String query) {
         return attraction.getName().toLowerCase().contains(query) ||
                (attraction.getCategory() != null && attraction.getCategory().toLowerCase().contains(query)) ||
@@ -302,9 +273,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
                (attraction.getDescription() != null && attraction.getDescription().toLowerCase().contains(query));
     }
 
-    /**
-     * Display filtered attractions as markers on the map
-     */
+//      Display filtered attractions as markers on the map
     private void displayAttractionsOnMap() {
         if (mMap == null) return;
 
@@ -320,9 +289,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         Log.d(TAG, "Displayed " + filteredAttractions.size() + " markers on map");
     }
 
-    /**
-     * Add a marker for an attraction on the map
-     */
+//      Add a marker for an attraction on the map
     private void addAttractionMarker(Attraction attraction) {
         LatLng position = new LatLng(attraction.getLatitude(), attraction.getLongitude());
 
@@ -338,9 +305,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Get marker color based on attraction category
-     */
+//      Get marker color based on attraction category
     private float getMarkerColor(String category) {
         if (category == null) return BitmapDescriptorFactory.HUE_RED;
 
@@ -369,9 +334,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         return false;
     }
 
-    /**
-     * Show attraction details in bottom sheet
-     */
+//      Show attraction details in bottom sheet
     private void showAttractionDetails(Attraction attraction) {
         // Set attraction data
         attractionName.setText(attraction.getName());
@@ -407,26 +370,20 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         bottomSheet.setOnClickListener(v -> openAttractionDetails(attraction));
     }
 
-    /**
-     * Calculate distance between two points in kilometers
-     */
+//      Calculate distance between two points in kilometers
     private float calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         float[] results = new float[1];
         Location.distanceBetween(lat1, lon1, lat2, lon2, results);
         return results[0] / 1000; // Convert to kilometers
     }
 
-    /**
-     * Hide the bottom sheet
-     */
+//      Hide the bottom sheet
     private void hideBottomSheet() {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         selectedAttraction = null;
     }
 
-    /**
-     * Open full attraction details activity
-     */
+//      Open full attraction details activity
     private void openAttractionDetails(Attraction attraction) {
         Intent intent = new Intent(this, LocationDetailActivity.class);
 
@@ -449,9 +406,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         startActivity(intent);
     }
 
-    /**
-     * Open navigation to selected attraction
-     */
+//      Open navigation to selected attraction
     private void openNavigation() {
         if (selectedAttraction == null) return;
 
@@ -478,9 +433,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Request location permission from user
-     */
+//     Request location permission from user
     private void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -490,9 +443,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Enable my location on map if permission is granted
-     */
+//      Enable my location on map if permission is granted
     private void enableMyLocationIfPermitted() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -503,9 +454,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Get current user location
-     */
+//      Get current user location
     private void getCurrentLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -521,9 +470,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Move camera to current location
-     */
+//      Move camera to current location
     private void moveToCurrentLocation() {
         if (currentLocation != null && mMap != null) {
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -534,9 +481,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         }
     }
 
-    /**
-     * Toggle between different map types
-     */
+//      Toggle between different map types
     private void toggleMapType() {
         if (mMap == null) return;
 
@@ -558,9 +503,7 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         mMap.setMapType(currentMapType);
     }
 
-    /**
-     * Toggle marker clustering (placeholder for future implementation)
-     */
+//      Toggle marker clustering (placeholder for future implementation)
     private void toggleClustering() {
         clusteringEnabled = !clusteringEnabled;
         String message = clusteringEnabled ? "Clustering Enabled" : "Clustering Disabled";
@@ -570,27 +513,21 @@ public class FullMapViewActivity extends BaseActivity implements OnMapReadyCallb
         // This would group nearby markers when zoomed out for better performance
     }
 
-    /**
-     * Show filter dialog (placeholder for future implementation)
-     */
+//      Show filter dialog (placeholder for future implementation)
     private void showFilterDialog() {
         Toast.makeText(this, "Filter options coming soon!", Toast.LENGTH_SHORT).show();
 
         // TODO: Implement filter dialog for categories, ratings, etc.
     }
 
-    /**
-     * Show loading indicator
-     */
+//      Show loading indicator
     private void showLoadingIndicator() {
         if (loadingIndicator != null) {
             loadingIndicator.setVisibility(View.VISIBLE);
         }
     }
 
-    /**
-     * Hide loading indicator
-     */
+//      Hide loading indicator
     private void hideLoadingIndicator() {
         if (loadingIndicator != null) {
             loadingIndicator.setVisibility(View.GONE);

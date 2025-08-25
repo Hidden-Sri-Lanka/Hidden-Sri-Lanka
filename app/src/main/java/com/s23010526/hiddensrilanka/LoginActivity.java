@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     Button signUpRederect;
     private SessionManager sessionManager;
 
-    // Define your database URL as a constant i have given reson in Signup Activity
+    // i have Define  database URL as a constant i have given reson in Signup Activity
     private static final String FIREBASE_DATABASE_URL = "https://hidden-sri-lanka-c3ec5-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     @Override
@@ -41,26 +41,26 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize SessionManager
         sessionManager = new SessionManager(this);
 
-        loginUsername = findViewById(R.id.userName);
+        loginUsername = findViewById(R.id.userName); // getting data from xml file
         loginPassword = findViewById(R.id.password);
         loginButton = findViewById(R.id.logingButton);
         signUpRederect = findViewById(R.id.signUpRederect);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {// when user click on login button
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {// validate username and password
                 boolean isUsernameValid = validateUsername();
                 boolean isPasswordValid = validatePassword();
-                if (isUsernameValid && isPasswordValid) {
+                if (isUsernameValid && isPasswordValid) {// if both are valid then check user
                     checkUser();
                 }
             }
         });
 
-        signUpRederect.setOnClickListener(new View.OnClickListener() {
+        signUpRederect.setOnClickListener(new View.OnClickListener() {// when user click on sign up button
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);// it will rederect to sinup activity
                 startActivity(intent);
             }
         });
@@ -73,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public Boolean validateUsername() {
-        String val = loginUsername.getText().toString().trim(); // Added trim()
+        String val = loginUsername.getText().toString().trim(); // Added trim() to remove leading/trailing spaces
         if (val.isEmpty()) {
-            loginUsername.setError("User Name cannot be Empty !");
+            loginUsername.setError("User Name cannot be Empty !"); // if user name is empty it will show error
             return false;
         } else {
             loginUsername.setError(null);
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public Boolean validatePassword() {
+    public Boolean validatePassword() { // validate password
         String val = loginPassword.getText().toString(); // No trim() here, as passwords can have leading/trailing spaces
         if (val.isEmpty()) {
             loginPassword.setError("Password cannot be Empty !");
@@ -96,27 +96,27 @@ public class LoginActivity extends AppCompatActivity {
 
     public void checkUser() {
         String userName = loginUsername.getText().toString().trim();
-        String userPassword = loginPassword.getText().toString().trim(); // Also trim password input for consistency if needed, but be careful
+        String userPassword = loginPassword.getText().toString().trim(); // Also trim password input for consistency
 
         // Get FirebaseDatabase instance with the correct URL
-        FirebaseDatabase database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
-        DatabaseReference reference = database.getReference("users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(userName);
+        FirebaseDatabase database = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL); // use the constant URL
+        DatabaseReference reference = database.getReference("users");// refer to user table
+        Query checkUserDatabase = reference.orderByChild("username").equalTo(userName);// check if the username is equal to the user name entered by user
 
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {// it will check the user name and password
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {// if any data change in database
+                if (snapshot.exists()) {// if user name exist in database
                     loginUsername.setError(null);
-                    boolean credentialsValid = false;
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    boolean credentialsValid = false;// flag to track if credentials are valid
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {// loop through all matching users (should be one due to unique usernames)
 
 
                         String passwordFromDB = userSnapshot.child("password").getValue(String.class);
 
-                        if (Objects.equals(passwordFromDB, userPassword)) {
+                        if (Objects.equals(passwordFromDB, userPassword)) {// check if password is equal to the password entered by user
                             credentialsValid = true;
-                            loginPassword.setError(null);
+                            loginPassword.setError(null);// if both are valid then it will rederect to home activity
 
                             // Get user data from database
                             String actualUsernameFromDB = userSnapshot.child("username").getValue(String.class);
@@ -124,16 +124,16 @@ public class LoginActivity extends AppCompatActivity {
                             String nameFromDB = userSnapshot.child("name").getValue(String.class);
 
                             // Save session data
-                            sessionManager.createLoginSession(
-                                    actualUsernameFromDB != null ? actualUsernameFromDB : userName,
-                                    emailFromDB != null ? emailFromDB : "",
-                                    nameFromDB != null ? nameFromDB : ""
+                            sessionManager.createLoginSession(// save session data
+                                    actualUsernameFromDB != null ? actualUsernameFromDB : userName,// if actual username is null then it will save the user name entered by user
+                                    emailFromDB != null ? emailFromDB : "",// if email is null then it will save empty string
+                                    nameFromDB != null ? nameFromDB : ""// if name is null then it will save empty string
                             );
 
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            intent.putExtra("USERNAME", actualUsernameFromDB != null ? actualUsernameFromDB : userName);
-                            startActivity(intent);
-                            finish();
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);// rederect to home activity
+                            intent.putExtra("USERNAME", actualUsernameFromDB != null ? actualUsernameFromDB : userName);// pass the user name to home activity
+                            startActivity(intent);// start home activity
+                            finish();// finish login activity
                             return; // Exit after successful login
                         }
                     }

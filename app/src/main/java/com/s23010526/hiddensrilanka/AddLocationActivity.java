@@ -58,7 +58,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
     private RecyclerView rvImageGallery;
 
     // Tutorial video URL -
-    private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/VIDEO"; // TODO Replace Vide with good production video this is tempory
+    private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/YOUR_TUTORIAL_VIDEO_ID"; // TODO Replace Vide with good production video this is tempory
 
     // Firebase declare used for cloud db
     private FirebaseFirestore firestore;
@@ -258,26 +258,28 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         btnPlayTutorial.setOnClickListener(v -> playTutorialVideo());
     }
 
+
+//    "updateCityDropdown" -> this method will refresh with data when province is selected
     private void updateCityDropdown(String selectedProvince) {
         String[] cities = provinceCityMap.get(selectedProvince);
-        if (cities != null) {
+        if (cities != null) { // when city is
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, cities);
-            etCity.setAdapter(cityAdapter);
-            etCity.setText("");
+                android.R.layout.simple_dropdown_item_1line, cities); // fetching all the cities in the list
+            etCity.setAdapter(cityAdapter); //
+            etCity.setText(""); // clearing previus taps or selections
 
-            tilCity.setHint("Select City from " + selectedProvince);
-            Toast.makeText(this, "Cities filtered for " + selectedProvince, Toast.LENGTH_SHORT).show();
+            tilCity.setHint("Select City from " + selectedProvince); //this will give hint
+            Toast.makeText(this, "Cities filtered for " + selectedProvince, Toast.LENGTH_SHORT).show(); // showing user to what thay have selected
         }
     }
 
-    private void updateGalleryVisibility() {
-        if (imageUrls.isEmpty()) {
-            layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
-            btnClearImages.setVisibility(View.GONE);
-        } else {
-            layoutGalleryPlaceholder.setVisibility(View.GONE);
-            btnClearImages.setVisibility(View.VISIBLE);
+    private void updateGalleryVisibility() { // this will dynamically show ui part when image added or not
+        if (imageUrls.isEmpty()) {// no iomage added
+            layoutGalleryPlaceholder.setVisibility(View.VISIBLE); // empty state ui
+            btnClearImages.setVisibility(View.GONE); // hide clear image buttons
+        } else { // image is present
+            layoutGalleryPlaceholder.setVisibility(View.GONE); // empty image gallary ui is not visible
+            btnClearImages.setVisibility(View.VISIBLE); // showing clear image button
         }
     }
 
@@ -305,45 +307,54 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         Toast.makeText(this, "Image added to gallery!", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean isValidUrl(String url) {
+    private boolean isValidUrl(String url) { // checking image url is valid or not
         return url.startsWith("http://") || url.startsWith("https://");
     }
 
     private void loadAndDisplayImage(String url) {
-        Log.d(TAG, "loadAndDisplayImage called with URL: " + url);
-        progressBar.setVisibility(View.VISIBLE);
+        Log.d(TAG, "loadAndDisplayImage called with URL: " + url); // this is for developer debug purpus
+        progressBar.setVisibility(View.VISIBLE); // progress bar is visible
 
         // Check if it's a Google Photos share link that needs processing
         if (url.contains("photos.app.goo.gl") || url.contains("photos.google.com/share")) {
-            Log.d(TAG, "Detected Google Photos URL, processing...");
+            Log.d(TAG, "Detected Google Photos URL, processing..."); // debug purpus
             Toast.makeText(this, "Processing Google Photos link...", Toast.LENGTH_SHORT).show();
 
-            // Use the GooglePhotosUrlHelper to process the URL first
+            // Use the GooglePhotosUrlHelper (java file )to process the URL first
             GooglePhotosUrlHelper.processImageUrl(this, url, processedUrl -> {
                 Log.d(TAG, "Google Photos URL processed to: " + processedUrl);
-                // Load the processed URL
+                // Load the processed URL to Glide
                 loadImageWithGlide(processedUrl);
             });
-        } else {
+        } else {// if image url is not google photo image url then it will load derectly
             Log.d(TAG, "Direct image URL detected, loading directly...");
             // Direct image URL - load directly
             loadImageWithGlide(url);
         }
     }
 
-    private void loadImageWithGlide(String url) {
+
+//    Glide -> android libriy for loading images from urls
+//----- Base ----
+// private void loadImageWithGlide(String url) {
+//    Glide.with(this)
+//            .load(url)
+//            .placeholder(android.R.drawable.ic_menu_gallery)
+//            .error(android.R.drawable.ic_menu_report_image)
+//            .into(targetImageView);
+//}
+
+    private void loadImageWithGlide(String url) {// getting image url as string
         Log.d(TAG, "loadImageWithGlide called with URL: " + url);
 
-        if (TextUtils.isEmpty(url)) {
+        if (TextUtils.isEmpty(url)) { // if image url is  empty
             Log.e(TAG, "Cannot load image: URL is empty");
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);// progress bar will not visible
             Toast.makeText(this, "Error: Image URL is empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Since Glide seems to be having consistent timeout issues,
-        // let's provide a more direct user experience
-        Log.d(TAG, "Attempting to load image with Glide...");
+        Log.d(TAG, "Attempting to load image with Glide..."); //dev perpus
 
         // Show immediate feedback to user
         Toast.makeText(this, "Testing image URL...", Toast.LENGTH_SHORT).show();
@@ -363,13 +374,14 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                            "• Skip preview and use the URL directly\n" +
                            "• Try a different image URL\n\n" +
                            "URL: " + url)
+                    // if user diided to proseed image url will skip checks and add url to gallary
                 .setPositiveButton("Skip Preview & Use URL", (dialog, which) -> {
                     timeoutHandler.removeCallbacks(null);
                     progressBar.setVisibility(View.GONE);
                     imageUrls.add(url);
                     imageGalleryAdapter.notifyDataSetChanged();
                     layoutGalleryPlaceholder.setVisibility(View.GONE);
-                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview skipped)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddLocationActivity.this, " Image URL saved! (Preview skipped)", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Try Different URL", (dialog, which) -> {
                     timeoutHandler.removeCallbacks(null);
@@ -384,11 +396,11 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 .show();
         };
 
-        Runnable timeoutRunnable = () -> {
+        Runnable timeoutRunnable = () -> { // when timeout reached
             Log.w(TAG, "Image loading timeout reached for URL: " + url);
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE); // progressbar will not visible
 
-            new android.app.AlertDialog.Builder(AddLocationActivity.this)
+            new android.app.AlertDialog.Builder(AddLocationActivity.this) // gives feedback to user
                 .setTitle("Image Load Timeout")
                 .setMessage("The image failed to load within 15 seconds. This might be due to:\n\n" +
                            "• Slow or unstable internet connection\n" +
@@ -399,7 +411,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 .setPositiveButton("Use URL Anyway", (dialog, which) -> {
                     imageUrls.add(url);
                     layoutGalleryPlaceholder.setVisibility(View.GONE);
-                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Will work in final app)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddLocationActivity.this, " Image URL saved! (Will work in final app)", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Try Different Image", (dialog, which) -> {
                     clearSelectedImage();
@@ -410,13 +422,13 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 .setCancelable(false)
                 .show();
         };
-
+//Timeout defin in here
         // Start quick feedback timer (3 seconds)
         quickFeedbackHandler.postDelayed(quickFeedbackRunnable, 3000);
 
         // Start timeout timer (15 seconds)
         timeoutHandler.postDelayed(timeoutRunnable, 15000);
-
+// checking config glide  and if success or fails it will give feedback to user?
         try {
             Glide.with(this)
                 .load(url)
@@ -445,14 +457,14 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                         runOnUiThread(() -> {
                             new android.app.AlertDialog.Builder(AddLocationActivity.this)
                                 .setTitle("Image Load Failed")
-                                .setMessage("Unable to load the image for preview. However, the URL might still work in the final app.\n\n" +
+                                .setMessage("Unable to load the image for preview. However, the URL might still work in  app.\n\n" +
                                            "Error details:\n" + (e != null ? e.getMessage() : "Unknown error") + "\n\n" +
                                            "URL: " + url + "\n\n" +
                                            "Would you like to use this URL anyway?")
                                 .setPositiveButton("Use URL Anyway", (dialog, which) -> {
                                     imageUrls.add(url);
                                     layoutGalleryPlaceholder.setVisibility(View.GONE);
-                                    Toast.makeText(AddLocationActivity.this, "✅ Image URL saved! (Preview failed but URL stored)", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AddLocationActivity.this, "Image URL saved! (Preview failed but URL stored)", Toast.LENGTH_LONG).show();
                                 })
                                 .setNegativeButton("Try Different Image", (dialog, which) -> {
                                     clearSelectedImage();
@@ -518,21 +530,21 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
     }
 
     private void clearSelectedImage() {
-        etImageUrl.setText("");
+        etImageUrl.setText(""); // setting image url box to empty
         // Removed ivSelectedImage reference since we're using gallery now
         updateGalleryVisibility();
     }
 
-    private void clearImageGallery() {
-        imageUrls.clear();
-        imageGalleryAdapter.notifyDataSetChanged();
-        layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
-        Toast.makeText(this, "Image gallery cleared", Toast.LENGTH_SHORT).show();
+    private void clearImageGallery() {// clearing entire gallary
+        imageUrls.clear();// clearing array list
+        imageGalleryAdapter.notifyDataSetChanged(); // notify adapter to refresh
+        layoutGalleryPlaceholder.setVisibility(View.VISIBLE); // show empty state ui
+        Toast.makeText(this, "Image gallery cleared", Toast.LENGTH_SHORT).show(); // feedback to user
     }
 
     private void validateAndSubmitLocation() {
-        String locationName = etLocationName.getText().toString().trim();
-        String description = etDescription.getText().toString().trim();
+        String locationName = etLocationName.getText().toString().trim(); // getting all the user inputs
+        String description = etDescription.getText().toString().trim(); // triming is used to remove extra spaces
         String category = etCategory.getText().toString().trim();
         String city = etCity.getText().toString().trim();
         String contributorName = etContributorName.getText().toString().trim();
@@ -552,19 +564,20 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
             return;
         }
 
-        // Updated description length check - increased to 3000 characters
-        if (description.length() > 3000) {
-            etDescription.setError("Description cannot exceed 3000 characters (" + description.length() + "/3000)");
+        // description length check - increased to 10000 characters
+        if (description.length() > 10000) {
+            etDescription.setError("Description cannot exceed 10000 characters (" + description.length() + "/3000)");
             etDescription.requestFocus();
             return;
         }
-
+// min discription
         if (description.length() < 50) {
             etDescription.setError("Description must be at least 50 characters (" + description.length() + "/50)");
             etDescription.requestFocus();
             return;
         }
 
+        // is catagory selected
         if (TextUtils.isEmpty(category)) {
             etCategory.setError("Category is required");
             etCategory.requestFocus();
@@ -614,25 +627,45 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         submitLocation(locationName, description, category, city, contributorName, youtubeUrl, province, imageUrls);
     }
 
+    // template for validating yt urls
     private boolean isValidYouTubeUrl(String url) {
         return url.contains("youtube.com/watch?v=") || url.contains("youtu.be/");
     }
 
-    private void submitLocation(String locationName, String description, String category,
-                              String city, String contributorName, String youtubeUrl, String province, ArrayList<String> imageUrls) {
-        progressBar.setVisibility(View.VISIBLE);
+    private void submitLocation(String locationName, // submitting location to firestore
+                                String description,
+                                String category,
+                                String city,
+                                String contributorName,
+                                String youtubeUrl,
+                                String province,
+                                ArrayList<String> imageUrls) { // submiting image urls to firestore db
 
-        saveLocationToFirestore(locationName, description, category, city,
-                              contributorName, youtubeUrl, imageUrls, province);
+        progressBar.setVisibility(View.VISIBLE); // setting progress bar visible
+
+        saveLocationToFirestore(locationName, // saving data to firestore
+                description,
+                category,
+                city,
+                contributorName,
+                youtubeUrl,
+                imageUrls,
+                province
+        );
     }
 
-    private void saveLocationToFirestore(String locationName, String description, String category,
-                                       String city, String contributorName, String youtubeUrl,
-                                       ArrayList<String> imageUrls, String province) {
+    private void saveLocationToFirestore(String locationName, // saving data to firestore
+                                         String description,
+                                         String category,
+                                         String city,
+                                         String contributorName,
+                                         String youtubeUrl,
+                                       ArrayList<String> imageUrls, // sending image urls to firestore
+                                         String province) {
 
-        // Create location data map
-        Map<String, Object> locationData = new HashMap<>();
-        locationData.put("name", locationName);
+        // Create location data map to save
+        Map<String, Object> locationData = new HashMap<>(); // creating hashmap to store data in key value pairs
+        locationData.put("name", locationName); // adding data to hashmap
         locationData.put("description", description);
         locationData.put("category", category);
         locationData.put("city", city);
@@ -657,9 +690,9 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                                  Toast.LENGTH_LONG).show();
 
                     // Clear form after successful submission
-                    clearForm();
+                    clearForm(); // after pressing shere location button and snd data to firestore db form will be clean and redy to add new location
                 })
-                .addOnFailureListener(e -> {
+                .addOnFailureListener(e -> { // if failed to add data to firestore
                     progressBar.setVisibility(View.GONE);
                     Log.e(TAG, "Error adding location: " + e.getMessage());
 
@@ -678,7 +711,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 });
     }
 
-    private void clearForm() {
+    private void clearForm() { // clearing form method that shown above
         etLocationName.setText("");
         etDescription.setText("");
         etCategory.setText("");
@@ -689,13 +722,13 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         etImageUrl.setText("");
 
         imageUrls.clear();
-        imageGalleryAdapter.notifyDataSetChanged();
-        layoutGalleryPlaceholder.setVisibility(View.VISIBLE);
+        imageGalleryAdapter.notifyDataSetChanged(); // notify adapter to refresh
+        layoutGalleryPlaceholder.setVisibility(View.VISIBLE); // show empty state ui
 
-        tilCity.setHint("City *");
+        tilCity.setHint("City *"); //
     }
 
-    private void playTutorialVideo() {
+    private void playTutorialVideo() { // yt video
         try {
             android.content.Intent youtubeIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(TUTORIAL_VIDEO_URL));
             youtubeIntent.setPackage("com.google.android.youtube");
@@ -720,7 +753,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
     private void setupTutorialVideo() {
         // Load tutorial video thumbnail
         String videoId = extractYouTubeVideoId(TUTORIAL_VIDEO_URL);
-        if (videoId != null && !videoId.equals("YOUR_TUTORIAL_VIDEO_ID")) {
+        if (videoId != null && !videoId.equals("YOUR_TUTORIAL_VIDEO_ID")) { // currently i havent added yt video so this is an place holder mage
             String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
 
             Glide.with(this)
@@ -737,7 +770,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         // Setup click listeners for video elements
         ivTutorialThumbnail.setOnClickListener(v -> playTutorialVideo());
     }
-
+// yt video id catcher
     private String extractYouTubeVideoId(String youtubeUrl) {
         try {
             String videoId = null;
@@ -760,21 +793,21 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         }
     }
 
-    /**
-     * Opens Google Photos helper dialog with instructions for sharing images
-     * Since using Firebase free plan, this helps users easily get Google Photos shared links
-     */
+//    This part is for google photos integration
+//      Opens Google Photos helper dialog with instructions for sharing images
+//      Since using Firebase free plan, this helps users easily get Google Photos shared links
+//
     private void openGooglePhotosHelper() {
         // Create a simple dialog with instructions for using Google Photos shared links
         new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
-                .setTitle("📷 Import from Google Photos")
+                .setTitle("! Import from Google Photos !")
                 .setMessage("Follow these simple steps to add images from Google Photos:\n\n" +
-                        "1️⃣ Open Google Photos app on your phone\n\n" +
-                        "2️⃣ Select the photo you want to share\n\n" +
-                        "3️⃣ Tap the Share button\n\n" +
-                        "4️⃣ Choose 'Copy link' or 'Create link'\n\n" +
-                        "5️⃣ Come back to this app\n\n" +
-                        "6️⃣ Paste the link in the Image URL field above\n\n" +
+                        "1️ Open Google Photos app on your phone\n\n" +
+                        "2️ Select the photo you want to share\n\n" +
+                        "3️ Tap the Share button\n\n" +
+                        "4️ Choose 'Copy link' or 'Create link'\n\n" +
+                        "5️ Come back to this app\n\n" +
+                        "6️ Paste the link in the Image URL field above\n\n" +
                         "💡 Tip: Every Android phone has Google Photos by default, making this the easiest way to share your travel photos!")
                 .setPositiveButton("Open Google Photos", (dialog, which) -> {
                     openGooglePhotosApp();
@@ -791,9 +824,9 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 .show();
     }
 
-    /**
-     * Opens the Google Photos app if available
-     */
+//
+//      Opens the Google Photos app if available
+//
     private void openGooglePhotosApp() {
         try {
             // Try to open Google Photos app
@@ -816,9 +849,9 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         }
     }
 
-    /**
-     * Checks clipboard for Google Photos links and auto-pastes if found
-     */
+
+//     Checks clipboard for Google Photos links and auto-pastes if found
+//
     private void checkClipboardForGooglePhotosLink() {
         try {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
@@ -833,15 +866,15 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                     String directUrl = convertGooglePhotosLinkToDirectUrl(clipText);
                     etImageUrl.setText(directUrl);
 
-                    Toast.makeText(this, "✅ Google Photos link pasted!\n\nTap 'Load Image' to preview", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, " Google Photos link pasted!\n\nTap 'Load Image' to preview", Toast.LENGTH_LONG).show();
 
                     // Automatically load the image
                     loadImageFromUrl();
                 } else {
-                    Toast.makeText(this, "❌ No Google Photos link found in clipboard.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "x No Google Photos link found in clipboard.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "❌ Clipboard is empty.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "x Clipboard is empty.\n\nPlease copy a photo link from Google Photos first.", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Log.e(TAG, "Error checking clipboard: " + e.getMessage());
@@ -849,9 +882,9 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         }
     }
 
-    /**
-     * Checks if a URL is a Google Photos shared link
-     */
+
+//     Checks if a URL is a Google Photos shared link
+//
     private boolean isGooglePhotosLink(String url) {
         return url != null && (
                 url.contains("photos.google.com") ||
@@ -861,10 +894,10 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         );
     }
 
-    /**
-     * Converts Google Photos shared link to a direct image URL
-     * This method handles different Google Photos URL formats
-     */
+
+//    Converts Google Photos shared link to a direct image URL
+//    This method handles different Google Photos URL formats
+
     private String convertGooglePhotosLinkToDirectUrl(String googlePhotosUrl) {
         try {
             // If it's already a direct googleusercontent link, return as is
@@ -872,7 +905,7 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 return googlePhotosUrl;
             }
 
-            // For shared Google Photos links, we'll return the original URL
+            // For shared Google Photos links, this will return the original URL
             // Google Photos shared links work directly in most image loading libraries like Glide
             // The link will automatically redirect to the actual image
             return googlePhotosUrl;
@@ -883,9 +916,8 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         }
     }
 
-    /**
-     * Enhanced URL validation that includes Google Photos links
-     */
+// Enhanced URL validation that includes Google Photos links
+
     private boolean isValidImageUrl(String url) {
         if (TextUtils.isEmpty(url)) {
             return false;

@@ -32,15 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity { // this activity also inharent BAse activity feturs
 
-    // ---Declare all the variables we will need ---
+    // ---Declare all the variables i need ---
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final String TAG = "HomeActivity";
-
+// adapters and list are managing and displaying attractions
     private AttractionAdapter adapter;
     private List<Attraction> attractionList;
-
+//
     private ProgressBar progressBar;
     private ChipGroup chipGroup;
 
@@ -67,24 +67,27 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         //Initialize everything
+//        initialize firbase
         firestoreDb = FirebaseFirestore.getInstance();
+//        initialize location client to get users current loaction
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//
+            // Initialize UI components
+        progressBar = findViewById(R.id.progressBar); // progressbar UI element
+        chipGroup = findViewById(R.id.chip_group_filters); // chip group for category filters
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_attractions); // recycler view to show list of attractions
 
-        progressBar = findViewById(R.id.progressBar);
-        chipGroup = findViewById(R.id.chip_group_filters);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_attractions);
-
-        attractionList = new ArrayList<>();
+        attractionList = new ArrayList<>(); // setting up recycler view and adapter
         adapter = new AttractionAdapter(attractionList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // seting up layout manager
         recyclerView.setAdapter(adapter);
 
-        checkLocationPermission();
+        checkLocationPermission(); // location permission request
         setupFilterListener();
         setupRefreshButton(); // Add refresh functionality
     }
 
-    // Add refresh button functionality
+    // Add refresh button functionality (no use )
     private void setupRefreshButton() {
         // Make the search functionality work for manual city override
         findViewById(R.id.search_icon).setOnClickListener(v -> {
@@ -153,16 +156,16 @@ public class HomeActivity extends BaseActivity {
     }
 
     // Location Handling Methods
-    private void checkLocationPermission() {
+    private void checkLocationPermission() { // requesting location permisson from user
         if (isLocationRequestInProgress) {
             Log.d(TAG, "Location request already in progress, skipping");
             return;
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) { // get access fine location permisson
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         } else {
-            getCurrentCity();
+            getCurrentCity(); // if location permission granted get city
         }
     }
 
@@ -186,7 +189,7 @@ public class HomeActivity extends BaseActivity {
             Log.d(TAG, "Location request already in progress, skipping getCurrentCity");
             return;
         }
-
+// to prevent duplicate callings
         isLocationRequestInProgress = true;
         progressBar.setVisibility(View.VISIBLE);
         Log.d(TAG, "Starting location detection...");
@@ -199,7 +202,7 @@ public class HomeActivity extends BaseActivity {
                     isLocationRequestInProgress = false;
                     hasInitialLocationLoad = true;
 
-                    if (location != null) {
+                    if (location != null) {// geo code to city name
                         Log.d(TAG, "Location found: " + location.getLatitude() + ", " + location.getLongitude());
 
                         // Always try to geocode the coordinates to get city name
@@ -520,9 +523,7 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    /**
-     * Show general placeholder when no attractions found anywhere
-     */
+//      Show general placeholder when no attractions found anywhere
     private void showGeneralPlaceholder() {
         Attraction placeholder = new Attraction();
         placeholder.setDocumentId("placeholder_general");

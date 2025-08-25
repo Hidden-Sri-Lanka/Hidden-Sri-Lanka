@@ -4,27 +4,12 @@ import androidx.annotation.NonNull;
 import java.util.List;
 import java.util.ArrayList;
 
-/**
- * Attraction - Data model class for tourist attractions in Sri Lanka
- *
- * This class demonstrates key object-oriented programming and Android development concepts:
- * 1. Data encapsulation with private fields and public getters/setters
- * 2. Firebase integration with proper constructor patterns
- * 3. Flexible data structure supporting multiple use cases
- * 4. Location-based data modeling with coordinates and administrative divisions
- * 5. Support for placeholder entries and dynamic content loading
- *
- * Academic Learning Outcomes:
- * - Object-oriented design principles
- * - Database integration patterns
- * - Data validation and type safety
- * - Memory-efficient collection usage
- * - Flexible architecture for different data sources
- */
-public class Attraction {
+
+public class Attraction { // class
     // Core identification and content fields
+    // followings will store allthe data foreach attractions
     private String documentId;      // Firebase document ID for database operations
-    private String name;           // Primary attraction name (e.g., "Udawalawe National Park")
+    private String name;           // Primary attraction name (eg: "Udawalawe National Park","Open University Sri Lanka")
     private String category;       // Type classification (Historical, Waterfall, Beach, etc.)
     private String description;    // Detailed description for display
     private String youtubeUrl;     // Optional video content URL
@@ -46,40 +31,25 @@ public class Attraction {
     // Special state field for UI placeholder handling
     private boolean isPlaceholder; // Indicates "grow our database" entries
 
-    /**
-     * Default constructor required by Firebase
-     *
-     * Firebase requires a public, no-argument constructor for automatic
-     * object serialization/deserialization from Firestore documents.
-     *
-     * Academic Learning: Understanding framework requirements and
-     * designing classes that work with external libraries.
-     */
-    public Attraction() {
+
+    public Attraction() { // this is the defoult container (runs wehn new attraction is created without no aguments )
+        // never be null
         // Initialize collections to prevent null pointer exceptions
         this.images = new ArrayList<>();
     }
 
-    /**
-     * Comprehensive constructor for creating complete attraction objects
-     *
-     * This constructor demonstrates proper object initialization with
-     * all required fields and null-safety for optional parameters.
-     *
-     * @param documentId Firebase document identifier
-     * @param name Attraction name
-     * @param category Attraction type/category
-     * @param description Detailed description
-     * @param youtubeUrl Optional video URL
-     * @param images List of image URLs
-     * @param contributorName User who added this attraction
-     * @param contributedAt Timestamp of contribution
-     * @param city City location
-     * @param province Province location
-     */
-    public Attraction(String documentId, String name, String category, String description,
-                     String youtubeUrl, List<String> images, String contributorName, long contributedAt,
-                     String city, String province) {
+   //constructer overload
+    public Attraction(String documentId,
+                      String name,
+                      String category,
+                      String description,
+                      String youtubeUrl,
+                      List<String> images,
+                      String contributorName,
+                      long contributedAt,
+                      String city,
+                      String province
+    ) {
         this.documentId = documentId;
         this.name = name;
         this.category = category;
@@ -93,23 +63,15 @@ public class Attraction {
         this.province = province;
     }
 
-    /**
-     * Constructor with all fields including contributor info
-     *
-     * This constructor is used when contributor information is available,
-     * but detailed location data is not required.
-     *
-     * @param documentId Firebase document identifier
-     * @param name Attraction name
-     * @param category Attraction type/category
-     * @param description Detailed description
-     * @param youtubeUrl Optional video URL
-     * @param images List of image URLs
-     * @param contributorName User who added this attraction
-     * @param contributedAt Timestamp of contribution
-     */
-    public Attraction(String documentId, String name, String category, String description,
-                     String youtubeUrl, List<String> images, String contributorName, long contributedAt) {
+    public Attraction(String documentId,
+                      String name,
+                      String category,
+                      String description,
+                      String youtubeUrl,
+                      List<String> images,
+                      String contributorName,
+                      long contributedAt
+    ) {
         this.documentId = documentId;
         this.name = name;
         this.category = category;
@@ -120,22 +82,13 @@ public class Attraction {
         this.contributedAt = contributedAt;
     }
 
-    /**
-     * Constructor for basic attraction
-     *
-     * This constructor is used for creating attraction objects with
-     * only the essential information. Ideal for placeholder entries
-     * or simplified views.
-     *
-     * @param documentId Firebase document identifier
-     * @param name Attraction name
-     * @param category Attraction type/category
-     * @param description Detailed description
-     * @param youtubeUrl Optional video URL
-     * @param images List of image URLs
-     */
-    public Attraction(String documentId, String name, String category, String description,
-                     String youtubeUrl, List<String> images) {
+    public Attraction(String documentId,
+                      String name,
+                      String category,
+                      String description,
+                      String youtubeUrl,
+                      List<String> images
+    ) {
         this.documentId = documentId;
         this.name = name;
         this.category = category;
@@ -145,6 +98,9 @@ public class Attraction {
     }
 
     // Getters and Setters
+    // getter let us read privet fealds
+    // setter let us change privet fealds
+    // this is encaptiulation fealds stay privet but we can expose controlledaccess
     public String getDocumentId() {
         return documentId;
     }
@@ -190,10 +146,9 @@ public class Attraction {
     }
 
 
-    /**
-     * Setter for images that handles both old String format and new List<String> format
-     * This ensures backward compatibility with existing Firestore data
-     */
+//      Setter for images that handles both old String format and new List<String> format
+//      This ensures backward compatibility with existing Firestore data
+//     Reson for this old db data i have created with manual data entry but after i have implimented form for that and i have to support both
     @SuppressWarnings("unchecked")
     public void setImages(Object images) {
         if (images instanceof List) {
@@ -285,10 +240,10 @@ public class Attraction {
         isPlaceholder = placeholder;
     }
 
-    /**
-     * Utility method to get the primary image URL
-     * Returns the first image from the list, or null if no images
-     */
+
+//      Utility method to get the primary image URL
+//      Returns the first image from the list, or null if no images
+//
     public String getPrimaryImageUrl() {
         if (images != null && !images.isEmpty()) {
             return images.get(0);
@@ -296,16 +251,16 @@ public class Attraction {
         return null;
     }
 
-    /**
-     * Utility method to check if the attraction has any images
-     */
+
+//      Utility method to check if the attraction has any images
+//
     public boolean hasImages() {
         return images != null && !images.isEmpty();
     }
 
-    /**
-     * Utility method to get the number of images
-     */
+
+//      Utility method to get the number of images
+//
     public int getImageCount() {
         return images != null ? images.size() : 0;
     }
@@ -316,7 +271,7 @@ public class Attraction {
 
     @NonNull
     @Override
-    public String toString() {
+    public String toString() { // how objects are shown in logcat and debugger
         return "Attraction{" +
                 "documentId='" + documentId + '\'' +
                 ", name='" + name + '\'' +

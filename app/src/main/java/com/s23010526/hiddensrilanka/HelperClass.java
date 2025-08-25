@@ -1,5 +1,7 @@
 package com.s23010526.hiddensrilanka;
-
+// This is used to store data in firebase
+// This is a model class
+// This class is used to store data in firebase
 public class HelperClass {
     String name,email, Username, password;
 

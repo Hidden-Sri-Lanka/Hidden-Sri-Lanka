@@ -2,6 +2,8 @@ package com.s23010526.hiddensrilanka;
 
 import android.os.Bundle;
 
+//Placeholder for under development parts
+
 public class FetureCommingSoonActivity extends BaseActivity {
 
 
