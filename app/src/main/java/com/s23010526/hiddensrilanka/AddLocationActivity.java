@@ -26,25 +26,41 @@ import java.util.List;
 import java.util.Map;
 
 // Create new screen called addLocationActivity that inharet feturs from BaseActivity
-//also can handle image cliks
+//also can handle image clicks events
+// create form for users to submit locations
 public class AddLocationActivity extends BaseActivity implements ImageGalleryAdapter.OnImageClickListener {
 
     private static final String TAG = "AddLocationActivity";
 
-    // UI Components
+    // UI Components declairation (Views)
+//    EditText -> all the basic text input boxes
     private EditText etLocationName, etDescription, etYoutubeUrl, etContributorName, etImageUrl;
+//    AutoCompleateTextView -> This is dropdown menues with search option
     private AutoCompleteTextView etCategory, etCity, etProvince;
+//    ImageView -> for displaing images
+//    Tutorial
     private ImageView ivTutorialThumbnail, btnPlayTutorial;
+
+//    LinearLayout -> for holding multiple views in a linear layout
     private LinearLayout layoutGalleryPlaceholder;
+
+    // Buttons
     private MaterialButton btnSubmitLocation, btnLoadUrl, btnGooglePhotos, btnClearImages;
+
+// container for stylings ,animations and additional feturs
+//
     private TextInputLayout tilCity;
+
+//    Progress bar
     private ProgressBar progressBar;
+
+//    initializing Scrollable list of image iterm in this case
     private RecyclerView rvImageGallery;
 
-    // Tutorial video URL - Replace with your actual instructional video
-    private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/watch?v=YOUR_TUTORIAL_VIDEO_ID"; // Replace with actual tutorial video
+    // Tutorial video URL -
+    private static final String TUTORIAL_VIDEO_URL = "https://www.youtube.com/VIDEO"; // TODO Replace Vide with good production video this is tempory
 
-    // Firebase
+    // Firebase declare used for cloud db
     private FirebaseFirestore firestore;
 
     // Image gallery data
@@ -54,34 +70,40 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
     // Data structures for province-city mapping
     private Map<String, String[]> provinceCityMap;
 
+//    in here i am connecting with xml file
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_add_location;
     }
 
+//    Title of the page (toolbar/topbar title)
     @Override
     protected String getActivityTitle() {
         return "Add New Location";
     }
 
+//    when oncreate called it will first create page or load screen
+//    runs only once when activity is created
+
+//    This part will setup entire page when it first loads
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initializeViews();
-        initializeFirebase();
-        initializeProvinceCityMapping();
-        setupDropdowns();
-        setupClickListeners();
-        setupTutorialVideo();
+        initializeViews(); // connect UI elements
+        initializeFirebase(); // initiaslize and setup database
+        initializeProvinceCityMapping(); //
+        setupDropdowns(); // fill dropdown menues
+        setupClickListeners(); // button clicks handling
+        setupTutorialVideo(); // setting and connecting yt video
     }
-
+// connecting java code with xml elements
     private void initializeViews() {
-        etLocationName = findViewById(R.id.et_location_name);
-        etDescription = findViewById(R.id.et_description);
-        etYoutubeUrl = findViewById(R.id.et_youtube_url);
-        etContributorName = findViewById(R.id.et_contributor_name);
-        etImageUrl = findViewById(R.id.et_image_url);
+        etLocationName = findViewById(R.id.et_location_name);// location name textbox
+        etDescription = findViewById(R.id.et_description);// discription box
+        etYoutubeUrl = findViewById(R.id.et_youtube_url);// yt url
+        etContributorName = findViewById(R.id.et_contributor_name);// contributer name
+        etImageUrl = findViewById(R.id.et_image_url);//
         etCategory = findViewById(R.id.et_category);
         etCity = findViewById(R.id.et_city);
         etProvince = findViewById(R.id.et_province);
@@ -96,25 +118,28 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         progressBar = findViewById(R.id.progress_bar_submit);
 
         // Initialize RecyclerView for image gallery
-        rvImageGallery = findViewById(R.id.rv_image_gallery);
-        rvImageGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        imageUrls = new ArrayList<>();
+        rvImageGallery = findViewById(R.id.rv_image_gallery); // This is getting recycler viwe instence so  can populate in rutime
+        rvImageGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)); // this is settings image scroll only for horisental (left to right ) and not be able to scroll up and down
+        imageUrls = new ArrayList<>(); // getting arrays of links
         imageGalleryAdapter = new ImageGalleryAdapter(this, imageUrls, true); // true = show remove buttons
-        imageGalleryAdapter.setOnImageClickListener(this);
-        rvImageGallery.setAdapter(imageGalleryAdapter);
+        imageGalleryAdapter.setOnImageClickListener(this); // taps are rederect and defin by custom interface
+        rvImageGallery.setAdapter(imageGalleryAdapter); // this will attach adapters to recycler view so it can create new holders
 
         updateGalleryVisibility();
     }
 
-    private void initializeFirebase() {
+    private void initializeFirebase() { // initializing sire base instence
         firestore = FirebaseFirestore.getInstance();
-        Log.d(TAG, "Firestore initialized");
+        Log.d(TAG, "Firestore initialized"); // this is for debugging purpus (to check wheter firebase instence created or not in logcat)
     }
-
-    private void initializeProvinceCityMapping() {
+// Mapping Cities ,provinces and catagories
+    private void initializeProvinceCityMapping() { //
         // Initialize province-city mapping
+        //explain -> here i am creating hashmap for storing data in key value pairs
+        // all the cities in each province is stored as keay values paire
+        // in here key is western province and value is all the cities in western province
         provinceCityMap = new HashMap<>();
-        provinceCityMap.put("Western Province", new String[]{
+        provinceCityMap.put("Western Province", new String[]{//  all the cities in western province is stored as keay values paire
             "Colombo", "Gampaha", "Kalutara", "Negombo", "Panadura", "Moratuwa",
             "Sri Jayawardenepura Kotte", "Dehiwala", "Mount Lavinia", "Kelaniya",
             "Ja-Ela", "Wattala", "Peliyagoda", "Ragama", "Kaduwela", "Maharagama",
@@ -171,15 +196,15 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         });
     }
 
-    private void setupDropdowns() {
+    private void setupDropdowns() { // this method  will look after catagory,city,province dropdown menues
         // Categories dropdown
-        String[] categories = {
+        String[] categories = { // fillin dropdown with following catagories
             "Historical Site", "WaterFall", "Beach", "Mountain", "Temple",
             "National Park", "Cave", "Lake", "Village", "Cultural Site", "More"
         };
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,
-            android.R.layout.simple_dropdown_item_1line, categories);
-        etCategory.setAdapter(categoryAdapter);
+            android.R.layout.simple_dropdown_item_1line, categories); //creacte adapter that know hoe to render each catagary  using build in dropdown template
+        etCategory.setAdapter(categoryAdapter); // attach catagary to adapter so it can populate in rutime
 
         // All Sri Lankan cities (comprehensive list)
         List<String> allCities = new ArrayList<>();
@@ -190,14 +215,15 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
                 }
             }
         }
-        allCities.sort(String::compareToIgnoreCase);
+        allCities.sort(String::compareToIgnoreCase); // setting list as alphabitically so easy to use (without casesensivity)
 
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,
             android.R.layout.simple_dropdown_item_1line, allCities);
         etCity.setAdapter(cityAdapter);
-        etCity.setEnabled(true);
+        etCity.setEnabled(true); // setting city input is interactable
 
         // Provinces dropdown
+        // same as city and catagary dropdowns
         String[] provinces = {
             "Western Province", "Central Province", "Southern Province", "Northern Province",
             "Eastern Province", "North Western Province", "North Central Province", "Uva Province",
@@ -208,14 +234,18 @@ public class AddLocationActivity extends BaseActivity implements ImageGalleryAda
         etProvince.setAdapter(provinceAdapter);
     }
 
+
+    // this method is defining what happens when buttons are pressed
     private void setupClickListeners() {
-        btnSubmitLocation.setOnClickListener(v -> validateAndSubmitLocation());
+        btnSubmitLocation.setOnClickListener(v -> validateAndSubmitLocation()); // when submit location button pressed it will call "validateAndSubmitLocation" to validatate input and send data
+
+        // reading URL from input and loading in to gallary prewewe
         btnLoadUrl.setOnClickListener(v -> loadImageFromUrl());
 
-        // Google Photos button click listener
+        // Google Photos button click listener (open up piker to select google photos [currently only open google photos and giving instructions])
         btnGooglePhotos.setOnClickListener(v -> openGooglePhotosHelper());
 
-        // Clear Images button click listener
+        // Clear Images button click listener (clear images that alredy added)
         btnClearImages.setOnClickListener(v -> clearImageGallery());
 
         // Province selection listener - optional filtering
