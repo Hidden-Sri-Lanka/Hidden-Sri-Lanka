@@ -5,21 +5,17 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/**
- * Simple dialog for adding Google Photos URLs
- * This replaces complex API integration with user-friendly URL input
- * Perfect for explaining in viva - clear, simple, effective
- */
+//  Simple dialog for adding Google Photos URLs
 public class GooglePhotosPickerDialog {
 
     public interface OnPhotoSelectedListener {
         void onPhotoSelected(String imageUrl);
     }
 
-    /**
-     * Shows a simple dialog for users to paste Google Photos share links
-     * Provides clear instructions for users
-     */
+
+//     Shows a simple dialog for users to paste Google Photos share links
+// Provides clear instructions for users
+
     public static void show(Context context, OnPhotoSelectedListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Add Image from Google Photos");
@@ -68,10 +64,9 @@ public class GooglePhotosPickerDialog {
         dialog.show();
     }
 
-    /**
-     * Validates Google Photos URL
-     * Simple validation that's easy to explain
-     */
+
+//    Validates Google Photos URL
+//    Simple validation that's easy to explain
     private static boolean isValidGooglePhotosUrl(String url) {
         if (url == null || url.trim().isEmpty()) {
             return false;
@@ -83,10 +78,8 @@ public class GooglePhotosPickerDialog {
                url.contains("lh3.googleusercontent.com");
     }
 
-    /**
-     * Processes Google Photos URL to make it suitable for loading
-     * Adds parameters for optimal image loading
-     */
+//      Processes Google Photos URL to make it suitable for loading
+//      Adds parameters for optimal image loading
     private static String processGooglePhotosUrl(String url) {
         // If it's already a direct Google Photos URL, optimize it
         if (url.contains("photos.google.com") && !url.contains("=")) {
@@ -97,9 +90,8 @@ public class GooglePhotosPickerDialog {
         return url;
     }
 
-    /**
-     * Shows help dialog with detailed instructions
-     */
+
+//     Shows help dialog with detailed instructions
     private static void showHelpDialog(Context context) {
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(context);
         helpBuilder.setTitle("📱 Google Photos Help");

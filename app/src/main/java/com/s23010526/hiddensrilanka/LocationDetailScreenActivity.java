@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+//The LocationDetailScreenActivity is a UI screen that presents all the key details of a selected attraction in hidden srilanka app
 public class LocationDetailScreenActivity extends BaseActivity {
 
     private static final String TAG = "LocationDetailScreen";
 
-    // UI Components
+    // UI Components decleration
     private ImageView ivMainImage;
     private TextView tvLocationName, tvCategory, tvDescription, tvContributor, tvContributedDate;
     private Chip chipCategory;
@@ -57,47 +58,47 @@ public class LocationDetailScreenActivity extends BaseActivity {
         displayLocationDetails();
     }
 
-    private void initializeViews() {
-        ivMainImage = findViewById(R.id.iv_main_image);
-        tvLocationName = findViewById(R.id.tv_location_name);
-        tvCategory = findViewById(R.id.tv_category);
-        tvDescription = findViewById(R.id.tv_description);
-        tvContributor = findViewById(R.id.tv_contributor);
-        tvContributedDate = findViewById(R.id.tv_contributed_date);
-        chipCategory = findViewById(R.id.chip_category);
-        btnGetDirections = findViewById(R.id.btn_get_directions);
-        btnShareLocation = findViewById(R.id.btn_share_location);
-        btnWatchVideo = findViewById(R.id.btn_watch_video);
-        rvImageGallery = findViewById(R.id.rv_image_gallery);
+    private void initializeViews() { // Initialize UI components
+        ivMainImage = findViewById(R.id.iv_main_image); // Main image view
+        tvLocationName = findViewById(R.id.tv_location_name);// Location name text view
+        tvCategory = findViewById(R.id.tv_category);// Category text view
+        tvDescription = findViewById(R.id.tv_description);// Description text view
+        tvContributor = findViewById(R.id.tv_contributor);// Contributor text view
+        tvContributedDate = findViewById(R.id.tv_contributed_date);// Contributed date text view
+        chipCategory = findViewById(R.id.chip_category);// Category chip
+        btnGetDirections = findViewById(R.id.btn_get_directions);// Get directions button
+        btnShareLocation = findViewById(R.id.btn_share_location);// Share location button
+        btnWatchVideo = findViewById(R.id.btn_watch_video);// Watch video button
+        rvImageGallery = findViewById(R.id.rv_image_gallery);// Image gallery RecyclerView
     }
 
     private void loadDataFromIntent() {
         Intent intent = getIntent();
-        attractionName = intent.getStringExtra("ATTRACTION_NAME");
-        attractionCategory = intent.getStringExtra("ATTRACTION_CATEGORY");
-        attractionDescription = intent.getStringExtra("ATTRACTION_DESCRIPTION");
-        contributorName = intent.getStringExtra("ATTRACTION_CONTRIBUTOR");
-        contributedAt = intent.getLongExtra("ATTRACTION_CONTRIBUTED_AT", 0);
-        youtubeUrl = intent.getStringExtra("ATTRACTION_YOUTUBE_URL");
-        cityName = intent.getStringExtra("ATTRACTION_CITY");
+        attractionName = intent.getStringExtra("ATTRACTION_NAME");// Get attraction name from intent extras
+        attractionCategory = intent.getStringExtra("ATTRACTION_CATEGORY");// Get attraction category from intent extras
+        attractionDescription = intent.getStringExtra("ATTRACTION_DESCRIPTION");// Get attraction description from intent extras
+        contributorName = intent.getStringExtra("ATTRACTION_CONTRIBUTOR");// Get contributor name from intent extras
+        contributedAt = intent.getLongExtra("ATTRACTION_CONTRIBUTED_AT", 0);// Get contributed date from intent extras
+        youtubeUrl = intent.getStringExtra("ATTRACTION_YOUTUBE_URL");// Get YouTube URL from intent extras
+        cityName = intent.getStringExtra("ATTRACTION_CITY");//
         imageUrls = intent.getStringArrayListExtra("ATTRACTION_IMAGES");
 
         Log.d(TAG, "Loaded attraction data: " + attractionName);
     }
 
     private void setupClickListeners() {
-        btnGetDirections.setOnClickListener(v -> openGoogleMaps());
-        btnShareLocation.setOnClickListener(v -> shareLocation());
-        btnWatchVideo.setOnClickListener(v -> watchYouTubeVideo());
+        btnGetDirections.setOnClickListener(v -> openGoogleMaps());// Open Google Maps when clicked
+        btnShareLocation.setOnClickListener(v -> shareLocation());// Share location when clicked
+        btnWatchVideo.setOnClickListener(v -> watchYouTubeVideo());// Watch YouTube video when clicked
     }
 
-    private void displayLocationDetails() {
+    private void displayLocationDetails() { // Display all location details in the UI
         // Set basic information
         tvLocationName.setText(attractionName != null ? attractionName : "Unknown Location");
         tvCategory.setText(attractionCategory != null ? attractionCategory : "Unknown Category");
         tvDescription.setText(attractionDescription != null ? attractionDescription : "No description available.");
 
-        // Set category chip
+        // Set category chip (single peaseof informations )
         if (chipCategory != null && attractionCategory != null) {
             chipCategory.setText(attractionCategory);
         }
@@ -127,7 +128,7 @@ public class LocationDetailScreenActivity extends BaseActivity {
         }
     }
 
-    private void setupImageGallery() {
+    private void setupImageGallery() { // Setup main image and image gallery
         if (imageUrls != null && !imageUrls.isEmpty()) {
             // Set main image (first image)
             if (ivMainImage != null) {
@@ -155,12 +156,12 @@ public class LocationDetailScreenActivity extends BaseActivity {
         }
     }
 
-    private void setupImageGalleryRecyclerView() {
+    private void setupImageGalleryRecyclerView() {// Setup RecyclerView for image gallery
         // Create a copy of imageUrls starting from the second image (index 1)
-        ArrayList<String> galleryImages = new ArrayList<>();
-        if (imageUrls.size() > 1) {
-            for (int i = 1; i < imageUrls.size(); i++) {
-                galleryImages.add(imageUrls.get(i));
+        ArrayList<String> galleryImages = new ArrayList<>();// New list for gallery images
+        if (imageUrls.size() > 1) {// Ensure there are additional images
+            for (int i = 1; i < imageUrls.size(); i++) {// Skip the first image
+                galleryImages.add(imageUrls.get(i)); // Add to gallery list
             }
         }
 

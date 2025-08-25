@@ -24,7 +24,7 @@ public class OnboardingScreen2Activity extends AppCompatActivity {
         });
     }
 
-    public void LoginPage(View view) {
+    public void LoginPage(View view) { // rederect to login page
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

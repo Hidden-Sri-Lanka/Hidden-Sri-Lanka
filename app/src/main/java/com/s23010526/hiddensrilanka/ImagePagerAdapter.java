@@ -13,12 +13,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-/**
- * ImagePagerAdapter - ViewPager2 adapter for horizontal scrolling through images
- *
- * This adapter enables users to swipe left/right through full-size images
- * in the location detail view, providing a smooth horizontal scrolling experience.
- */
+// ImagePagerAdapter - ViewPager2 adapter for horizontal scrolling through images
+// This adapter enables users to swipe left/right through full-size images
+// in the location detail view, providing a smooth horizontal scrolling experience.
 public class ImagePagerAdapter extends RecyclerView.Adapter<ImagePagerAdapter.ImageViewHolder> {
 
     private Context context;
@@ -55,18 +52,14 @@ public class ImagePagerAdapter extends RecyclerView.Adapter<ImagePagerAdapter.Im
         return imageUrls.size();
     }
 
-    /**
-     * Update the adapter with new image URLs
-     */
+//      Update the adapter with new image URLs
     public void updateImages(ArrayList<String> newImageUrls) {
         this.imageUrls.clear();
         this.imageUrls.addAll(newImageUrls);
         notifyDataSetChanged();
     }
 
-    /**
-     * Check if URL is a Google Photos URL that needs processing
-     */
+//      Check if URL is a Google Photos URL that needs processing
     private boolean isGooglePhotosUrl(String url) {
         return url != null && (
                 url.contains("photos.app.goo.gl") ||
@@ -76,9 +69,7 @@ public class ImagePagerAdapter extends RecyclerView.Adapter<ImagePagerAdapter.Im
         );
     }
 
-    /**
-     * Load image using Glide with proper error handling
-     */
+//      Load image using Glide with proper error handling
     private void loadImageWithGlide(ImageView imageView, String imageUrl) {
         Glide.with(context)
                 .load(imageUrl)

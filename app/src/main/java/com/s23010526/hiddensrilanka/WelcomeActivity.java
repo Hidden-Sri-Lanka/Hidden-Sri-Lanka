@@ -25,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    public void exploreShere(View view) {
+    public void exploreShere(View view) { // rederecto to onboarding screen activity
         Intent intent = new Intent(this, OnboardingScreen2Activity.class);
         startActivity(intent);
     }

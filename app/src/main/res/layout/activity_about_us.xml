@@ -15,9 +15,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Logo image -->
-        <!--        TODO: Change the logo to transparent withot text
-        Piority Low -->
+<!--       TODO : Change logo to without txt-->
         <ImageView
             android:id="@+id/splashImageView"
             android:layout_width="172dp"
@@ -50,7 +48,7 @@
             android:fontFamily="sans-serif-black"
             android:text="@string/devBy" />
 
-        <!-- Links to other pages -->
+        <!-- Links to docs -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPrivacyPolicy"
             style="@style/AboutPage.Button.Link"

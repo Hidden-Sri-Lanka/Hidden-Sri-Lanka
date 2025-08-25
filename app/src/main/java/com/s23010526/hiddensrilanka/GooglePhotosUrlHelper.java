@@ -59,10 +59,9 @@ public class GooglePhotosUrlHelper {
         builder.show();
     }
 
-    /**
-     * Public method to process image URL - converts Google Photos share links if needed
-     * This method handles both Google Photos links and direct image URLs
-     */
+
+//      Public method to process image URL - converts Google Photos share links if needed
+//      This method handles both Google Photos links and direct image URLs
     public static void processImageUrl(Context context, String imageUrl, ImageUrlCallback callback) {
         // Validate input
         if (imageUrl == null || imageUrl.trim().isEmpty()) {
@@ -101,9 +100,7 @@ public class GooglePhotosUrlHelper {
         }).start();
     }
 
-    /**
-     * Interface for URL processing callback
-     */
+//      Interface for URL processing callback
     public interface ImageUrlCallback {
         void onImageUrlProcessed(String imageUrl);
 
@@ -113,9 +110,7 @@ public class GooglePhotosUrlHelper {
         }
     }
 
-    /**
-     * Check if URL is a Google Photos URL that needs processing
-     */
+//      Check if URL is a Google Photos URL that needs processing
     public static boolean isGooglePhotosUrl(String url) {
         return url != null && (
                 url.contains("photos.app.goo.gl") ||
@@ -125,9 +120,7 @@ public class GooglePhotosUrlHelper {
         );
     }
 
-    /**
-     * Extract direct image URL from Google Photos share link
-     */
+//      Extract direct image URL from Google Photos share link
     private static String extractDirectImageUrl(String shareUrl) {
         try {
             // Method 1: Try to follow redirects
@@ -151,9 +144,7 @@ public class GooglePhotosUrlHelper {
         }
     }
 
-    /**
-     * Checks if URL is a Google Photos share link
-     */
+//      Checks if URL is a Google Photos share link
     private static boolean isGooglePhotosShareLink(String url) {
         return url != null && (
             url.contains("photos.app.goo.gl") ||
@@ -163,9 +154,7 @@ public class GooglePhotosUrlHelper {
         );
     }
 
-    /**
-     * Validates if the URL could be any type of image URL
-     */
+//      Validates if the URL could be any type of image URL
     private static boolean validateAnyImageUrl(String url) {
         if (url == null || url.isEmpty()) {
             return false;
@@ -202,9 +191,7 @@ public class GooglePhotosUrlHelper {
         return lowerUrl.startsWith("http") && !lowerUrl.contains("javascript:");
     }
 
-    /**
-     * AsyncTask to extract direct image URL from Google Photos share link
-     */
+//      AsyncTask to extract direct image URL from Google Photos share link
     private static class ExtractImageUrlTask extends AsyncTask<String, Void, String> {
         private Context context;
         private ImageUrlCallback callback;
@@ -261,9 +248,7 @@ public class GooglePhotosUrlHelper {
         }
     }
 
-    /**
-     * Extract image ID from Google Photos URL
-     */
+//      Extract image ID from Google Photos URL
     private static String extractImageIdFromUrl(String url) {
         try {
             // Pattern for Google Photos share URLs
@@ -286,9 +271,7 @@ public class GooglePhotosUrlHelper {
         return null;
     }
 
-    /**
-     * Follow redirects to get final URL
-     */
+//     Follow redirects to get final URL
     private static String followRedirects(String urlString) {
         try {
             URL url = new URL(urlString);
@@ -304,9 +287,7 @@ public class GooglePhotosUrlHelper {
         }
     }
 
-    /**
-     * Try to extract image URL from HTML content
-     */
+//      Try to extract image URL from HTML content
     private static String extractImageFromHtml(String urlString) {
         try {
             URL url = new URL(urlString);
@@ -338,9 +319,7 @@ public class GooglePhotosUrlHelper {
         return null;
     }
 
-    /**
-     * Load image from URL using Glide with error handling
-     */
+//      Load image from URL using Glide with error handling
     public static void loadImageFromUrl(Context context, String url, ImageView imageView) {
         Glide.with(context)
             .load(url)

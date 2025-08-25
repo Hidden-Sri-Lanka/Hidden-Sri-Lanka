@@ -13,7 +13,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-
+//This is a RecyclerView adapter that displays a horizontal or grid gallery of images
+//loaded from URLs. It supports both viewing mode (just display images) and
+//editing mode (with remove buttons) used in home and add location activities respectively.
 public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapter.ImageViewHolder> {
 
     private Context context;
@@ -22,14 +24,14 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
     private boolean showRemoveButton;
 
     public interface OnImageClickListener {
-        void onImageClick(int position, String imageUrl);
-        void onImageRemove(int position);
+        void onImageClick(int position, String imageUrl); // user tap on image
+        void onImageRemove(int position); // user press on delete button
     }
 
     public ImageGalleryAdapter(Context context, ArrayList<String> imageUrls, boolean showRemoveButton) {
         this.context = context;
-        this.imageUrls = imageUrls;
-        this.showRemoveButton = showRemoveButton;
+        this.imageUrls = imageUrls; // initial list of img urls
+        this.showRemoveButton = showRemoveButton; // true for edit mode, false for view mode
     }
 
     public void setOnImageClickListener(OnImageClickListener listener) {
@@ -39,7 +41,8 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_gallery_image, parent, false);
+        // create new view holder when recycler view needs one
+        View view = LayoutInflater.from(context).inflate(R.layout.item_gallery_image, parent, false);// contain image View + floaring action button
         return new ImageViewHolder(view);
     }
 
@@ -77,7 +80,7 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
         return imageUrls.size();
     }
 
-    public void addImage(String imageUrl) {
+    public void addImage(String imageUrl) { // add new image url to the list
         imageUrls.add(imageUrl);
         notifyItemInserted(imageUrls.size() - 1);
     }
@@ -85,12 +88,12 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapte
     public void removeImage(int position) {
         if (position >= 0 && position < imageUrls.size()) {
             imageUrls.remove(position);
-            notifyItemRemoved(position);
+            notifyItemRemoved(position); // update position fo remaining iterms
             notifyItemRangeChanged(position, imageUrls.size());
         }
     }
 
-    public void updateImages(ArrayList<String> newImageUrls) {
+    public void updateImages(ArrayList<String> newImageUrls) { // batch update (need when reseving images from firestore db )
         this.imageUrls.clear();
         this.imageUrls.addAll(newImageUrls);
         notifyDataSetChanged();

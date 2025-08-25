@@ -11,25 +11,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
-/**
- * Location Detail Activity - Shows complete information about a selected attraction
- *
- * This activity demonstrates key Android development concepts:
- * 1. Intent data extraction and validation
- * 2. Google Photos URL processing for image loading
- * 3. Three-level fallback system for navigation
- * 4. Background thread management for geocoding
- * 5. Comprehensive error handling and user feedback
- * 6. Horizontal scrolling image gallery with ViewPager2
- *
- * Academic Learning Outcomes:
- * - Activity lifecycle management
- * - Cross-activity data communication
- * - Location services integration
- * - Image processing with Glide library
- * - Thread management and UI updates
- * - ViewPager2 implementation for smooth scrolling
- */
+//The LocationDetailActivity displays full details for a selected attraction
+// a swipable image gallery, name, city, category, description, contributor,
+// and buttons to get directions or share the location.
+
+
 public class LocationDetailActivity extends AppCompatActivity {
 
     // UI Components - Following Material Design principles
@@ -66,11 +52,10 @@ public class LocationDetailActivity extends AppCompatActivity {
         setupButtonListeners();
     }
 
-    /**
-     * Initialize all UI components with findViewById calls
-     * This method ensures all views are properly connected before use
-     * Demonstrates proper UI initialization patterns in Android
-     */
+//      Initialize all UI components with findViewById calls
+//      This method ensures all views are properly connected before use
+//      Demonstrates proper UI initialization patterns in Android
+//
     private void initializeViews() {
         vpLocationImages = findViewById(R.id.vp_location_images);
         tvImageCounter = findViewById(R.id.tv_image_counter);
@@ -83,15 +68,14 @@ public class LocationDetailActivity extends AppCompatActivity {
         // btnShareLocation = findViewById(R.id.btn_share_location); // Commented out as button is not in layout
     }
 
-    /**
-     * Extract attraction data from Intent extras and populate the attraction object
-     *
-     * Key Learning: This method demonstrates proper intent data extraction
-     * and the importance of using consistent key names between activities.
-     *
-     * Bug Fix: Previously failed due to mismatched intent keys between
-     * AttractionAdapter and this activity. Fixed by standardizing key names.
-     */
+//      Extract attraction data from Intent extras and populate the attraction object
+//
+//      Key Learning: This method demonstrates proper intent data extraction
+//      and the importance of using consistent key names between activities.
+//
+//      Bug Fix: Previously failed due to mismatched intent keys between
+//      AttractionAdapter and this activity. Fixed by standardizing key names.
+//
     private void loadAttractionData() {
         Intent intent = getIntent();
 
@@ -140,10 +124,8 @@ public class LocationDetailActivity extends AppCompatActivity {
         displayAttractionData(contributorName);
     }
 
-    /**
-     * Display attraction data in UI components with proper null checking
-     * Demonstrates safe UI updates and user-friendly fallbacks
-     */
+//      Display attraction data in UI components with proper null checking
+//      Demonstrates safe UI updates and user-friendly fallbacks
     private void displayAttractionData(String contributorName) {
         // Populate text fields with attraction data
         tvLocationName.setText(currentAttraction.getName());
@@ -162,10 +144,8 @@ public class LocationDetailActivity extends AppCompatActivity {
         loadLocationImage();
     }
 
-    /**
-     * Smart image loading with multiple image support
-     * Handles both single images (backward compatibility) and multiple images (new feature)
-     */
+//      Smart image loading with multiple image support
+//      Handles both single images (backward compatibility) and multiple images (new feature)
     private void loadLocationImage() {
         // Initialize image gallery
         setupImagePager();
@@ -186,9 +166,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Set up the image pager ViewPager2 for horizontal scrolling
-     */
+//      Set up the image pager ViewPager2 for horizontal scrolling
     private void setupImagePager() {
         imageUrls = new ArrayList<>();
         imagePagerAdapter = new ImagePagerAdapter(this, imageUrls);
@@ -204,9 +182,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Update the image counter text view
-     */
+//      Update the image counter text view
     private void updateImageCounter(int position) {
         if (imageUrls != null && !imageUrls.isEmpty()) {
             // Show current position (1-based) and total count
@@ -217,9 +193,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handle multiple images - show horizontal scrolling pager
-     */
+//      Handle multiple images - show horizontal scrolling pager
     private void setupMultipleImages() {
         if (!imageUrls.isEmpty()) {
             // Update the adapter with new image URLs
@@ -240,9 +214,7 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handle single image - show in pager without counter
-     */
+//      Handle single image - show in pager without counter
     private void setupSingleImage() {
         if (!imageUrls.isEmpty()) {
             imagePagerAdapter.updateImages(imageUrls);
@@ -251,18 +223,14 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handle no images - show placeholder
-     */
+//      Handle no images - show placeholder
     private void setupNoImages() {
         vpLocationImages.setVisibility(android.view.View.GONE);
         tvImageCounter.setVisibility(android.view.View.GONE);
     }
 
-    /**
-     * Utility method to detect Google Photos URLs
-     * These URLs need special processing to extract the actual image
-     */
+//      Utility method to detect Google Photos URLs
+//      These URLs need special processing to extract the actual image
     private boolean isGooglePhotosUrl(String url) {
         return url != null && (
                 url.contains("photos.app.goo.gl") ||       // Shortened share links
@@ -273,10 +241,8 @@ public class LocationDetailActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Set up button click listeners for user interactions
-     * Demonstrates proper event handling and method delegation
-     */
+//      Set up button click listeners for user interactions
+//      Demonstrates proper event handling and method delegation
     private void setupButtonListeners() {
         // Get Directions button - Implements intelligent navigation system
         btnGetDirections.setOnClickListener(v -> openInGoogleMaps());
@@ -285,20 +251,19 @@ public class LocationDetailActivity extends AppCompatActivity {
         // btnShareLocation.setOnClickListener(v -> shareLocation()); // Commented out as button is not in layout
     }
 
-    /**
-     * INTELLIGENT DIRECTIONS SYSTEM - Three-Level Fallback Implementation
-     *
-     * This method demonstrates advanced problem-solving in mobile development.
-     *
-     * Problem Solved: Originally, the directions button failed when locations
-     * didn't have stored coordinates in the database (showing 0.0, 0.0).
-     *
-     * Solution: Implemented a three-level fallback system that ensures the
-     * directions feature ALWAYS works regardless of data completeness.
-     *
-     * Academic Learning: Shows understanding of graceful degradation,
-     * user experience design, and robust error handling.
-     */
+//      INTELLIGENT DIRECTIONS SYSTEM - Three-Level Fallback Implementation
+//
+//      This method demonstrates advanced problem-solving in mobile development.
+//
+//      Problem Solved: Originally, the directions button failed when locations
+//      didn't have stored coordinates in the database (showing 0.0, 0.0).
+//
+//      Solution: Implemented a three-level fallback system that ensures the
+//      directions feature ALWAYS works regardless of data completeness.
+//
+//      Academic Learning: Shows understanding of graceful degradation,
+//      user experience design, and robust error handling.
+//
     private void openInGoogleMaps() {
         double lat = currentAttraction.getLatitude();
         double lng = currentAttraction.getLongitude();
@@ -320,12 +285,10 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * LEVEL 1: Open maps using precise coordinates
-     *
-     * This method handles the ideal case where we have exact latitude/longitude
-     * coordinates for the attraction. Creates proper Google Maps intents.
-     */
+//       Open maps using precise coordinates
+//
+//      This method handles the ideal case where we have exact latitude/longitude
+//      coordinates for the attraction. Creates proper Google Maps intents.
     private void openMapsWithCoordinates(double lat, double lng) {
         try {
             // Create geo URI with coordinates and location name
@@ -358,18 +321,11 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * LEVEL 2: Geocoding fallback system
-     *
-     * When coordinates aren't available, this method attempts to convert
-     * the location name into coordinates using Android's Geocoder service.
-     *
-     * Key Technical Concepts Demonstrated:
-     * 1. Background thread processing (avoids blocking UI)
-     * 2. Main thread UI updates (Android requirement)
-     * 3. Smart query construction for better accuracy
-     * 4. Graceful fallback to Level 3 if geocoding fails
-     */
+//       Geocoding fallback system
+//
+//      When coordinates aren't available, this method attempts to convert
+//      the location name into coordinates using Android's Geocoder service.
+
     private void geocodeLocationName() {
         String locationName = currentAttraction.getName();
         String city = currentAttraction.getCity();
@@ -424,15 +380,14 @@ public class LocationDetailActivity extends AppCompatActivity {
         }).start(); // Start the background thread
     }
 
-    /**
-     * LEVEL 3: Search query fallback (final resort)
-     *
-     * When both stored coordinates and geocoding fail, this method provides
-     * a guaranteed working solution by searching Google Maps by name.
-     *
-     * This ensures the directions feature ALWAYS works, demonstrating
-     * commitment to user experience and robust application design.
-     */
+//     Search query fallback (final resort)
+//
+//      When both stored coordinates and geocoding fail, this method provides
+//      a guaranteed working solution by searching Google Maps by name.
+//
+//      This ensures the directions feature ALWAYS works, demonstrating
+//      commitment to user experience and robust application design.
+//
     private void openMapsWithSearchQuery(String searchQuery) {
         try {
             // Create Google Maps search URL with encoded query
@@ -455,14 +410,13 @@ public class LocationDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Native Android sharing implementation
-     *
-     * Creates formatted text with location details and opens the system
-     * sharing menu, allowing users to share via any installed app.
-     *
-     * Demonstrates integration with Android's built-in sharing capabilities.
-     */
+//      Native Android sharing implementation
+//
+//      Creates formatted text with location details and opens the system
+//      sharing menu, allowing users to share via any installed app.
+//
+//      Demonstrates integration with Android's built-in sharing capabilities.
+//
     private void shareLocation() {
         // Create formatted share text with location information
         // Using emoji and clear formatting for better user experience
@@ -490,10 +444,9 @@ public class LocationDetailActivity extends AppCompatActivity {
         startActivity(chooser);
     }
 
-    /**
-     * Activity lifecycle management
-     * Handles back button press to return to previous screen
-     */
+//      Activity lifecycle management
+//      Handles back button press to return to previous screen
+//
     @Override
     public void onBackPressed() {
         super.onBackPressed();
