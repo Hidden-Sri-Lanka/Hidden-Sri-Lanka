@@ -1,5 +1,5 @@
 # Hidden Sri Lanka Mobile App
-
+[![GitHub release](https://img.shields.io/github/v/release)
 > 📚 Looking for the docs? Jump straight in: **[➡️ Full Documentation Index](docs/README.md)**
 
 Quick Docs Shortcuts:
