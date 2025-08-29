@@ -1,5 +1,6 @@
 # Hidden Sri Lanka Mobile App
-[![GitHub release](https://img.shields.io/github/v/release)
+> Latest Release 
+![latest GitHub release](https://img.shields.io/github/v/release/Hidden-Sri-Lanka/Hidden-Sri-Lanka?include_prereleases&sort=semver)</br>
 > 📚 Looking for the docs? Jump straight in: **[➡️ Full Documentation Index](docs/README.md)**
 
 Quick Docs Shortcuts:
